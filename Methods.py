@@ -16,6 +16,8 @@ def print_all_content(data=None):
         except:
             print("Value: ", v)
 
+    return
+
 
 def ERP_plot(save=False, data=None, key="pfc"):
     
@@ -47,6 +49,7 @@ def ERP_plot(save=False, data=None, key="pfc"):
         plotly.offline.plot(fig, filename="ERP_" + key + ".html")
 
     fig.show()
+    return
 
 
 def CSD_plot(save=False, data=None, key='pfc'):
