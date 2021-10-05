@@ -7,4 +7,4 @@ Example of plots; the fucntions will save the plots in HTML format but due to pl
 
 <img src="https://github.com/HNXJ/PlotlyDraft/blob/main/pfc_spectral_coherence.png" width="700"/>
 
-<img src="https://github.com/HNXJ/PlotlyDraft/blob/main/pfc_spectral_power_density.png" width="700"/>
+<img src="https://github.com/HNXJ/PlotlyDraft/blob/main/pfc_spectral_powers.png" width="700"/>
