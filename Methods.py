@@ -98,7 +98,21 @@ def CSD_plot(save=False, data=None, key='pfc'):
     fig.show()
 
 
-def pspectlam(x, axis=0, fs=1000, fc=500):
+def pspectlam(x, axis=0, fs=1000, fc=500, mode=None):
+    if mode=="MT":
+        
+        ch_names = [str(i) for i in range(1, 17)]
+        info = mne.create_info(ch_names=ch_names, sfreq=1000)
+        d = np.transpose(np.mean(data['lfp'][:, 0:16, :]), 2)
+        
+        raw = mne.io.RawArray(d, info, first_samp=0, copy='auto', verbose=None)
+        f = mne.time_frequency.psd_multitaper(raw, fmin=0, fmax=fc, tmin=None, tmax=None,
+                                          bandwidth=2, adaptive=False, low_bias=True,
+                                          normalization='length', picks=ch_names, proj=False,
+                                          n_jobs=1, verbose=None)
+        
+        return f[0]
+    
     x = x - np.mean(np.mean(x))
     _fft = np.fft.fft(x, axis=axis)
     k = fs/fc
@@ -138,9 +152,10 @@ def psplot(x, save=True, show=True, filename="psp.html", w=300, h=200, t=None, y
 
 def customplot(x, save=True, show=True, filename="plot.html"
                , w=300, h=200, t=None, y=None, relative=True
-               ,xlabel="T", ylabel="A", title="Plot"):
+               ,xlabel="T", ylabel="A", title="Plot", reverse=None):
 
     im = x.transpose()
+    print(im.shape)
     if relative==True:
         im = im / np.max(np.max(im))
         
@@ -154,6 +169,11 @@ def customplot(x, save=True, show=True, filename="plot.html"
         ),
     )
 
+    if reverse==True: 
+        fig.update_layout(
+            yaxis = dict(autorange="reversed")
+        )
+
     if save==True:
         plotly.offline.plot(fig, filename=filename)
     
@@ -163,18 +183,18 @@ def customplot(x, save=True, show=True, filename="plot.html"
     return
 
 
-def psp_plotter(data=None, key='pfc', save=False):
+def psp_plotter(data=None, key='pfc', save=False, t1=500, t2=2501):
     
     lam1 = data['lfp'][:, 0:16, :]
     lam2 = data['lfp'][:, 16:32, :]
     lam3 = data['lfp'][:, 32:48, :]
     
     if key=='pfc':
-        Y = lam1[500:2501, :, :]
+        Y = lam1[t1:t2, :, :]
     elif key=='p7a':
-        Y = lam2[500:2501, :, :]
+        Y = lam2[t1:t2, :, :]
     elif key=='v4':
-        Y = lam3[500:2501, :, :]
+        Y = lam3[t1:t2, :, :]
     else:
         print('Not in set')
         return
@@ -185,7 +205,7 @@ def psp_plotter(data=None, key='pfc', save=False):
     y = np.linspace(1, 16, 300)
         
     psplot(ps_pfc, save=save, filename="ps_" + key + ".html", w=1000, h=300, t=t, y=y, relative=True)
-    
+    return
     
 
     
