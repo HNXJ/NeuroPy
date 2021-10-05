@@ -199,11 +199,15 @@ def customplot(x, save=True, show=True, filename="plot.html"
 def psp_plotter(data=None, key='pfc', save=False,
                 t1=500, t2=2501, fmin=0, fmax=100,
                 normalize_w=False, k=5,
-                title="Power spectrum multitaper ", bw=15):
+                title="Power spectrum multitaper ",
+                bw=15, trials=None):
     
-    lam1 = data['lfp'][:, 0:16, :]
-    lam2 = data['lfp'][:, 16:32, :]
-    lam3 = data['lfp'][:, 32:48, :]
+    if trials==None:
+        trials = [i for i in range(data['lfp'].shape[2])]
+    
+    lam1 = data['lfp'][:, 0:16, trials]
+    lam2 = data['lfp'][:, 16:32, trials]
+    lam3 = data['lfp'][:, 32:48, trials]
     
     if key=='pfc':
         Y = lam1[t1:t2, :, :]
