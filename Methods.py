@@ -5,7 +5,7 @@ import plotly.express as px
 import numpy as np
 
 import plotly
-import mne
+import mne # Multitaper spectrums
 import cv2
 
 
