@@ -1,5 +1,5 @@
 # from matplotlib import pyplot as plt ### Not used
-
+from statsmodels.tsa.stattools import grangercausalitytests as gct
 import plotly.graph_objects as go
 import plotly.express as px
 import numpy as np
@@ -304,17 +304,24 @@ def coherence_plotter(data=None, key='pfc', save=False,
     return
 
 
-def coherence_granger(x, y): # Incomplete
+def coherence_granger(x, y, lag=2): # Incomplete
 
-    c = np.corrcoef(x, y)
-    return c[0, 1]
+    d = np.array((x, y)).transpose()
+    gc = gct(d, lag, verbose=False)
+    c = 0
+    
+    for lg in range(1, lag+1):
+        if gc[lg][0]['lrtest'][1] > 0:
+            c += gc[lg][0]['lrtest'][1]
+            
+    return c
 
 
 def granger_plotter(data=None, key='pfc', save=False,
                 t1=500, t2=2501, fmin=0, fmax=100,
                 normalize_w=False, k=5,
                 title="Spectral coherence multitaper ",
-                bw=15, trials=None):
+                bw=15, trials=None, lag=2):
     
     if trials==None:
         trials = [i for i in range(data['lfp'].shape[2])]
@@ -353,10 +360,10 @@ def granger_plotter(data=None, key='pfc', save=False,
     c = np.zeros((ps_pfc.shape[1], ps_pfc.shape[1]))
     for i in range(ps_pfc.shape[1]):
         c[i, i] = 1
-        for j in range(i+1, ps_pfc.shape[1]):
-            u = coherence_granger(ps_pfc[:, i], ps_pfc[:, j])
+        for j in range(ps_pfc.shape[1]):
+            u = coherence_granger(ps_pfc[:, i], ps_pfc[:, j], lag=lag)
             c[i, j] = u
-            c[j, i] = u
+            # c[j, i] = u
             
     t = np.linspace(1, 17, 16)
     y = np.linspace(1, 17, 16)
