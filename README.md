@@ -1,4 +1,4 @@
-# PlotlyDraft
+# PlotlyGeneralPlottingExamples
 
 Draft for python/plotly plotting of electrophysiological signal/data
 use arbitrary data (as dict type) for IO
