@@ -241,7 +241,7 @@ def psp_plotter(data=None, key='pfc', save=False,
     return
     
 
-def coherence(x, y):
+def coherence_pearson(x, y):
 
     c = np.corrcoef(x, y)
     return c[0, 1]
@@ -291,7 +291,70 @@ def coherence_plotter(data=None, key='pfc', save=False,
     for i in range(ps_pfc.shape[1]):
         c[i, i] = 1
         for j in range(i+1, ps_pfc.shape[1]):
-            u = coherence(ps_pfc[:, i], ps_pfc[:, j])
+            u = coherence_pearson(ps_pfc[:, i], ps_pfc[:, j])
+            c[i, j] = u
+            c[j, i] = u
+            
+    t = np.linspace(1, 17, 16)
+    y = np.linspace(1, 17, 16)
+    customplot(c, save=True, show=True, filename="specCoherence.html"
+                   , w=16, h=16, t=t, y=y, relative=True
+                   ,xlabel="Ch ID", ylabel="Ch ID",
+                   title=title)
+    return
+
+
+def coherence_granger(x, y): # Incomplete
+
+    c = np.corrcoef(x, y)
+    return c[0, 1]
+
+
+def granger_plotter(data=None, key='pfc', save=False,
+                t1=500, t2=2501, fmin=0, fmax=100,
+                normalize_w=False, k=5,
+                title="Spectral coherence multitaper ",
+                bw=15, trials=None):
+    
+    if trials==None:
+        trials = [i for i in range(data['lfp'].shape[2])]
+    
+    lam1 = data['lfp'][:, 0:16, trials]
+    lam2 = data['lfp'][:, 16:32, trials]
+    lam3 = data['lfp'][:, 32:48, trials]
+    
+    if key=='pfc':
+        Y = lam1[t1:t2, :, :]
+    elif key=='p7a':
+        Y = lam2[t1:t2, :, :]
+    elif key=='v4':
+        Y = lam3[t1:t2, :, :]
+    else:
+        print('Not in set')
+        return
+    
+    ps_pfc = pspectlamavg(Y, axis=0, fs=1000, fc=150, fmin=fmin, fmax=fmax)
+    
+    if normalize_w==True:
+        for i in range(ps_pfc.shape[0]-k):
+            if k > 0:
+                ps_pfc[i, :] /= np.max(np.max(ps_pfc[i:i+k, :]))
+            else:
+                ps_pfc[i, :] /= np.max(np.max(ps_pfc[i, :]))
+        if k > 0:
+            for i in range(ps_pfc.shape[0]-k, ps_pfc.shape[0]):
+                ps_pfc[i, :] /= np.max(np.max(ps_pfc[i, :]))
+        
+        title = title + ",Normalized relative to other channels"
+        
+    t = np.linspace(fmin, fmax, 1000)
+    y = np.linspace(1, 16, 300)
+    
+    c = np.zeros((ps_pfc.shape[1], ps_pfc.shape[1]))
+    for i in range(ps_pfc.shape[1]):
+        c[i, i] = 1
+        for j in range(i+1, ps_pfc.shape[1]):
+            u = coherence_granger(ps_pfc[:, i], ps_pfc[:, j])
             c[i, j] = u
             c[j, i] = u
             
