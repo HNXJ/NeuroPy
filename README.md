@@ -10,4 +10,4 @@ Example of plots; the fucntions will save the plots in HTML format but due to pl
 
 <img src="https://github.com/HNXJ/PlotlyDraft/blob/main/pfc_spectral_powers.png" width="1200"/>
 
-<img src="https://github.com/HNXJ/PlotlyDraft/blob/main/BasicGrangerSingleTrial.png" width="1200"/>
+<img src="https://github.com/HNXJ/PlotlyDraft/blob/main/basic_all_trial_granger.png" width="1200"/>
