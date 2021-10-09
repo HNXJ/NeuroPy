@@ -1,5 +1,7 @@
 # Plotly General Plotting Examples for Electrophysiology
 
+## github@HNXJ
+
 Notable libraries: Scipy - Statsmodel - Plotly
 
 Draft for python/plotly plotting of electrophysiological signal/data
