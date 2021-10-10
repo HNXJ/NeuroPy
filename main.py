@@ -40,7 +40,8 @@ from Methods import *
 
 granger_plotter(data=data, key='pfc', save=True, t1=500, t2=2500, fmin=4,
             fmax=100, normalize_w=True, bw=45, k=0,
-            title="Granger causality, trial 100, 200", trials=[100, 200], lag=12)
+            title="Granger causality, trial 100, 200, P-values > 0.1 have been set to -0.1 as null",
+            trials=[100, 200], lag=12)
 # granger_plotter(data=data, key='pfc', save=True, t1=2500, t2=4500, fmin=4,
 #             fmax=100, normalize_w=True, bw=45, k=0,
 #             title="Coherence, trial 400, 500", trials=[400, 500], lag=2)
