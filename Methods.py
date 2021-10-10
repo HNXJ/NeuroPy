@@ -310,12 +310,12 @@ def coherence_granger(x, y, lag=2, test='lrtest'): # Incomplete
     gc = gct(d, lag, verbose=False)
     c = 0
     
-    p_values = [round(gc[i+1][0][test][1], 4) for i in range(lag)]
-    print(f'P Values = {p_values}')
+    p_values = [round(gc[i+1][0][test][1], 5) for i in range(lag)]
+    # print(f'P Values = {p_values}')
 
     c = np.min(p_values)       
-    if c > 0.1:
-        c = -0.1
+    if c > 0.2:
+        return -0.1
     return c
 
 
