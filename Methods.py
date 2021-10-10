@@ -304,16 +304,18 @@ def coherence_plotter(data=None, key='pfc', save=False,
     return
 
 
-def coherence_granger(x, y, lag=2): # Incomplete
+def coherence_granger(x, y, lag=2, test='lrtest'): # Incomplete
 
     d = np.array((x, y)).transpose()
     gc = gct(d, lag, verbose=False)
     c = 0
     
-    for lg in range(1, lag+1):
-        if gc[lg][0]['lrtest'][1] > 0:
-            c += gc[lg][0]['lrtest'][1]
-            
+    p_values = [round(gc[i+1][0][test][1], 4) for i in range(lag)]
+    print(f'P Values = {p_values}')
+
+    c = np.min(p_values)       
+    if c > 0.1:
+        c = -0.1
     return c
 
 
@@ -359,7 +361,7 @@ def granger_plotter(data=None, key='pfc', save=False,
     
     c = np.zeros((ps_pfc.shape[1], ps_pfc.shape[1]))
     for i in range(ps_pfc.shape[1]):
-        c[i, i] = 1
+        c[i, i] = -0.1
         for j in range(ps_pfc.shape[1]):
             u = coherence_granger(ps_pfc[:, i], ps_pfc[:, j], lag=lag)
             c[i, j] = u
