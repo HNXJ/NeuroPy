@@ -9,6 +9,7 @@ use arbitrary data (as dict type) for IO
 
 Example of plots; the fucntions will save the plots in HTML format but due to plotly features, you can save a png format from its panel.
 
+### Granger (channelwise on each trial separately)
 
 <img src="https://github.com/HNXJ/PlotlyDraft/blob/main/avg_1to300_granger_pvalue.png" width="1200"/>
 
