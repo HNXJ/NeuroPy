@@ -361,8 +361,10 @@ def granger_plotter(data=None, key='pfc', save=False,
     
     c = np.zeros((ps_pfc.shape[1], ps_pfc.shape[1]))
     for i in range(ps_pfc.shape[1]):
-        c[i, i] = -0.1
+        c[i, i] = 0
         for j in range(ps_pfc.shape[1]):
+            if i==j:
+                continue
             u = coherence_granger(ps_pfc[:, i], ps_pfc[:, j], lag=lag)
             c[i, j] = u
             # c[j, i] = u
@@ -370,7 +372,7 @@ def granger_plotter(data=None, key='pfc', save=False,
     t = np.linspace(1, 17, 16)
     y = np.linspace(1, 17, 16)
     customplot(c, save=True, show=True, filename="specCoherence.html"
-                   , w=16, h=16, t=t, y=y, relative=True
+                   , w=16, h=16, t=t, y=y, relative=False
                    ,xlabel="Ch ID", ylabel="Ch ID",
                    title=title)
     return
