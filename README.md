@@ -14,8 +14,8 @@ Example of plots; the fucntions will save the plots in HTML format but due to pl
 
 <img src="https://github.com/HNXJ/PlotlyDraft/blob/main/avg_301to600_granger_pvalue.png" width="1200"/>
 
-<img src="https://github.com/HNXJ/PlotlyDraft/blob/main/single_t100_granger.png" width="1200"/>
+<img src="https://github.com/HNXJ/PlotlyDraft/blob/main/single_100_granger_pval.png" width="1200"/>
 
-<img src="https://github.com/HNXJ/PlotlyDraft/blob/main/single_t400_granger.png" width="1200"/>
+<img src="https://github.com/HNXJ/PlotlyDraft/blob/main/single_500_granger_pval.png" width="1200"/>
 
 <img src="https://github.com/HNXJ/PlotlyDraft/blob/main/basic_all_trial_granger.png" width="1200"/>
