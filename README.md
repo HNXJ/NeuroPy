@@ -1,4 +1,4 @@
-# Plotly General Plotting Examples for Electrophysiology
+# General signal processing examples (Electrophysiology)
 
 ## github@HNXJ
 
