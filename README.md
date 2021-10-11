@@ -2,7 +2,7 @@
 
 ## github@HNXJ
 
-Notable libraries: Scipy - Statsmodel - Plotly
+Notable libraries: Scipy - Statsmodel - Plotly - PyMNE - CV2
 
 Draft for python/plotly plotting of electrophysiological signal/data
 use arbitrary data (as dict type) for IO
