@@ -300,7 +300,7 @@ def coherence_plotter(data=None, key='pfc', save=False,
     customplot(c, save=True, show=True, filename="specCoherence.html"
                    , w=16, h=16, t=t, y=y, relative=True
                    ,xlabel="Ch ID", ylabel="Ch ID",
-                   title=title)
+                   title=title, reverse=True)
     return
 
 
@@ -314,8 +314,8 @@ def coherence_granger(x, y, lag=2, test='lrtest'): # Incomplete
     # print(f'P Values = {p_values}')
 
     c = np.min(p_values)       
-    if c > 0.2:
-        return -0.1
+    # if c > 0.2:
+    #     return -0.2
     return c
 
 
@@ -361,7 +361,7 @@ def granger_plotter(data=None, key='pfc', save=False,
     
     c = np.zeros((ps_pfc.shape[1], ps_pfc.shape[1]))
     for i in range(ps_pfc.shape[1]):
-        c[i, i] = 0
+        c[i, i] = -0.1
         for j in range(ps_pfc.shape[1]):
             if i==j:
                 continue
@@ -371,8 +371,8 @@ def granger_plotter(data=None, key='pfc', save=False,
             
     t = np.linspace(1, 17, 16)
     y = np.linspace(1, 17, 16)
-    customplot(c, save=True, show=True, filename="specCoherence.html"
+    customplot(c, save=True, show=True, filename="specCoherence" + str(trials[0]) + ".html"
                    , w=16, h=16, t=t, y=y, relative=False
                    ,xlabel="Ch ID", ylabel="Ch ID",
-                   title=title)
+                   title=title, reverse=True)
     return

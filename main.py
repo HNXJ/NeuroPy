@@ -40,8 +40,21 @@ from Methods import *
 
 granger_plotter(data=data, key='pfc', save=True, t1=500, t2=2500, fmin=4,
             fmax=100, normalize_w=True, bw=45, k=0,
-            title="Granger causality maxlag=12 mean P-values, trials 100 and 200, P-values > 0.1 have been set to -0.1 as null",
-            trials=[100, 200], lag=12)
-# granger_plotter(data=data, key='pfc', save=True, t1=2500, t2=4500, fmin=4,
-#             fmax=100, normalize_w=True, bw=45, k=0,
-#             title="Coherence, trial 400, 500", trials=[400, 500], lag=2)
+            title="Granger causality (maxlag=12 min P-values) on trials 1-300",
+            trials=[i for i in range(300)], lag=12)
+
+granger_plotter(data=data, key='pfc', save=True, t1=500, t2=2500, fmin=4,
+            fmax=100, normalize_w=True, bw=45, k=0,
+            title="Granger causality (maxlag=12 min P-values) on trials 301-600",
+            trials=[i for i in range(300, 600)], lag=12)
+
+granger_plotter(data=data, key='pfc', save=True, t1=500, t2=2500, fmin=4,
+            fmax=100, normalize_w=True, bw=45, k=0,
+            title="Granger causality (maxlag=12 min P-values) on trial 100",
+            trials=[100], lag=12)
+
+granger_plotter(data=data, key='pfc', save=True, t1=500, t2=2500, fmin=4,
+            fmax=100, normalize_w=True, bw=45, k=0,
+            title="Granger causality (maxlag=12 min P-values) on trial 500",
+            trials=[500], lag=12)
+
