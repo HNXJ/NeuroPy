@@ -1,4 +1,4 @@
-# General signal processing examples (Electrophysiology)
+# General signal processing tools (Electrophysiology)
 
 ## github@HNXJ
 
@@ -17,7 +17,7 @@ Example of plots; the fucntions will save the plots in HTML format but due to pl
 
 <img src="https://github.com/HNXJ/PlotlyDraft/blob/main/pfc_spectral_coherence.png" width="1200"/>
 
-### Granger (channelwise on each trial separately)
+### Coherence and connectivity (channelwise on each trial separately, Granger causality mode)
 
 <img src="https://github.com/HNXJ/PlotlyDraft/blob/main/avg_1to300_granger_pvalue.png" width="1200"/>
 
