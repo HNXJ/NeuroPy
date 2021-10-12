@@ -2,8 +2,9 @@
 from statsmodels.tsa.stattools import grangercausalitytests as gct
 import plotly.graph_objects as go
 import plotly.express as px
-import numpy as np
+from Methods import *
 
+import numpy as np
 import plotly
 import mne # Multitaper spectrums
 import cv2
@@ -140,3 +141,4 @@ def single_trial_granger_plotter(data=None, key='pfc', save=False,
                    ,xlabel="Ch ID", ylabel="Ch ID",
                    title=title, reverse=True)
     return
+
