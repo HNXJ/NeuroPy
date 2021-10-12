@@ -1,5 +1,6 @@
 import scipy.io as sio
 from Methods import *
+from Granger import *
 
 ### Load data and show content of it
 # data = sio.loadmat('data.mat') # Example data, private access
@@ -43,10 +44,10 @@ granger_plotter(data=data, key='pfc', save=True, t1=500, t2=2500, fmin=4,
             title="Granger causality (maxlag=12 min P-values) on trials 1-100",
             trials=[i for i in range(100)], lag=12)
 
-granger_plotter(data=data, key='pfc', save=True, t1=500, t2=2500, fmin=4,
-            fmax=100, normalize_w=True, bw=45, k=0,
-            title="Granger causality (maxlag=12 min P-values) on trials 501-600",
-            trials=[i for i in range(500, 600)], lag=12)
+# granger_plotter(data=data, key='pfc', save=True, t1=500, t2=2500, fmin=4,
+#             fmax=100, normalize_w=True, bw=45, k=0,
+#             title="Granger causality (maxlag=12 min P-values) on trials 501-600",
+#             trials=[i for i in range(500, 600)], lag=12)
 
 # granger_plotter(data=data, key='pfc', save=True, t1=500, t2=2500, fmin=4,
 #             fmax=100, normalize_w=True, bw=45, k=0,
