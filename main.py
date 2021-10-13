@@ -39,10 +39,10 @@ from Granger import *
 #             fmax=100, normalize_w=True, bw=45, k=0,
 #             title="Coherence, trial 400, 500", trials=[400, 500])
 
-granger_plotter(data=data, key='pfc', save=True, t1=500, t2=2500, fmin=4,
+granger_plotter(data=data, key='pfc', save=True, t1=1500, t2=2500, fmin=4,
             fmax=100, normalize_w=True, bw=45, k=0,
-            title="Granger causality (maxlag=12 min P-values) on trials 1-100",
-            trials=[i for i in range(100)], lag=12)
+            title="Granger causality (maxlag=12 min P-values) on trials 1-10",
+            trials=[i for i in range(10)], lag=6)
 
 # granger_plotter(data=data, key='pfc', save=True, t1=500, t2=2500, fmin=4,
 #             fmax=100, normalize_w=True, bw=45, k=0,
