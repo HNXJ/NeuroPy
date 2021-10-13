@@ -48,8 +48,10 @@ def granger_plotter(data=None, key='pfc', save=False,
         print('Not in set')
         return
     
-    ps_pfc = pspectlamavg(Y, axis=0, fs=1000, fc=150, fmin=fmin, fmax=fmax)
-    print(ps_pfc.shape, Y.shape)
+    # ps_pfc = pspectlamavg(Y, axis=0, fs=1000, fc=150, fmin=fmin, fmax=fmax)
+    Ym = np.mean(Y, 2)
+    ps_pfc = Ym
+    # print(ps_pfc.shape, Ym.shape)
     
     if normalize_w==True:
         for i in range(ps_pfc.shape[0]-k):
@@ -65,8 +67,9 @@ def granger_plotter(data=None, key='pfc', save=False,
         
     t = np.linspace(fmin, fmax, 1000)
     y = np.linspace(1, 16, 300)
-    
+    print("Granger test started ...")
     c = np.zeros((ps_pfc.shape[1], ps_pfc.shape[1]))
+    
     for i in range(ps_pfc.shape[1]):
         c[i, i] = -0.1
         for j in range(ps_pfc.shape[1]):
@@ -76,8 +79,10 @@ def granger_plotter(data=None, key='pfc', save=False,
             c[i, j] = u
             # c[j, i] = u
             
+    print("Granger p_values calculation done.")
     t = np.linspace(1, 17, 16)
     y = np.linspace(1, 17, 16)
+    
     customplot(c, save=save, show=True, filename="specCoherence" + str(trials[0]) + ".html"
                    , w=16, h=16, t=t, y=y, relative=False
                    ,xlabel="Ch ID", ylabel="Ch ID",
