@@ -166,9 +166,9 @@ def psplot(x, save=True, show=True, filename="psp.html", w=300, h=200, t=None,
 def customplot(x, save=True, show=True, filename="plot.html"
                , w=300, h=200, t=None, y=None, relative=True
                ,xlabel="T", ylabel="A", title="Plot", reverse=None):
-
+    
+    print("Plotting, preprocessing ...")
     im = x.transpose()
-    print(im.shape)
     if relative==True:
         im = im / np.max(np.max(im))
         
@@ -193,6 +193,7 @@ def customplot(x, save=True, show=True, filename="plot.html"
     if show==True:
         fig.show()
     
+    print("Done.")
     return
 
 
