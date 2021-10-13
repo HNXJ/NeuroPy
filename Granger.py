@@ -49,6 +49,7 @@ def granger_plotter(data=None, key='pfc', save=False,
         return
     
     ps_pfc = pspectlamavg(Y, axis=0, fs=1000, fc=150, fmin=fmin, fmax=fmax)
+    print(ps_pfc.shape, Y.shape)
     
     if normalize_w==True:
         for i in range(ps_pfc.shape[0]-k):
@@ -108,6 +109,7 @@ def single_trial_granger_plotter(data=None, key='pfc', save=False,
         return
     
     ps_pfc = pspectlamavg(Y, axis=0, fs=1000, fc=150, fmin=fmin, fmax=fmax)
+
     
     if normalize_w==True:
         for i in range(ps_pfc.shape[0]-k):
