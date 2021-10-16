@@ -304,3 +304,18 @@ def coherence_plotter(data=None, key='pfc', save=False,
                    title=title, reverse=True)
     return
 
+
+def get_trials(c=None, mode='Block', l=0, r=600):
+    
+    t = []
+    for i in range(l, r):
+        
+        if mode=='block': # Expected, predictable
+            if c[i]==0:
+                t.append(i)
+        elif mode=='trial': # Enexpected, random
+            if c[i]:
+                t.append(i)
+                
+    return t
+
