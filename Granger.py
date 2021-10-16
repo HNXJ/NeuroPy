@@ -90,11 +90,11 @@ def granger_plotter(data=None, key='pfc', save=False,
     return
 
 
-def single_trial_granger_plotter(data=None, key='pfc', save=False,
+def s_granger_plotter(data=None, key='pfc', save=False,
                 t1=500, t2=2501, fmin=0, fmax=100,
                 normalize_w=False, k=5,
                 title="Spectral coherence multitaper ",
-                bw=15, trials=None, lag=2): # INCOMPLETE
+                bw=15, trials=None, lag=2):
     
     if trials==None:
         trials = [i for i in range(data['lfp'].shape[2])]
@@ -113,36 +113,44 @@ def single_trial_granger_plotter(data=None, key='pfc', save=False,
         print('Not in set')
         return
     
-    ps_pfc = pspectlamavg(Y, axis=0, fs=1000, fc=150, fmin=fmin, fmax=fmax)
+    # ps_pfc = pspectlamavg(Y, axis=0, fs=1000, fc=150, fmin=fmin, fmax=fmax)
+    c = np.zeros((16, 16))
+    print("Granger test started ...")
 
-    
-    if normalize_w==True:
-        for i in range(ps_pfc.shape[0]-k):
+    for t in trials:
+        print('Trials no.', t)
+        Ym = Y[:, :, t]
+        ps_pfc = Ym
+        # print(ps_pfc.shape, Ym.shape)
+        
+        if normalize_w==True:
+            for i in range(ps_pfc.shape[0]-k):
+                if k > 0:
+                    ps_pfc[i, :] /= np.max(np.max(ps_pfc[i:i+k, :]))
+                else:
+                    ps_pfc[i, :] /= np.max(np.max(ps_pfc[i, :]))
             if k > 0:
-                ps_pfc[i, :] /= np.max(np.max(ps_pfc[i:i+k, :]))
-            else:
-                ps_pfc[i, :] /= np.max(np.max(ps_pfc[i, :]))
-        if k > 0:
-            for i in range(ps_pfc.shape[0]-k, ps_pfc.shape[0]):
-                ps_pfc[i, :] /= np.max(np.max(ps_pfc[i, :]))
-        
-        title = title + ",Normalized relative to other channels"
-        
-    t = np.linspace(fmin, fmax, 1000)
-    y = np.linspace(1, 16, 300)
-    
-    c = np.zeros((ps_pfc.shape[1], ps_pfc.shape[1]))
-    for i in range(ps_pfc.shape[1]):
-        c[i, i] = -0.1
-        for j in range(ps_pfc.shape[1]):
-            if i==j:
-                continue
-            u = coherence_granger(ps_pfc[:, i], ps_pfc[:, j], lag=lag)
-            c[i, j] = u
-            # c[j, i] = u
+                for i in range(ps_pfc.shape[0]-k, ps_pfc.shape[0]):
+                    ps_pfc[i, :] /= np.max(np.max(ps_pfc[i, :]))
             
+            title = title + ",Normalized relative to other channels"
+            
+        t = np.linspace(fmin, fmax, 1000)
+        y = np.linspace(1, 16, 300)
+        for i in range(ps_pfc.shape[1]):
+            c[i, i] += -0.1
+            for j in range(ps_pfc.shape[1]):
+                if i==j:
+                    continue
+                u = coherence_granger(ps_pfc[:, i], ps_pfc[:, j], lag=lag)
+                c[i, j] += u
+                # c[j, i] += u
+            
+    print("Granger p_values calculation done.")
     t = np.linspace(1, 17, 16)
     y = np.linspace(1, 17, 16)
+    c /= len(t)
+    
     customplot(c, save=save, show=True, filename="specCoherence" + str(trials[0]) + ".html"
                    , w=16, h=16, t=t, y=y, relative=False
                    ,xlabel="Ch ID", ylabel="Ch ID",
