@@ -12,6 +12,6 @@ for i = 1:size(a, 1)
     end
 end
 
-save('cue.mat', 'c');
+save('cues.mat', 'c');
 
 %%
