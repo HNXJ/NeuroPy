@@ -13,13 +13,13 @@ from Granger import *
 # t_exp = get_trials(cues, mode='block', l=0, r=100)
 # t_unx = get_trials(cues, mode='trial', l=0, r=100)
 
-### Event related potential and current source density plots
+# ### Event related potential and current source density plots
 # ERP_plot(save=True, data=data, key="pfc")
 # CSD_plot(save=True, data=data, key='pfc')
 
-### Power spectrum (multitaper) plots on heatmap
+# ### Power spectrum (multitaper) plots on heatmap
 # psp_plotter(data=data, key='pfc', save=True, t1=500, t2=2500, fmin=0,
-#             fmax=100, normalize_w=True, bw=45, k=0, title="PS, all trials ")
+#             fmax=100, normalize_w=True, pink_noise_filter=False, bw=45, k=0, title="PS, all trials ")
 
 ### Channelwise spectral coherence
 # coherence_plotter(data=data, key='pfc', save=True, t1=500, t2=2500, fmin=4,

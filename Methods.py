@@ -1,4 +1,4 @@
-# from matplotlib import pyplot as plt ### Not used
+
 from statsmodels.tsa.stattools import grangercausalitytests as gct
 import plotly.graph_objects as go
 import plotly.express as px
@@ -211,7 +211,7 @@ def psp_plotter(data=None, key='pfc', save=False,
                 t1=500, t2=2501, fmin=0, fmax=100,
                 normalize_w=False, k=5,
                 title="Power spectrum multitaper ",
-                bw=15, trials=None):
+                bw=15, trials=None, pink_noise_filter=True):
     
     if trials==None:
         trials = [i for i in range(data['lfp'].shape[2])]
@@ -231,6 +231,10 @@ def psp_plotter(data=None, key='pfc', save=False,
         return
     
     ps_pfc = pspectlamavg(Y, axis=0, fs=1000, fc=150, fmin=fmin, fmax=fmax)
+    
+    if pink_noise_filter==True:
+        for i in range(ps_pfc.shape[0]):
+            ps_pfc[i, :] = pink_noise_inverse_filter(x=ps_pfc[i, :], w=7)
     
     if normalize_w==True:
         for i in range(ps_pfc.shape[0]-k):
@@ -255,7 +259,7 @@ def psp_plotter(data=None, key='pfc', save=False,
 def power_spectrum_density(data=None, key='pfc', save=False,
                 t1=500, t2=2501, fmin=0, fmax=100,
                 normalize_w=False, k=5,
-                bw=15, trials=None):
+                bw=15, trials=None, pink_noise_filter=True):
     
     if trials==None:
         trials = [i for i in range(data['lfp'].shape[2])]
@@ -275,6 +279,13 @@ def power_spectrum_density(data=None, key='pfc', save=False,
         return
     
     ps_pfc, f = pspectlamnorm(Y, axis=0, fs=1000, fc=150, fmin=fmin, fmax=fmax)
+    piv = np.mean(ps_pfc, 0)
+    piv = np.mean(piv, 1)
+    
+    if pink_noise_filter==True:
+        for i in range(ps_pfc.shape[0]):
+            for t in range(len(trials)):
+                ps_pfc[i, :, t] = pink_noise_inverse_filter(x=ps_pfc[i, :, t], w=15, piv=piv)
     
     if normalize_w==True:
         for i in range(ps_pfc.shape[0]-k):
@@ -289,16 +300,98 @@ def power_spectrum_density(data=None, key='pfc', save=False,
     return ps_pfc, f
 
 
-def pds_ratio_matrix(psd=None, freqs=None, pink_noise_remove=True):
-    return 
+def psd_ratio_plotter(psd=None, freqs=None, title="P. 1"):
     
-def pink_noise_inverse_filter(x=None, w=5):
+    c = psd_ratio_matrix(psd=psd, freqs=freqs)
+    customplot(c, save=True, show=True, filename="CMXSpecBands.html"
+                   , w=9, h=16, t=np.arange(16), y=np.arange(9), relative=True
+                   ,xlabel="Ch", ylabel="Band", title=title, reverse=None)
+    return
+
+
+def psd_ratio_matrix(psd=None, freqs=None):
     
+    c = np.zeros((16, 9))
+    d = np.zeros((9))
+    
+    for i in range(freqs.shape[0]):
+        
+        if freqs[i] < 3.0: # Delta
+            c[:, 0] += psd[:, i]
+            d[0] += 1
+        
+        elif freqs[i] < 8.0: # Theta
+            c[:, 1] += psd[:, i]
+            d[1] += 1
+        
+        elif freqs[i] < 12.0: # Alpha
+            c[:, 2] += psd[:, i]
+            d[2] += 1
+        
+        elif freqs[i] < 16.0: # L-Beta
+            c[:, 3] += psd[:, i]
+            d[3] += 1
+        
+        elif freqs[i] < 20.0: # M-Beta
+            c[:, 4] += psd[:, i]
+            d[4] += 1
+        
+        elif freqs[i] < 30.0: # U-Beta
+            c[:, 5] += psd[:, i]
+            d[5] += 1
+        
+        elif freqs[i] < 50.0: # L-Gamma
+            c[:, 6] += psd[:, i]
+            d[6] += 1
+        
+        elif freqs[i] < 70.0: # M-Gamma
+            c[:, 7] += psd[:, i]
+            d[7] += 1
+        
+        elif freqs[i] < 99.0: # U-Gamma
+            c[:, 8] += psd[:, i]
+            d[8] += 1
+        
+        else:
+            pass
+    
+    for i in range(9):
+        c[:, i] /= d[i]
+        
+    return c
+    
+
+def taper_window(w=5):
+    
+    tw = np.zeros(w)
+    for i in range(w):
+        if i < w/2:
+            tw[i] = i+1
+        else:
+            tw[i] = w-i
+    
+    return tw/np.sum(tw)
+    
+
+def pink_noise_inverse_filter(x=None, w=5, piv=None):
+    
+    try: 
+        
+        if piv.shape==None:
+            piv = x
+            
+    except:
+        pass
+    
+    k = np.int(w/2)
     n = np.max(x.shape)
-    h = np.ones(w)
-    y = np.convolve(x, h)
-    y = y[w-1:n+w-1]
-    return np.multiply(x, y**-1)
+    
+    h = taper_window(w)
+    y = np.convolve(piv**-1, h)
+    h = np.ones(w)/w
+    
+    y = np.convolve(y[w-k:n+w-k], h)
+    return np.multiply(x, y[w-k:n+w-k])
     
 
 def coherence_pearson(x, y):
