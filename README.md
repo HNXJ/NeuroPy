@@ -9,7 +9,7 @@ use arbitrary data (as dict type) for IO
 
 Example of plots; the fucntions will save the plots in HTML format but due to plotly features, you can save a png format from its panel.
 
-### Power spectrum density
+### Power spectrum density (Normalized and scaled to max at each channel/frequency)
 
 <img src="https://github.com/HNXJ/PlotlyDraft/blob/main/Images/pfc_spectral_powers.png" width="1200"/>
 
