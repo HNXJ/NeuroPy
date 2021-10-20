@@ -17,6 +17,6 @@ Example of plots; the fucntions will save the plots in HTML format but due to pl
 
 <img src="https://github.com/HNXJ/PlotlyDraft/blob/main/Images/pfc_spectral_coherence.png" width="1200"/>
 
-### Coherence and connectivity (channelwise on each trial separately, Granger causality mode)
+### Channelwise pectral power density (after pink noise removal) 
 
 <img src="https://github.com/HNXJ/PlotlyDraft/blob/main/Images/SMC40.png" width="1200"/>
