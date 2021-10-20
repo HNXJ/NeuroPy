@@ -116,8 +116,8 @@ def pspectlam(x, axis=0, fs=1000, fc=500, mode="MT", fmin=0, fmax=100, bw=15):
         f = mne.time_frequency.psd_multitaper(raw, fmin=fmin, fmax=fmax, tmin=None, tmax=None,
                                           bandwidth=bw, adaptive=False, low_bias=True,
                                           normalization='length', picks=ch_names, proj=False,
-                                          n_jobs=1, verbose=None)
-        return f[0]
+                                          n_jobs=1, verbose=False)
+        return f[0], f[1]
     
     x = x - np.mean(np.mean(x))
     _fft = np.fft.fft(x, axis=axis)
@@ -128,8 +128,18 @@ def pspectlam(x, axis=0, fs=1000, fc=500, mode="MT", fmin=0, fmax=100, bw=15):
 
 def pspectlamavg(x, axis=0, fs=1000, fc=1000, fmin=0, fmax=100, bw=15):
     x = np.mean(x, 2)
-    xf = pspectlam(x.transpose(), axis=axis, fs=fs, fc=fc, fmin=fmin, fmax=fmax, bw=bw)
+    xf, _ = pspectlam(x.transpose(), axis=axis, fs=fs, fc=fc, fmin=fmin, fmax=fmax, bw=bw)
     return xf.transpose()
+
+
+def pspectlamnorm(x, axis=0, fs=1000, fc=1000, fmin=0, fmax=100, bw=15):
+    _t, _ = pspectlam(x[:, :, 0].transpose(), axis=axis, fs=fs,
+                                fc=fc, fmin=fmin, fmax=fmax, bw=bw)
+    xf = np.zeros((x.shape[1], _t.shape[1], x.shape[2]))
+    for i in range(x.shape[2]):
+        xf[:, :, i], f = pspectlam(x[:, :, i].transpose(), axis=axis, fs=fs,
+                                fc=fc, fmin=fmin, fmax=fmax, bw=bw)
+    return xf, f
 
 
 def psplot(x, save=True, show=True, filename="psp.html", w=300, h=200, t=None,
@@ -240,6 +250,55 @@ def psp_plotter(data=None, key='pfc', save=False,
     psplot(ps_pfc, save=save, filename="ps_" + key + ".html", w=1000, h=300,
            t=t, y=y, relative=True, title=title)
     return
+    
+
+def power_spectrum_density(data=None, key='pfc', save=False,
+                t1=500, t2=2501, fmin=0, fmax=100,
+                normalize_w=False, k=5,
+                bw=15, trials=None):
+    
+    if trials==None:
+        trials = [i for i in range(data['lfp'].shape[2])]
+    
+    lam1 = data['lfp'][:, 0:16, trials]
+    lam2 = data['lfp'][:, 16:32, trials]
+    lam3 = data['lfp'][:, 32:48, trials]
+    
+    if key=='pfc':
+        Y = lam1[t1:t2, :, :]
+    elif key=='p7a':
+        Y = lam2[t1:t2, :, :]
+    elif key=='v4':
+        Y = lam3[t1:t2, :, :]
+    else:
+        print('Not in set')
+        return
+    
+    ps_pfc, f = pspectlamnorm(Y, axis=0, fs=1000, fc=150, fmin=fmin, fmax=fmax)
+    
+    if normalize_w==True:
+        for i in range(ps_pfc.shape[0]-k):
+            if k > 0:
+                ps_pfc[i, :] /= np.max(np.max(ps_pfc[i:i+k, :]))
+            else:
+                ps_pfc[i, :] /= np.max(np.max(ps_pfc[i, :]))
+        if k > 0:
+            for i in range(ps_pfc.shape[0]-k, ps_pfc.shape[0]):
+                ps_pfc[i, :] /= np.max(np.max(ps_pfc[i, :]))
+        
+    return ps_pfc, f
+
+
+def pds_ratio_matrix(psd=None, freqs=None, pink_noise_remove=True):
+    return 
+    
+def pink_noise_inverse_filter(x=None, w=5):
+    
+    n = np.max(x.shape)
+    h = np.ones(w)
+    y = np.convolve(x, h)
+    y = y[w-1:n+w-1]
+    return np.multiply(x, y**-1)
     
 
 def coherence_pearson(x, y):
