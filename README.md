@@ -11,20 +11,12 @@ Example of plots; the fucntions will save the plots in HTML format but due to pl
 
 ### Power spectrum density
 
-<img src="https://github.com/HNXJ/PlotlyDraft/blob/main/pfc_spectral_powers.png" width="1200"/>
+<img src="https://github.com/HNXJ/PlotlyDraft/blob/main/Images/pfc_spectral_powers.png" width="1200"/>
 
 ### Spectral coherence
 
-<img src="https://github.com/HNXJ/PlotlyDraft/blob/main/pfc_spectral_coherence.png" width="1200"/>
+<img src="https://github.com/HNXJ/PlotlyDraft/blob/main/Images/pfc_spectral_coherence.png" width="1200"/>
 
 ### Coherence and connectivity (channelwise on each trial separately, Granger causality mode)
 
-<img src="https://github.com/HNXJ/PlotlyDraft/blob/main/avg_1to300_granger_pvalue.png" width="1200"/>
-
-<img src="https://github.com/HNXJ/PlotlyDraft/blob/main/avg_301to600_granger_pvalue.png" width="1200"/>
-
-<img src="https://github.com/HNXJ/PlotlyDraft/blob/main/single_100_granger_pval.png" width="1200"/>
-
-<img src="https://github.com/HNXJ/PlotlyDraft/blob/main/single_500_granger_pval.png" width="1200"/>
-
-<img src="https://github.com/HNXJ/PlotlyDraft/blob/main/basic_all_trial_granger.png" width="1200"/>
+<img src="https://github.com/HNXJ/PlotlyDraft/blob/main/Images/SCM.png" width="1200"/>
