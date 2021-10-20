@@ -19,4 +19,4 @@ Example of plots; the fucntions will save the plots in HTML format but due to pl
 
 ### Coherence and connectivity (channelwise on each trial separately, Granger causality mode)
 
-<img src="https://github.com/HNXJ/PlotlyDraft/blob/main/Images/SMC.png" width="1200"/>
+<img src="https://github.com/HNXJ/PlotlyDraft/blob/main/Images/SMC40.png" width="1200"/>
