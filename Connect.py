@@ -255,14 +255,15 @@ def time_spectral_coherence(data=None, key='key', save=True, trials=None, ts=Non
         => To calculate the psd in each time window, in order to check time dependent variations
     '''
     
-    tsc = []
+    tsc = np.zeros([data.shape[0], data.shape[1], data.shape[1], data.shape[3]])
     
     for t in range(len(trials)):
+        
         for i in range(len(ts)-1):
             
             
-            c = spectral_coherence(psd=data[i, :, :, t])
-            tsc.append(c)
-
-    return np.array(tsc)
+            tsc[i, :, :, t] = spectral_coherence(psd=data[i, :, :, t])
+            
+    
+    return tsc
 

@@ -15,7 +15,9 @@ import Viewer
 
 ##############################################################################
 
-
+trials = [i for i in range(40, 60)]
+# trials = t_exp
+# trials = t_unx
 
 # ### Event related potential and current source density plots
 # Methods.ERP_plot(save=True, data=data, key="pfc")
@@ -63,20 +65,22 @@ import Viewer
 #                           freqs=freqs, title="PSDRatio_T40-T60")
 
 
-### PSD in time windows
-
-trials = [i for i in range(40, 60)]
+# ### PSD in time windows
 # tpsd, freqs, times = Connect.time_power_spectrum_density(data=data, key='v4', save=True
-#                                 , time_window_size=700, time_overlap=50
+#                                 , time_window_size=200, time_overlap=50
 #                                 , trials=trials, bw=50, tl=0, tr=4500, time_base=-1500)
 
-tsc = Connect.time_spectral_coherence(data=tpsd, key='key', save=True, trials=trials, ts=times)
+# ### SC in time windows
+# tsc = Connect.time_spectral_coherence(data=tpsd, key='key', save=True, trials=trials, ts=times)
 
-# Viewer.run(data=tpsd, fqs=freqs, trials=2, frames=9, title="PSD in time, V4 area "
+# ### GC is time windows
+# tgc = Connect.time_granger_causality(data=tpsd, key='key', save=True, trials=trials, ts=times)
+
+# Viewer.run(data=tpsd, fqs=freqs, title="PSD in time, V4 area "
 #             , xlabel="Frequency", ylabel="Channel", fr=times, tr=[i for i in range(40, 60)])
 
-Viewer.run(data=tsc, fqs=freqs, trials=2, frames=9, title="Spectral coherence in time, V4 area "
-            , xlabel="Frequency", ylabel="Channel", fr=times, tr=[i for i in range(40, 60)])
+# Viewer.run(data=tsc, fqs=freqs, title="Spectral coherence in time, V4 area "
+#             , xlabel="Frequency", ylabel="Channel", fr=times, tr=[i for i in range(40, 60)])
 
 ### Spectral coherence in time window
 # tsc, chs, times = Connect.time_spectral_cohernece(data=data, key='pfc', save=True
