@@ -2,7 +2,7 @@
 from statsmodels.tsa.stattools import grangercausalitytests as gct
 import plotly.graph_objects as go
 import plotly.express as px
-from Methods import *
+import Methods
 
 import numpy as np
 import plotly
@@ -54,7 +54,7 @@ def coherence_plotter(data=None, key='pfc', save=False,
         print('Not in set')
         return
     
-    ps_pfc = pspectlamavg(Y, axis=0, fs=1000, fc=150, fmin=fmin, fmax=fmax)
+    ps_pfc = Methods.pspectlamavg(Y, axis=0, fs=1000, fc=150, fmin=fmin, fmax=fmax)
     
     if normalize_w==True:
         for i in range(ps_pfc.shape[0]-k):
@@ -71,7 +71,7 @@ def coherence_plotter(data=None, key='pfc', save=False,
     c = spectral_coherence(psd=ps_pfc.transpose())
     t = np.linspace(1, 17, 16)
     y = np.linspace(1, 17, 16)
-    customplot(c, save=True, show=True, filename="specCoherence.html"
+    Methods.customplot(c, save=True, show=True, filename="specCoherence.html"
                    , w=16, h=16, t=t, y=y, relative=True
                    ,xlabel="Ch ID", ylabel="Ch ID",
                    title=title, reverse=False)
@@ -80,7 +80,7 @@ def coherence_plotter(data=None, key='pfc', save=False,
 
 def spectral_coherence(psd=None):
     
-    print(psd.shape)
+    # print(psd.shape)
     c = np.zeros((psd.shape[0], psd.shape[0]))
     for i in range(psd.shape[0]):
         c[i, i] = 1
@@ -92,15 +92,13 @@ def spectral_coherence(psd=None):
     return c
 
 
-def granger_coherence(psd=None):
+def granger_coherence(psd=None, lag=4):
     
+    # print(psd.shape)
     c = np.zeros((psd.shape[0], psd.shape[0]))
     for i in range(psd.shape[0]):
-        c[i, i] = -0.1
         for j in range(psd.shape[0]):
-            if i==j:
-                continue
-            u = coherence_granger(ps_pfc[:, i], ps_pfc[:, j], lag=lag)
+            u = coherence_granger(psd[i, :], psd[j, :], lag=lag)
             c[i, j] = u
             
     return c
@@ -146,8 +144,6 @@ def granger_plotter(data=None, key='pfc', save=False,
         
         title = title + ",Normalized relative to other channels"
         
-    t = np.linspace(fmin, fmax, 1000)
-    y = np.linspace(1, 16, 300)
     print("Granger test started ...")
     c = granger_cohernece(psd=ps_pfc.transpose())
             
@@ -155,7 +151,7 @@ def granger_plotter(data=None, key='pfc', save=False,
     t = np.linspace(1, 17, 16)
     y = np.linspace(1, 17, 16)
     
-    customplot(c, save=save, show=True, filename="specCoherence" + str(trials[0]) + ".html"
+    Methods.customplot(c, save=save, show=True, filename="specCoherence" + str(trials[0]) + ".html"
                    , w=16, h=16, t=t, y=y, relative=False
                    ,xlabel="Ch ID", ylabel="Ch ID",
                    title=title, reverse=False)
@@ -206,24 +202,18 @@ def s_granger_plotter(data=None, key='pfc', save=False,
                     ps_pfc[i, :] /= np.max(np.max(ps_pfc[i, :]))
             
             title = title + ",Normalized relative to other channels"
-            
-        t = np.linspace(fmin, fmax, 1000)
-        y = np.linspace(1, 16, 300)
-        for i in range(ps_pfc.shape[1]):
-            c[i, i] += -0.1
-            for j in range(ps_pfc.shape[1]):
-                if i==j:
-                    continue
-                u = coherence_granger(ps_pfc[:, i], ps_pfc[:, j], lag=lag)
-                c[i, j] += u
-                # c[j, i] += u
+           
+        try:
+            c += granger_coherence(psd=ps_pfc.transpose())
+        except:
+            c = granger_coherence(psd=ps_pfc.transpose())
             
     print("Granger p_values calculation done.")
     t = np.linspace(1, 17, 16)
     y = np.linspace(1, 17, 16)
     c /= len(t)
     
-    customplot(c, save=save, show=True, filename="specCoherence" + str(trials[0]) + ".html"
+    Methods.customplot(c, save=save, show=True, filename="specCoherence" + str(trials[0]) + ".html"
                    , w=16, h=16, t=t, y=y, relative=False
                    ,xlabel="Ch ID", ylabel="Ch ID",
                    title=title, reverse=True)
@@ -232,7 +222,7 @@ def s_granger_plotter(data=None, key='pfc', save=False,
 
 def time_power_spectrum_density(data=None, key='key', save=True
                                 , time_window_size=500, time_overlap=100
-                                , trials=None, bw=40, tl=0, tr=4500):
+                                , trials=None, bw=40, tl=0, tr=4500, time_base=0):
     
     '''
         => To calculate the psd in each time window, in order to check time dependent variations
@@ -245,64 +235,34 @@ def time_power_spectrum_density(data=None, key='key', save=True
     for t in ts:
         
         
-        psd, freqs = power_spectrum_density(data=data, key='pfc', save=True
+        psd, freqs = Methods.power_spectrum_density(data=data, key='pfc', save=True
                                             , t1=t, t2=t+time_window_size
                                             , fmin=0, fmax=100, normalize_w=False
                                             , bw=bw, k=0, trials=trials)
         
         tpsd.append(psd)
     
-    return np.array(tpsd), freqs
-
-
-def animate_plotter(data=None):
-    
-    frames = data.shape[0]
-    channels = data.shape[1]
-    length = data.shape[2]
-    trials = data.shape[3]
-    
-    print("Plotting, preprocessing ...")
-    im = x.transpose()
-    if relative==True:
-        im = im / np.max(np.max(im))
+    ts.append(ts[len(ts)-1] + time_window_size)
+    for t in range(len(ts)):
+        ts[t] += time_base
         
-    im = cv2.resize(im, (w, h))
-    fig = go.Figure(
-        data=go.Heatmap(z=im, y=y, x=t), 
-        layout=go.Layout(
-            title=title,
-            xaxis=dict(title=xlabel),
-            yaxis=dict(title=ylabel)
-        ),
-    )
-    
-    if xtext==True:
-        
-        k = len(xtext_labels)
-        fig.update_xaxes(visible=False)
-        
-        for i in range(k):
-            fig.add_annotation(dict(font=dict(color='green',size=15),
-                                            x=((i+0.1)/k),
-                                            y=-0.04,
-                                            showarrow=False,
-                                            text=xtext_labels[i],
-                                            textangle=0,
-                                            xanchor='left',
-                                            xref="paper",
-                                            yref="paper"))
+    return np.array(tpsd), freqs, ts
 
-    if reverse==True: 
-        fig.update_layout(
-            yaxis = dict(autorange="reversed")
-        )
 
-    if save==True:
-        plotly.offline.plot(fig, filename=filename)
+def time_spectral_coherence(data=None, key='key', save=True, trials=None, ts=None):
     
-    if show==True:
-        fig.show()
+    '''
+        => To calculate the psd in each time window, in order to check time dependent variations
+    '''
     
-    print("Done.")
-    return
+    tsc = []
+    
+    for t in range(len(trials)):
+        for i in range(len(ts)-1):
+            
+            
+            c = spectral_coherence(psd=data[i, :, :, t])
+            tsc.append(c)
+
+    return np.array(tsc)
+
