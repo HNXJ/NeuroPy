@@ -2,8 +2,9 @@ from plotly.offline import download_plotlyjs, init_notebook_mode, plot
 from matplotlib import pyplot as plt 
 
 import scipy.io as sio
-from Methods import *
-from Connect import *
+import Methods
+import Connect
+
 
 # ### Load data and show content of it
 # data = sio.loadmat('data.mat') # Example data, private access

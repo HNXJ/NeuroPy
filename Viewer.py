@@ -1,11 +1,15 @@
-import dash_core_components as dcc
-import dash_html_components as html
 from dash.dependencies import Input, Output, State
+
+import dash_html_components as html
+import dash_core_components as dcc
 import plotly.graph_objs as go
+
+import numpy as np
 import dash
 
 
-def create_app(trials=3, frames=3, title="T", xlabel="C", ylabel="C"):
+def create_app(data=None, fqs=None, trials=3, frames=3, title="T", xlabel="C"
+               , ylabel="C", fr=None, tr=None):
         
     app = dash.Dash(__name__)
     
@@ -13,7 +17,7 @@ def create_app(trials=3, frames=3, title="T", xlabel="C", ylabel="C"):
         html.Button('update', id='update'),
         dcc.Dropdown(
             id='trial',
-            options=[{'label': int(i+1), 'value': int(i)} for i in range(trials)],
+            options=[{'label': int(i+1), 'value': int(i)} for i in tr],
             value='0'
         ),
         dcc.Dropdown(
@@ -23,6 +27,13 @@ def create_app(trials=3, frames=3, title="T", xlabel="C", ylabel="C"):
         ),
         dcc.Graph(id='updated-graph')
     ])
+    
+    trial_ind = dict()
+    cnt = 0
+    for i in tr:
+        
+        trial_ind[i] = cnt
+        cnt += 1
     
     @app.callback(
             Output('updated-graph', 'figure'), inputs=[
@@ -37,13 +48,16 @@ def create_app(trials=3, frames=3, title="T", xlabel="C", ylabel="C"):
         if n_clicks is None:
             return dash.no_update
             
-        im = np.random.rand(10, 10) * int(value1) + int(value2)
-        y = np.arange(10)
-        t = y
+        im = data[int(value2), :, :, trial_ind[int(value1)]]
+        y = np.arange(data.shape[1])
         
+        t = fqs
+        tit = "Frame no. " + str(int(value2)) + " of trial no. " + str(int(value1)) + " for t in range [" + str(fr[int(value2)]) + "] - [" + str(fr[int(value2) + 1]) + "]"
         return {
-            'data':[go.Heatmap(z=im, y=y, x=t)], 'layout': go.Layout(
-                    title=title,
+            'data':[go.Heatmap(z=im, y=y, x=t)], 'layout': go.Layout(autosize=False,
+                    width=1320,
+                    height=600,
+                    title=tit,
                     xaxis=dict(title=xlabel),
                     yaxis=dict(title=ylabel)
                 )
@@ -52,8 +66,13 @@ def create_app(trials=3, frames=3, title="T", xlabel="C", ylabel="C"):
     return app
 
 
-def run():
+def run(data=None, fqs=None, trials=1, frames=1, title="", xlabel="", ylabel=""
+        ,fr=None, tr=None):
     
-    app = create_app(trials=5, frames=4)
+    if fr==None:
+        fr = [i for i in range(frames + 1)]
+        
+    app = create_app(data=data, fqs=fqs, trials=trials, frames=frames, title=title
+                     , xlabel=xlabel, ylabel=ylabel, fr=fr, tr=tr)
     app.run_server(debug=False, use_reloader=False)
     
