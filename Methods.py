@@ -175,7 +175,8 @@ def psplot(x, save=True, show=True, filename="psp.html", w=300, h=200, t=None,
 
 def customplot(x, save=True, show=True, filename="plot.html"
                , w=300, h=200, t=None, y=None, relative=True
-               ,xlabel="T", ylabel="A", title="Plot", reverse=None):
+               ,xlabel="T", ylabel="A", title="Plot", reverse=None
+               ,xtext=False, xtext_labels=[]):
     
     print("Plotting, preprocessing ...")
     im = x.transpose()
@@ -191,6 +192,22 @@ def customplot(x, save=True, show=True, filename="plot.html"
             yaxis=dict(title=ylabel)
         ),
     )
+    
+    if xtext==True:
+        
+        k = len(xtext_labels)
+        fig.update_xaxes(visible=False)
+        
+        for i in range(k):
+            fig.add_annotation(dict(font=dict(color='green',size=15),
+                                            x=((i+0.1)/k),
+                                            y=-0.04,
+                                            showarrow=False,
+                                            text=xtext_labels[i],
+                                            textangle=0,
+                                            xanchor='left',
+                                            xref="paper",
+                                            yref="paper"))
 
     if reverse==True: 
         fig.update_layout(
@@ -302,10 +319,30 @@ def power_spectrum_density(data=None, key='pfc', save=False,
 
 def psd_ratio_plotter(psd=None, freqs=None, title="P. 1"):
     
+    bandlabels = ["Delta[0.1-3]", "Theta[3-8]", "Alpha[8-12]"
+                  , "L-Beta[12-16]", "M-Beta[16-20]", "U-Beta[20-30]"
+                  , "L-Gamma[30-50]", "M-Gamma[50-70]", "U-Gamma[70+]"]
     c = psd_ratio_matrix(psd=psd, freqs=freqs)
-    customplot(c, save=True, show=True, filename="CMXSpecBands.html"
-                   , w=9, h=16, t=np.arange(16), y=np.arange(9), relative=True
-                   ,xlabel="Ch", ylabel="Band", title=title, reverse=None)
+    customplot(c, save=True, show=True, filename= title +".html"
+                   , w=9, h=16, t=np.arange(9), y=np.ones(16)*16-np.arange(16), relative=True
+                   ,xlabel="Band", ylabel="Ch", title=title, reverse=True
+                   ,xtext=True, xtext_labels=bandlabels)
+    return
+
+
+def psd_ratio_compare_plotter(psd1=None, psd2=None, freqs=None, title="P. 1"):
+    
+    bandlabels = ["Delta[0.1-3]", "Theta[3-8]", "Alpha[8-12]"
+                  , "L-Beta[12-16]", "M-Beta[16-20]", "U-Beta[20-30]"
+                  , "L-Gamma[30-50]", "M-Gamma[50-70]", "U-Gamma[70+]"]
+    
+    c1 = psd_ratio_matrix(psd=psd1, freqs=freqs)
+    c2 = psd_ratio_matrix(psd=psd2, freqs=freqs)
+    
+    customplot(c1/c2, save=True, show=True, filename= title +".html"
+                   , w=9, h=16, t=np.arange(9), y=np.ones(16)*16-np.arange(16), relative=True
+                   ,xlabel="Band", ylabel="Ch", title=title, reverse=True
+                   ,xtext=True, xtext_labels=bandlabels)
     return
 
 
@@ -348,7 +385,7 @@ def psd_ratio_matrix(psd=None, freqs=None):
             c[:, 7] += psd[:, i]
             d[7] += 1
         
-        elif freqs[i] < 99.0: # U-Gamma
+        elif freqs[i] >= 70.0: # U-Gamma
             c[:, 8] += psd[:, i]
             d[8] += 1
         
@@ -377,7 +414,7 @@ def pink_noise_inverse_filter(x=None, w=5, piv=None):
     
     try: 
         
-        if piv.shape==None:
+        if piv==None:
             piv = x
             
     except:
@@ -393,69 +430,6 @@ def pink_noise_inverse_filter(x=None, w=5, piv=None):
     y = np.convolve(y[w-k:n+w-k], h)
     return np.multiply(x, y[w-k:n+w-k])
     
-
-def coherence_pearson(x, y):
-
-    c = np.corrcoef(x, y)
-    return c[0, 1]
-
-
-def coherence_plotter(data=None, key='pfc', save=False,
-                t1=500, t2=2501, fmin=0, fmax=100,
-                normalize_w=False, k=5,
-                title="Spectral coherence multitaper ",
-                bw=15, trials=None):
-    
-    if trials==None:
-        trials = [i for i in range(data['lfp'].shape[2])]
-    
-    lam1 = data['lfp'][:, 0:16, trials]
-    lam2 = data['lfp'][:, 16:32, trials]
-    lam3 = data['lfp'][:, 32:48, trials]
-    
-    if key=='pfc':
-        Y = lam1[t1:t2, :, :]
-    elif key=='p7a':
-        Y = lam2[t1:t2, :, :]
-    elif key=='v4':
-        Y = lam3[t1:t2, :, :]
-    else:
-        print('Not in set')
-        return
-    
-    ps_pfc = pspectlamavg(Y, axis=0, fs=1000, fc=150, fmin=fmin, fmax=fmax)
-    
-    if normalize_w==True:
-        for i in range(ps_pfc.shape[0]-k):
-            if k > 0:
-                ps_pfc[i, :] /= np.max(np.max(ps_pfc[i:i+k, :]))
-            else:
-                ps_pfc[i, :] /= np.max(np.max(ps_pfc[i, :]))
-        if k > 0:
-            for i in range(ps_pfc.shape[0]-k, ps_pfc.shape[0]):
-                ps_pfc[i, :] /= np.max(np.max(ps_pfc[i, :]))
-        
-        title = title + ",Normalized relative to other channels"
-        
-    t = np.linspace(fmin, fmax, 1000)
-    y = np.linspace(1, 16, 300)
-    
-    c = np.zeros((ps_pfc.shape[1], ps_pfc.shape[1]))
-    for i in range(ps_pfc.shape[1]):
-        c[i, i] = 1
-        for j in range(i+1, ps_pfc.shape[1]):
-            u = coherence_pearson(ps_pfc[:, i], ps_pfc[:, j])
-            c[i, j] = u
-            c[j, i] = u
-            
-    t = np.linspace(1, 17, 16)
-    y = np.linspace(1, 17, 16)
-    customplot(c, save=True, show=True, filename="specCoherence.html"
-                   , w=16, h=16, t=t, y=y, relative=True
-                   ,xlabel="Ch ID", ylabel="Ch ID",
-                   title=title, reverse=True)
-    return
-
 
 def get_trials(c=None, mode='Block', l=0, r=600):
     
