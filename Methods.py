@@ -1,4 +1,3 @@
-
 from statsmodels.tsa.stattools import grangercausalitytests as gct
 import plotly.graph_objects as go
 import plotly.express as px
