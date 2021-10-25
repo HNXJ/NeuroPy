@@ -1,76 +1,84 @@
 import scipy.io as sio
-from Methods import *
-from Connect import *
-from Viewer import *
-
+import Methods
+import Connect
+import Viewer
 
 # ### Load data and show content of it
 # data = sio.loadmat('data.mat') # Example data, private access
 # cues = sio.loadmat('cues.mat') # Example data's cue tye array
 # cues = cues['c']
-# print_all_content(data)
+# Methods.print_all_content(data)
 
 # ### Trial ID decomposition
-t_exp = get_trials(cues, mode='block', l=0, r=10)
-t_unx = get_trials(cues, mode='trial', l=0, r=10)
+# t_exp = Methods.get_trials(cues, mode='block', l=0, r=10)
+# t_unx = Methods.get_trials(cues, mode='trial', l=0, r=60)
 
 ##############################################################################
 
 
 
-
 # ### Event related potential and current source density plots
-# ERP_plot(save=True, data=data, key="pfc")
-# CSD_plot(save=True, data=data, key='pfc')
+# Methods.ERP_plot(save=True, data=data, key="pfc")
+# Methods.CSD_plot(save=True, data=data, key='pfc')
 
 # ### Power spectrum (multitaper) plots on heatmap
-# psp_plotter(data=data, key='pfc', save=True, t1=500, t2=2500, fmin=0,
+# Methods.psp_plotter(data=data, key='pfc', save=True, t1=500, t2=2500, fmin=0,
 #             fmax=100, normalize_w=True, pink_noise_filter=False, bw=45, k=0, title="PS, all trials ")
 
-### Channelwise spectral coherence
-# coherence_plotter(data=data, key='pfc', save=True, t1=500, t2=2500, fmin=4,
+# ## Channelwise spectral coherence
+# Connect.coherence_plotter(data=data, key='pfc', save=True, t1=500, t2=2500, fmin=4,
 #             fmax=100, normalize_w=True, bw=45, k=0)
 
-### Selective or single trial parts: PSP and COH
-### PSP
-# psp_plotter(data=data, key='pfc', save=True, t1=2500, t2=4500, fmin=0,
+# ### Selective or single trial parts: PSP and COH
+# ### PSP
+# Methods.psp_plotter(data=data, key='v4', save=True, t1=2500, t2=4500, fmin=0,
 #             fmax=100, normalize_w=True, bw=45, k=0, trials=t_exp,
 #             title="PS, block mode (expected)")
 
 # ### Coherence (spectral)
-# coherence_plotter(data=data, key='pfc', save=True, t1=500, t2=2500, fmin=4,
+# Connect.coherence_plotter(data=data, key='pfc', save=True, t1=500, t2=2500, fmin=4,
 #             fmax=100, normalize_w=True, bw=45, k=0,
 #             title="Coherence, trial 100, 200", trials=[i for i in range(0, 50)])
-# coherence_plotter(data=data, key='pfc', save=True, t1=500, t2=2500, fmin=4,
-#             fmax=100, normalize_w=True, bw=45, k=0,
-#             title="Coherence, trial 100, 200", trials=[i for i in range(50, 100)])
 
 # ### Coherence (granger)
-# s_granger_plotter(data=data, key='pfc', save=True, t1=100, t2=2500, fmin=4,
+# Connect.s_granger_plotter(data=data, key='pfc', save=True, t1=100, t2=2500, fmin=4,
 #             fmax=100, normalize_w=True, bw=45, k=0,
 #             title="Granger causality (maxlag=6 min P-values) on block (exp) first 100 trials",
-#             trials=t_exp, lag=6)
+#             trials=[1], lag=6)
 
-# s_granger_plotter(data=data, key='pfc', save=True, t1=100, t2=2500, fmin=4,
-#             fmax=100, normalize_w=True, bw=45, k=0,
-#             title="Granger causality (maxlag=6 min P-values) on trial (unexp) first 100 trials",
-#             trials=t_unx, lag=6)
 
-# psd, freqs = power_spectrum_density(data=data, key='pfc', save=True, t1=2000, t2=4500, fmin=0,
-#             fmax=100, normalize_w=False, bw=45, k=0, trials=[i for i in range(100)])
+# ### Power spectral density array in bands
+# psd, freqs = Methods.power_spectrum_density(data=data, key='pfc', save=True, t1=2000, t2=4500, fmin=0,
+#             fmax=100, normalize_w=False, bw=45, k=0, trials=[i for i in range(2)])
 
-# psd_ratio_plotter(psd=psd[:, :, 10], freqs=freqs,
+# ### PSD ratio plotter
+# Methods.psd_ratio_plotter(psd=psd[:, :, 1], freqs=freqs,
 #                   title="T10SpectBandAvgPower")
 
-# tpsd, freqs = time_power_spectrum_density(data=data, key='pfc', save=True
-#                                 , time_window_size=500, time_overlap=10
-#                                 , trials=t_exp, bw=50, tl=0, tr=4500)
-
-# psd_ratio_plotter(psd=tpsd[6, :, :, 9], freqs=freqs,
-#                   title="T10SpectBandAvgPower")
-
-# psd_ratio_compare_plotter(psd1=psd[:, :, 20], psd2=psd[:, :, 80],
+### Comparisons
+# Methods.psd_ratio_compare_plotter(psd1=psd[:, :, 1], psd2=psd[:, :, 0],
 #                           freqs=freqs, title="PSDRatio_T20-T80")
 
-# psd_ratio_compare_plotter(psd1=psd[:, :, 40], psd2=psd[:, :, 60],
+# Methods.psd_ratio_compare_plotter(psd1=psd[:, :, 0], psd2=psd[:, :, 0],
 #                           freqs=freqs, title="PSDRatio_T40-T60")
+
+
+### PSD in time windows
+
+trials = [i for i in range(40, 60)]
+# tpsd, freqs, times = Connect.time_power_spectrum_density(data=data, key='v4', save=True
+#                                 , time_window_size=700, time_overlap=50
+#                                 , trials=trials, bw=50, tl=0, tr=4500, time_base=-1500)
+
+tsc = Connect.time_spectral_coherence(data=tpsd, key='key', save=True, trials=trials, ts=times)
+
+# Viewer.run(data=tpsd, fqs=freqs, trials=2, frames=9, title="PSD in time, V4 area "
+#             , xlabel="Frequency", ylabel="Channel", fr=times, tr=[i for i in range(40, 60)])
+
+Viewer.run(data=tsc, fqs=freqs, trials=2, frames=9, title="Spectral coherence in time, V4 area "
+            , xlabel="Frequency", ylabel="Channel", fr=times, tr=[i for i in range(40, 60)])
+
+### Spectral coherence in time window
+# tsc, chs, times = Connect.time_spectral_cohernece(data=data, key='pfc', save=True
+#                                 , time_window_size=500, time_overlap=10
+#                                 , trials=[i for i in range(40, 60)], bw=50, tl=0, tr=4500, time_base=-1500)
