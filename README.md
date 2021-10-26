@@ -2,7 +2,9 @@
 
 ## github@HNXJ
 
-Notable libraries: Scipy - Statsmodel - Plotly - PyMNE - CV2
+Notable libraries: Scipy - Statsmodel - Plotly - PyMNE - CV2 - Dash
+
+Part of this code rquires local dash server, you can enter the address in the terminal (default 127.0.0.1:8050) to open the web application interactive plots.
 
 Draft for python/plotly plotting of electrophysiological signal/data
 use arbitrary data (as dict type) for IO
