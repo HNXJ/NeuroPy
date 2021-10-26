@@ -186,7 +186,7 @@ def customplot(x, save=True, show=True, filename="plot.html"
         
         im = cv2.resize(im, (w, h))
         fig = go.Figure(
-            data=go.Heatmap(z=im, y=y, x=xtext_labels[]), 
+            data=go.Heatmap(z=im, y=y, x=xtext_labels), 
             layout=go.Layout(
                 title=title,
                 xaxis=dict(title=xlabel),

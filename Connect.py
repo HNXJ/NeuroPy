@@ -229,14 +229,14 @@ def time_power_spectrum_density(data=None, key='key', save=True, bands=True
     '''
     
     tq = time_window_size-time_overlap
-    ts = [i for i in range(tl, tr-tq, tq)]
+    ts = [i for i in range(tl+time_window_size, tr, tq)]
     tpsd = []
     
     for t in ts:
         
         
         psd, freqs = Methods.power_spectrum_density(data=data, key='pfc', save=True
-                                            , t1=t, t2=t+time_window_size
+                                            , t1=t-time_window_size, t2=t
                                             , fmin=0, fmax=100, normalize_w=False
                                             , bw=bw, k=0, trials=trials)
         
@@ -255,7 +255,7 @@ def time_power_spectrum_density(data=None, key='key', save=True, bands=True
     
     ts.append(ts[len(ts)-1] + time_window_size)
     for t in range(len(ts)):
-        ts[t] += time_base
+        ts[t] += time_base - time_window_size
         
     return np.array(tpsd), freqs, ts
 
@@ -289,7 +289,7 @@ def time_granger_causality(data=None, key='key', time_window_size=500, time_over
         return
     
     tq = time_window_size-time_overlap
-    ts = [i for i in range(tl, tr-tq, tq)]
+    ts = [i for i in range(tl+time_window_size, tr, tq)]
     tgc = np.zeros([len(ts), lam.shape[1], lam.shape[1], len(trials)])
     print("Dynamic granger started, it will take a while. log of progress will be printed.")
     for i in range(len(trials)):
@@ -299,8 +299,11 @@ def time_granger_causality(data=None, key='key', time_window_size=500, time_over
         for t in range(len(ts)):
             
             print("Cal. for t = ", ts[t])
-            tgc[t, :, :, i] = granger_coherence(sig=sig[:, ts[t]:ts[t]+time_window_size]
+            tgc[t, :, :, i] = granger_coherence(sig=sig[:, ts[t]-time_window_size:ts[t]]
                                                 , lag=7)
                 
-    
+    ts.append(ts[len(ts)-1] + time_window_size)
+    for t in range(len(ts)):
+        ts[t] += time_base - time_window_size
+        
     return tgc, ts
