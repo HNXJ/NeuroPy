@@ -15,7 +15,7 @@ import Viewer
 
 ##############################################################################
 
-trials = [i for i in range(40, 60)]
+trials = [i for i in range(247, 253)]
 # trials = t_exp
 # trials = t_unx
 
@@ -67,17 +67,19 @@ trials = [i for i in range(40, 60)]
 
 # ### PSD in time windows
 # tpsd, freqs, times = Connect.time_power_spectrum_density(data=data, key='v4', save=True
-#                                 , time_window_size=200, time_overlap=50
+                                # , time_window_size=200, time_overlap=50
 #                                 , trials=trials, bw=50, tl=0, tr=4500, time_base=-1500)
 
 # ### SC in time windows
 # tsc = Connect.time_spectral_coherence(data=tpsd, key='key', save=True, trials=trials, ts=times)
 
-# ### GC is time windows
-# tgc = Connect.time_granger_causality(data=tpsd, key='key', save=True, trials=trials, ts=times)
+### GC is time windows
+tgc = Connect.time_granger_causality(data=data, key='pfc', time_window_size=500
+                                , time_overlap=0, trials=trials, bw=50, tl=0
+                                , tr=4500, time_base=-1500)
 
 # Viewer.run(data=tpsd, fqs=freqs, title="PSD in time, V4 area "
-#             , xlabel="Frequency", ylabel="Channel", fr=times, tr=[i for i in range(40, 60)])
+#             , xlabel="Frequency", ylabel="Channel", fr=times, tr=trials)
 
 # Viewer.run(data=tsc, fqs=freqs, title="Spectral coherence in time, V4 area "
 #             , xlabel="Frequency", ylabel="Channel", fr=times, tr=[i for i in range(40, 60)])
