@@ -30,7 +30,7 @@ def create_app(data=None, fqs=None, trials=3, frames=3, title="T", xlabel="C"
         dcc.Slider(
                 id='frame',
                 min=1,
-                max=len(fr),
+                max=len(fr)-1,
                 step=1,
                 value=1,
                 marks={i : "{} ms".format(fr[i]) for i in range(len(fr))
@@ -60,20 +60,41 @@ def create_app(data=None, fqs=None, trials=3, frames=3, title="T", xlabel="C"
         
         # if n_clicks is None:
         #     return dash.no_update
-            
         im = data[int(value2), :, :, trial_ind[int(value1)]]
         y = np.array([data.shape[1] - i for i in range(data.shape[1])])
         
         t = fqs
         tit = title + ", Frame no. " + str(int(value2)) + " of trial no. " + str(int(value1)+1) + " for t in range [" + str(fr[int(value2)]) + "] - [" + str(fr[int(value2) + 1]) + "]"
+        
+        bandlabels = ["Delta[0.1-3]", "Theta[3-8]", "Alpha[8-12]"
+                      , "L-Beta[12-16]", "M-Beta[16-20]", "U-Beta[20-30]"
+                      , "L-Gamma[30-50]", "M-Gamma[50-70]", "U-Gamma[70+]"]
+        k = len(bandlabels)
+        
+        # annotations = []
+        # for i in range(k):
+        #     annotation = {
+        #         'x': ((i+0.1)),
+        #         'y': 0.5,
+        #         'xref': 'x',
+        #         'yref': 'y',
+        #         'text': bandlabels[i],
+        #         'align': 'center',
+        #         'ay': 0,
+        #         'opacity': 0,
+        #         'bgcolor': 'green',
+        #     }
+        #     annotations.append(annotation)
+        
         return {
-            'data':[go.Heatmap(z=im, y=y, x=t)], 'layout': go.Layout(autosize=False,
+            'data':[go.Heatmap(z=im, y=y, x=bandlabels)]
+            , 'layout': go.Layout(autosize=False,
                     width=1420,
                     height=600,
                     title=tit,
                     xaxis=dict(title=xlabel),
                     yaxis=dict(title=ylabel)
-                )
+                    )
             }
     
     return app
