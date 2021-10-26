@@ -92,13 +92,13 @@ def spectral_coherence(psd=None):
     return c
 
 
-def granger_coherence(psd=None, lag=4):
+def granger_coherence(sig=None, lag=4):
     
     # print(psd.shape)
-    c = np.zeros((psd.shape[0], psd.shape[0]))
-    for i in range(psd.shape[0]):
-        for j in range(psd.shape[0]):
-            u = coherence_granger(psd[i, :], psd[j, :], lag=lag)
+    c = np.zeros((sig.shape[0], sig.shape[0]))
+    for i in range(sig.shape[0]):
+        for j in range(sig.shape[0]):
+            u = coherence_granger(sig[i, :], sig[j, :], lag=lag)
             c[i, j] = u
             
     return c
@@ -251,10 +251,6 @@ def time_power_spectrum_density(data=None, key='key', save=True
 
 def time_spectral_coherence(data=None, key='key', save=True, trials=None, ts=None):
     
-    '''
-        => To calculate the psd in each time window, in order to check time dependent variations
-    '''
-    
     tsc = np.zeros([data.shape[0], data.shape[1], data.shape[1], data.shape[3]])
     
     for t in range(len(trials)):
@@ -267,3 +263,33 @@ def time_spectral_coherence(data=None, key='key', save=True, trials=None, ts=Non
     
     return tsc
 
+
+def time_granger_causality(data=None, key='key', time_window_size=500, time_overlap=100
+                                , trials=None, bw=40, tl=0, tr=4500, time_base=0):
+    
+    if key=='pfc':
+        lam = data['lfp'][:, 0:16, trials]
+    elif key=='p7a':
+        lam = data['lfp'][:, 16:32, trials]
+    elif key=='v4':
+        lam = data['lfp'][:, 32:48, trials]
+    else:
+        print('Not in set')
+        return
+    
+    tq = time_window_size-time_overlap
+    ts = [i for i in range(tl, tr-tq, tq)]
+    tgc = np.zeros([len(ts), lam.shape[1], lam.shape[1], len(trials)])
+    print("Dynamic granger started, it will take a while. log of progress will be printed.")
+    for i in range(len(trials)):
+        
+        print("Trial no. ", trials[i])
+        sig = lam[:, :, i].transpose()
+        for t in range(len(ts)):
+            
+            print("Cal. for t = ", ts[t])
+            tgc[t, :, :, i] = granger_coherence(sig=sig[:, ts[t]:ts[t]+time_window_size]
+                                                , lag=7)
+                
+    
+    return tsc
