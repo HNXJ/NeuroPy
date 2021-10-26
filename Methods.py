@@ -46,7 +46,7 @@ def ERP_plot(save=False, data=None, key="pfc"):
     )
     
     if save==True:
-        plotly.offline.plot(fig, filename="ERP_" + key + ".html")
+        plotly.offline.plot(fig, filename="Files/ERP_" + key + ".html")
 
     fig.show()
     return
@@ -93,7 +93,7 @@ def CSD_plot(save=False, data=None, key='pfc'):
     )
     
     if save==True:
-        plotly.offline.plot(fig, filename="ACSD_" + key + ".html")
+        plotly.offline.plot(fig, filename="Files/ACSD_" + key + ".html")
         
     fig.show()
 
@@ -164,7 +164,7 @@ def psplot(x, save=True, show=True, filename="psp.html", w=300, h=200, t=None,
         )
         
     if save==True:
-        plotly.offline.plot(fig, filename=filename)
+        plotly.offline.plot(fig, filename="Files/" + filename)
     
     if show==True:
         fig.show()
@@ -214,7 +214,7 @@ def customplot(x, save=True, show=True, filename="plot.html"
         )
 
     if save==True:
-        plotly.offline.plot(fig, filename=filename)
+        plotly.offline.plot(fig, filename="Files/" + filename)
     
     if show==True:
         fig.show()

@@ -4,8 +4,8 @@ import Connect
 import Viewer
 
 # ### Load data and show content of it
-# data = sio.loadmat('data.mat') # Example data, private access
-# cues = sio.loadmat('cues.mat') # Example data's cue tye array
+# data = sio.loadmat('Data/data.mat') # Example data, private access
+# cues = sio.loadmat('Data/cues.mat') # Example data's cue tye array
 # cues = cues['c']
 # Methods.print_all_content(data)
 
