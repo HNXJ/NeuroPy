@@ -220,7 +220,7 @@ def s_granger_plotter(data=None, key='pfc', save=False,
     return
 
 
-def time_power_spectrum_density(data=None, key='key', save=True
+def time_power_spectrum_density(data=None, key='key', save=True, bands=True
                                 , time_window_size=500, time_overlap=100
                                 , trials=None, bw=40, tl=0, tr=4500, time_base=0):
     
@@ -240,7 +240,18 @@ def time_power_spectrum_density(data=None, key='key', save=True
                                             , fmin=0, fmax=100, normalize_w=False
                                             , bw=bw, k=0, trials=trials)
         
-        tpsd.append(psd)
+        if bands:
+            
+            bpsd = np.zeros([psd.shape[0], 9, psd.shape[2]])
+            for i in range(psd.shape[2]):
+                
+                bpsd[:, :, i] = Methods.psd_ratio_matrix(psd=psd[:, :, i], freqs=freqs)
+        
+        else:
+            
+            bpsd = psd
+            
+        tpsd.append(bpsd)
     
     ts.append(ts[len(ts)-1] + time_window_size)
     for t in range(len(ts)):
@@ -292,4 +303,4 @@ def time_granger_causality(data=None, key='key', time_window_size=500, time_over
                                                 , lag=7)
                 
     
-    return tsc
+    return tgc, ts
