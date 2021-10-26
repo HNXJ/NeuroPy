@@ -18,7 +18,7 @@ def create_app(data=None, fqs=None, trials=3, frames=3, title="T", xlabel="C"
         dcc.Dropdown(
             id='trial',
             options=[{'label': int(i+1), 'value': int(i)} for i in tr],
-            value='0'
+            value=tr[0]
         ),
         # dcc.Dropdown(
         #     id='frame',
@@ -62,10 +62,10 @@ def create_app(data=None, fqs=None, trials=3, frames=3, title="T", xlabel="C"
         #     return dash.no_update
             
         im = data[int(value2), :, :, trial_ind[int(value1)]]
-        y = np.arange(data.shape[1])
+        y = np.array([data.shape[1] - i for i in range(data.shape[1])])
         
         t = fqs
-        tit = title + ", Frame no. " + str(int(value2)) + " of trial no. " + str(int(value1)-1) + " for t in range [" + str(fr[int(value2)]) + "] - [" + str(fr[int(value2) + 1]) + "]"
+        tit = title + ", Frame no. " + str(int(value2)) + " of trial no. " + str(int(value1)+1) + " for t in range [" + str(fr[int(value2)]) + "] - [" + str(fr[int(value2) + 1]) + "]"
         return {
             'data':[go.Heatmap(z=im, y=y, x=t)], 'layout': go.Layout(autosize=False,
                     width=1420,
