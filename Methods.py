@@ -181,32 +181,30 @@ def customplot(x, save=True, show=True, filename="plot.html"
     im = x.transpose()
     if relative==True:
         im = im / np.max(np.max(im))
-        
-    im = cv2.resize(im, (w, h))
-    fig = go.Figure(
-        data=go.Heatmap(z=im, y=y, x=t), 
-        layout=go.Layout(
-            title=title,
-            xaxis=dict(title=xlabel),
-            yaxis=dict(title=ylabel)
-        ),
-    )
-    
+       
     if xtext==True:
         
-        k = len(xtext_labels)
-        fig.update_xaxes(visible=False)
+        im = cv2.resize(im, (w, h))
+        fig = go.Figure(
+            data=go.Heatmap(z=im, y=y, x=xtext_labels[]), 
+            layout=go.Layout(
+                title=title,
+                xaxis=dict(title=xlabel),
+                yaxis=dict(title=ylabel)
+            ),
+        )
+    
+    else:
         
-        for i in range(k):
-            fig.add_annotation(dict(font=dict(color='green',size=15),
-                                            x=((i+0.1)/k),
-                                            y=-0.04,
-                                            showarrow=False,
-                                            text=xtext_labels[i],
-                                            textangle=0,
-                                            xanchor='left',
-                                            xref="paper",
-                                            yref="paper"))
+        im = cv2.resize(im, (w, h))
+        fig = go.Figure(
+            data=go.Heatmap(z=im, y=y, x=t), 
+            layout=go.Layout(
+                title=title,
+                xaxis=dict(title=xlabel),
+                yaxis=dict(title=ylabel)
+            ),
+        )
 
     if reverse==True: 
         fig.update_layout(
