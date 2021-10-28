@@ -1,12 +1,29 @@
-from statsmodels.tsa.stattools import grangercausalitytests as gct
 import plotly.graph_objects as go
-import plotly.express as px
 import numpy as np
 
 import plotly
 import mne # Multitaper spectrums
 import cv2
 
+import pickle
+
+
+def save_list(l, filename="List0.txt"):
+        
+    with open(filename, "wb") as f_temp:
+        pickle.dump(l, f_temp)
+    
+    print("Saved.")
+    return
+
+
+def load_list(filename="List0.txt"):
+    
+    with open(filename, "rb") as f_temp:
+        l = pickle.load(f_temp)
+    
+    print("Loaded.")
+    return l
 
 def print_all_content(data=None):
     
@@ -319,7 +336,12 @@ def psd_ratio_plotter(psd=None, freqs=None, title="P. 1"):
     bandlabels = ["Delta[0.1-3]", "Theta[3-8]", "Alpha[8-12]"
                   , "L-Beta[12-16]", "M-Beta[16-20]", "U-Beta[20-30]"
                   , "L-Gamma[30-50]", "M-Gamma[50-70]", "U-Gamma[70+]"]
-    c = psd_ratio_matrix(psd=psd, freqs=freqs)
+    
+    if psd.shape[1] > 9:
+        c = psd_ratio_matrix(psd=psd, freqs=freqs)
+    else:
+        c = psd
+        
     customplot(c, save=True, show=True, filename= title +".html"
                    , w=9, h=16, t=np.arange(9), y=np.ones(16)*16-np.arange(16), relative=True
                    ,xlabel="Band", ylabel="Ch", title=title, reverse=True
@@ -333,9 +355,13 @@ def psd_ratio_compare_plotter(psd1=None, psd2=None, freqs=None, title="P. 1"):
                   , "L-Beta[12-16]", "M-Beta[16-20]", "U-Beta[20-30]"
                   , "L-Gamma[30-50]", "M-Gamma[50-70]", "U-Gamma[70+]"]
     
-    c1 = psd_ratio_matrix(psd=psd1, freqs=freqs)
-    c2 = psd_ratio_matrix(psd=psd2, freqs=freqs)
-    
+    if psd1.shape[1] > 9:
+        c1 = psd_ratio_matrix(psd=psd1, freqs=freqs)
+        c2 = psd_ratio_matrix(psd=psd2, freqs=freqs)
+    else:
+        c1 = psd1
+        c2 = psd2
+        
     customplot(c1/c2, save=True, show=True, filename= title +".html"
                    , w=9, h=16, t=np.arange(9), y=np.ones(16)*16-np.arange(16), relative=True
                    ,xlabel="Band", ylabel="Ch", title=title, reverse=True
