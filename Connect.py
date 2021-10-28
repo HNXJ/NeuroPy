@@ -1,14 +1,8 @@
 # from matplotlib import pyplot as plt ### Not used
 from statsmodels.tsa.stattools import grangercausalitytests as gct
-import plotly.graph_objects as go
-import plotly.express as px
 import Methods
 
 import numpy as np
-import plotly
-import mne # Multitaper spectrums
-import cv2
-
 
 def coherence_pearson(x, y):
 
@@ -234,7 +228,7 @@ def time_power_spectrum_density(data=None, key='key', save=True, bands=True
     
     for t in ts:
         
-        
+        print("Time no. ", t)
         psd, freqs = Methods.power_spectrum_density(data=data, key='pfc', save=True
                                             , t1=t-time_window_size, t2=t
                                             , fmin=0, fmax=100, normalize_w=False
@@ -266,6 +260,7 @@ def time_spectral_coherence(data=None, key='key', save=True, trials=None, ts=Non
     
     for t in range(len(trials)):
         
+        print("Trial no. ", t)
         for i in range(len(ts)-1):
             
             
@@ -307,3 +302,4 @@ def time_granger_causality(data=None, key='key', time_window_size=500, time_over
         ts[t] += time_base - time_window_size
         
     return tgc, ts
+
