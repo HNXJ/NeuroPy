@@ -1,15 +1,14 @@
-# General signal processing tools (Electrophysiology)
+# General signal processing and data analysis tools for neural signals (Electrophysiology)
 
 ## github@HNXJ
 
-Notable libraries: Scipy - Statsmodel - Plotly - PyMNE - CV2 - Dash
+Notable libraries: Scipy - Statsmodel - Plotly - PyMNE - CV2 - Dash - Scikit-learn
 
 Part of this code rquires local dash server, you can enter the address in the terminal (default 127.0.0.1:8050) to open the web application interactive plots.
 
-Draft for python/plotly plotting of electrophysiological signal/data
-use arbitrary data (as dict type) for IO
+See tutorial for utilities and examples of functions.
 
-Example of plots; the fucntions will save the plots in HTML format but due to plotly features, you can save a png format from its panel.
+Some visualization examples:
 
 ### Power spectrum density (Normalized and scaled to max at each channel/frequency)
 
