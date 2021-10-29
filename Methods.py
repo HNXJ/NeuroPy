@@ -2,120 +2,23 @@ import plotly.graph_objects as go
 import numpy as np
 
 import plotly
-import mne # Multitaper spectrums
+import mne
 import cv2
 
-import pickle
 
-
-def save_list(l, filename="List0.txt"):
-        
-    with open(filename, "wb") as f_temp:
-        pickle.dump(l, f_temp)
+def print_dict_content(dict_=None):
     
-    print("Saved.")
-    return
-
-
-def load_list(filename="List0.txt"):
-    
-    with open(filename, "rb") as f_temp:
-        l = pickle.load(f_temp)
-    
-    print("Loaded.")
-    return l
-
-def print_all_content(data=None):
-    
-    for v in data.keys():
+    for v in dict_.keys():
         try:
-            print("Value: ", v, " || Size: ", data[v].shape)
+            print("Value: ", v, " || Size: ", dict_[v].shape)
         except:
             print("Value: ", v)
 
     return
 
 
-def ERP_plot(save=False, data=None, key="pfc"):
-    
-    if key=='pfc':
-        lam = np.mean(data['lfp'][:, 0:16, :], 2)
-    elif key=='p7a':
-        lam = np.mean(data['lfp'][:, 16:32, :], 2)
-    elif key=='v4':
-        lam = np.mean(data['lfp'][:, 32:48, :], 2)
-    else:
-        print('Not in set')
-        return
-    
-    lam = lam.transpose()
-    lam = cv2.resize(lam, (900, 300))
-    t = np.linspace(-1500, 3000, 900)
-    y = np.linspace(1, 16, 300)
-    
-    fig = go.Figure(
-        data=go.Heatmap(z=lam, y=y, x=t), 
-        layout=go.Layout(
-            title="ERP heatmap (" + key + ")",
-            xaxis=dict(title='Time(ms)'),
-            yaxis=dict(title='Channel ID')
-        ),
-    )
-    
-    if save==True:
-        plotly.offline.plot(fig, filename="Files/ERP_" + key + ".html")
-
-    fig.show()
-    return
-
-
-def CSD_plot(save=False, data=None, key='pfc'):
-    
-    lam1 = data['lfp'][:, 0:16, :]
-    lam2 = data['lfp'][:, 16:32, :]
-    lam3 = data['lfp'][:, 32:48, :]
-    
-    sig = 2*(10**-4)
-    es = 0.4
-    
-    csd1 = sig*(lam1[:, 0:14, :] - 2*lam1[:, 1:15, :] +lam1[:, 2:16, :])/(2*(es**2))
-    csd2 = sig*(lam2[:, 0:14, :] - 2*lam2[:, 1:15, :] +lam2[:, 2:16, :])/(2*(es**2))
-    csd3 = sig*(lam3[:, 0:14, :] - 2*lam3[:, 1:15, :] +lam3[:, 2:16, :])/(2*(es**2))
-    
-    acsd1 = np.mean(csd1, 2)
-    acsd2 = np.mean(csd2, 2)
-    acsd3 = np.mean(csd3, 2)
-
-    if key=='pfc':
-        acsd1 = acsd1.transpose()
-    elif key=='p7a':
-        acsd1 = acsd2.transpose()
-    elif key=='v4':
-        acsd1 = acsd3.transpose()
-    else:
-        print('Not in set')
-        return
-    
-    acsd1 = cv2.resize(acsd1, (900, 300))
-    t = np.linspace(-1500, 3000, 900)
-    y = np.linspace(3, 13, 300)
-    
-    fig = go.Figure(
-        data=go.Heatmap(z=acsd1, y=y, x=t), 
-        layout=go.Layout(
-            title="Average CSD heatmap (" + key + ")",
-            xaxis=dict(title='Time(ms)'),
-            yaxis=dict(title='Channel ID')
-        ),
-    )
-    
-    if save==True:
-        plotly.offline.plot(fig, filename="Files/ACSD_" + key + ".html")
-        
-    fig.show()
-
-
 def pspectlam(x, axis=0, fs=1000, fc=500, mode="MT", fmin=0, fmax=100, bw=15):
+    
     if mode=="MT":
         
         ch_names = [str(i) for i in range(1, 17)]
@@ -242,7 +145,7 @@ def psp_plotter(data=None, key='pfc', save=False,
                 t1=500, t2=2501, fmin=0, fmax=100,
                 normalize_w=False, k=5,
                 title="Power spectrum multitaper ",
-                bw=15, trials=None, pink_noise_filter=True):
+                bw=15, trials=None, pink_noise_filter=True): # Deprecated, only for demo
     
     if trials==None:
         trials = [i for i in range(data['lfp'].shape[2])]
@@ -287,29 +190,12 @@ def psp_plotter(data=None, key='pfc', save=False,
     return
     
 
-def power_spectrum_density(data=None, key='pfc', save=False,
+def power_spectrum_density(data=None, save=False,
                 t1=500, t2=2501, fmin=0, fmax=100,
                 normalize_w=False, k=5,
                 bw=15, trials=None, pink_noise_filter=True):
     
-    if trials==None:
-        trials = [i for i in range(data['lfp'].shape[2])]
-    
-    lam1 = data['lfp'][:, 0:16, trials]
-    lam2 = data['lfp'][:, 16:32, trials]
-    lam3 = data['lfp'][:, 32:48, trials]
-    
-    if key=='pfc':
-        Y = lam1[t1:t2, :, :]
-    elif key=='p7a':
-        Y = lam2[t1:t2, :, :]
-    elif key=='v4':
-        Y = lam3[t1:t2, :, :]
-    else:
-        print('Not in set')
-        return
-    
-    ps_pfc, f = pspectlamnorm(Y, axis=0, fs=1000, fc=150, fmin=fmin, fmax=fmax)
+    ps_pfc, f = pspectlamnorm(data[t1:t2, :, trials], axis=0, fs=1000, fc=150, fmin=fmin, fmax=fmax)
     piv = np.mean(ps_pfc, 0)
     piv = np.mean(piv, 1)
     
@@ -454,17 +340,53 @@ def pink_noise_inverse_filter(x=None, w=5, piv=None):
     return np.multiply(x, y[w-k:n+w-k])
     
 
-def get_trials(c=None, mode='Block', l=0, r=600):
+def ERP_plot(data=None, title="", save=False, filename="ERP_plot"):
     
-    t = []
-    for i in range(l, r):
-        
-        if mode=='block': # Expected, predictable
-            if c[i]==0:
-                t.append(i)
-        elif mode=='trial': # Enexpected, random
-            if c[i]:
-                t.append(i)
-                
-    return t
+    lam = np.mean(data, 2).transpose()
+    lam = cv2.resize(lam, (900, 300))
+    t = np.linspace(-1500, 3000, 900)
+    y = np.linspace(1, 16, 300)
+    
+    fig = go.Figure(
+        data=go.Heatmap(z=lam, y=y, x=t), 
+        layout=go.Layout(
+            title=title,
+            xaxis=dict(title='Time(ms)'),
+            yaxis=dict(title='Channel ID')
+        ),
+    )
+    
+    if save==True:
+        plotly.offline.plot(fig, filename="Files/" + filename + ".html")
 
+    fig.show()
+    return
+
+
+def CSD_plot(data=None, title="", save=False, filename="ERP_plot"):
+    
+    lam = data
+    sig = 2*(10**-4)
+    es = 0.4
+    
+    csd = sig*(lam[:, 0:14, :] - 2*lam[:, 1:15, :] +lam[:, 2:16, :])/(2*(es**2))
+    acsd = np.mean(csd, 2).transpose()
+    
+    acsd = cv2.resize(acsd, (900, 300))
+    t = np.linspace(-1500, 3000, 900)
+    y = np.linspace(3, 13, 300)
+    
+    fig = go.Figure(
+        data=go.Heatmap(z=acsd, y=y, x=t), 
+        layout=go.Layout(
+            title=title,
+            xaxis=dict(title='Time(ms)'),
+            yaxis=dict(title='Channel ID')
+        ),
+    )
+    
+    if save==True:
+        plotly.offline.plot(fig, filename="Files/" + filename + ".html")
+        
+    fig.show()
+    return
