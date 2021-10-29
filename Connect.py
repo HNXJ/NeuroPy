@@ -229,7 +229,7 @@ def time_power_spectrum_density(data=None, key='key', save=True, bands=True
     for t in ts:
         
         print("Time no. ", t)
-        psd, freqs = Methods.power_spectrum_density(data=data, key='pfc', save=True
+        psd, freqs = Methods.power_spectrum_density(data=data, save=True
                                             , t1=t-time_window_size, t2=t
                                             , fmin=0, fmax=100, normalize_w=False
                                             , bw=bw, k=0, trials=trials)
@@ -254,7 +254,7 @@ def time_power_spectrum_density(data=None, key='key', save=True, bands=True
     return np.array(tpsd), freqs, ts
 
 
-def time_spectral_coherence(data=None, key='key', save=True, trials=None, ts=None):
+def time_spectral_coherence(data=None, trials=None, ts=None):
     
     tsc = np.zeros([data.shape[0], data.shape[1], data.shape[1], data.shape[3]])
     
@@ -270,18 +270,10 @@ def time_spectral_coherence(data=None, key='key', save=True, trials=None, ts=Non
     return tsc
 
 
-def time_granger_causality(data=None, key='key', time_window_size=500, time_overlap=100
+def time_granger_causality(data=None, time_window_size=500, time_overlap=100
                                 , trials=None, bw=40, tl=0, tr=4500, time_base=0):
     
-    if key=='pfc':
-        lam = data['lfp'][:, 0:16, trials]
-    elif key=='p7a':
-        lam = data['lfp'][:, 16:32, trials]
-    elif key=='v4':
-        lam = data['lfp'][:, 32:48, trials]
-    else:
-        print('Not in set')
-        return
+    lam = data[:, :, trials]
     
     tq = time_window_size-time_overlap
     ts = [i for i in range(tl+time_window_size, tr, tq)]
