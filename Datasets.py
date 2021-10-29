@@ -27,14 +27,14 @@ class Dataset:
         
         return
     
-    def load_laminar_data(self, filename="Data/data.mat"):
+    def load_laminar_data(self, path="Data/"):
         
         """
         This function is only for A.M Bastos's lab data loading.
         """
         print("Loading data...")
-        self.data = sio.loadmat('Data/data.mat')
-        self.cues = sio.loadmat('Data/cues.mat')['c']
+        self.data = sio.loadmat(path + "data.mat")
+        self.cues = sio.loadmat(path + "cues.mat")['c']
         print("Loaded.")
         
         self.signals['pfc'] = self.data['lfp'][:, 0:16, :]
