@@ -1,4 +1,5 @@
-%% Handler for trial cue type
+%% Handler for matlab .mat file's trial cue type, implement one for yourself if required 
+
 
 clc;clear;
 
@@ -13,5 +14,6 @@ for i = 1:size(a, 1)
 end
 
 save('cues.mat', 'c');
+
 
 %%
