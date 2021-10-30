@@ -91,4 +91,5 @@ def load_list(filename="List0.txt"):
     print("Loaded.")
     return l
     
+
     

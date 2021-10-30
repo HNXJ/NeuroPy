@@ -122,3 +122,4 @@ def run(data=None, fqs=None, trials=1, frames=1, title="", xlabel="", ylabel=""
                      , xlabel=xlabel, ylabel=ylabel, fr=fr, tr=tr, bands=bands)
     app.run_server(debug=False, use_reloader=False)
     
+

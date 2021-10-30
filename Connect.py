@@ -295,3 +295,4 @@ def time_granger_causality(data=None, time_window_size=500, time_overlap=100
         
     return tgc, ts
 
+

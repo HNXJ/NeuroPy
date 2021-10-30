@@ -87,3 +87,4 @@ def scatter_3d_plot(X=None, Y=None, tit=None, save=False, name=""):
             fig.savefig("Plots/" + name + ".png")
     return
 
+
