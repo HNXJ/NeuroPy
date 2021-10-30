@@ -4,9 +4,16 @@ import Methods
 
 import numpy as np
 
-def coherence_pearson(x, y):
+
+def correlation_pearson(x, y):
 
     c = np.corrcoef(x, y)
+    return c[0, 1]
+
+
+def coherence(x, y):
+
+    c = (x*y) / (x)
     return c[0, 1]
 
 
@@ -62,7 +69,7 @@ def coherence_plotter(data=None, key='pfc', save=False,
         
         title = title + ",Normalized relative to other channels"
     
-    c = spectral_coherence(psd=ps_pfc.transpose())
+    c = spectral_correlation(psd=ps_pfc.transpose())
     t = np.linspace(1, 17, 16)
     y = np.linspace(1, 17, 16)
     Methods.customplot(c, save=True, show=True, filename="specCoherence.html"
@@ -72,6 +79,20 @@ def coherence_plotter(data=None, key='pfc', save=False,
     return
 
 
+def spectral_correlation(psd=None):
+    
+    # print(psd.shape)
+    c = np.zeros((psd.shape[0], psd.shape[0]))
+    for i in range(psd.shape[0]):
+        c[i, i] = 1
+        for j in range(i+1, psd.shape[0]):
+            u = correlation_pearson(psd[i, :], psd[j, :])
+            c[i, j] = u
+            c[j, i] = u
+            
+    return c
+
+
 def spectral_coherence(psd=None):
     
     # print(psd.shape)
@@ -79,7 +100,7 @@ def spectral_coherence(psd=None):
     for i in range(psd.shape[0]):
         c[i, i] = 1
         for j in range(i+1, psd.shape[0]):
-            u = coherence_pearson(psd[i, :], psd[j, :])
+            u = coherence(psd[i, :], psd[j, :])
             c[i, j] = u
             c[j, i] = u
             
@@ -101,7 +122,7 @@ def granger_coherence(sig=None, lag=4):
 def granger_plotter(data=None, key='pfc', save=False,
                 t1=500, t2=2501, fmin=0, fmax=100,
                 normalize_w=False, k=5,
-                title="Spectral coherence multitaper ",
+                title=" ",
                 bw=15, trials=None, lag=2):
     
     if trials==None:
@@ -155,7 +176,7 @@ def granger_plotter(data=None, key='pfc', save=False,
 def s_granger_plotter(data=None, key='pfc', save=False,
                 t1=500, t2=2501, fmin=0, fmax=100,
                 normalize_w=False, k=5,
-                title="Spectral coherence multitaper ",
+                title="multitaper ",
                 bw=15, trials=None, lag=2):
     
     if trials==None:
