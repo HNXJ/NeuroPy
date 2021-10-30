@@ -2,6 +2,7 @@ import Datasets
 import Methods
 import Connect
 import Viewer
+import Learning
 
 import numpy as np
 
@@ -18,8 +19,15 @@ import numpy as np
 
 # TODO tSNE
 
-### PSD in time windows
-tpsd, freqs, times = Connect.time_power_spectrum_density(data=dataset.signals['pfc']
-                                , save=True, bands=True
-                                , time_window_size=500, time_overlap=50
-                                , trials=trials, bw=50, tl=0, tr=4000, time_base=-1500)
+# ### PSD in time windows
+# tpsd, freqs, times = Connect.time_power_spectrum_density(data=dataset.signals['pfc']
+#                                 , save=True, bands=True
+#                                 , time_window_size=500, time_overlap=50
+#                                 , trials=trials, bw=50, tl=0, tr=4000, time_base=-1500)
+# Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd.txt")
+
+x = tpsd[5, :, :, :].reshape([-1, 600]).transpose()
+y = (np.array(trials)//50)%2
+Learning.tsne_cluster(X=x, Y=y, components=3, visualize=True, iterations=1000
+              , tit=None, save=False, name="")
+
