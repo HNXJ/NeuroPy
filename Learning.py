@@ -119,7 +119,7 @@ def scatter_2d_plotly(X=None, Y=None, tit=None, save=False, name=""):
                         title=tit)
      
     if save:       
-        plotly.offline.plot(fig, filename="plot.html")
+        plotly.offline.plot(fig, filename=name + ".html")
     
     fig.show()
     return
@@ -138,7 +138,7 @@ def scatter_3d_plotly(X=None, Y=None, tit=None, save=False, name=""):
                         title=tit)
      
     if save:       
-        plotly.offline.plot(fig, filename="plot.html")
+        plotly.offline.plot(fig, filename=name + ".html")
     
     fig.show()
     return
