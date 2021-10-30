@@ -16,7 +16,7 @@ Some visualization examples:
 
 ### Spectral coherence
 
-<img src="https://github.com/HNXJ/PlotlyDraft/blob/main/Images/pfc_spectral_coherence.png" width="1200"/>
+<img src="https://github.com/HNXJ/PlotlyDraft/blob/main/Images/pfc_spect_coherence.png" width="1200"/>
 
 ### Channelwise pectral power density (after pink noise removal) 
 
