@@ -1,5 +1,6 @@
 # from matplotlib import pyplot as plt ### Not used
 from statsmodels.tsa.stattools import grangercausalitytests as gct
+from scipy import signal
 import Methods
 
 import numpy as np
@@ -11,10 +12,10 @@ def correlation_pearson(x, y):
     return c[0, 1]
 
 
-def coherence(x, y):
+def coherence(x, y, fs=1000):
 
-    c = (x*y) / (x)
-    return c[0, 1]
+    f, c = signal.coherence(x, y, fs=fs)
+    return f, c
 
 
 def coherence_granger(x, y, lag=2, test='lrtest'): # Incomplete
@@ -275,7 +276,7 @@ def time_power_spectrum_density(data=None, key='key', save=True, bands=True
     return np.array(tpsd), freqs, ts
 
 
-def time_spectral_coherence(data=None, trials=None, ts=None):
+def time_spectral_correlation(data=None, trials=None, ts=None):
     
     tsc = np.zeros([data.shape[0], data.shape[1], data.shape[1], data.shape[3]])
     
@@ -285,7 +286,7 @@ def time_spectral_coherence(data=None, trials=None, ts=None):
         for i in range(len(ts)-1):
             
             
-            tsc[i, :, :, t] = spectral_coherence(psd=data[i, :, :, t])
+            tsc[i, :, :, t] = spectral_correlation(psd=data[i, :, :, t])
             
     
     return tsc

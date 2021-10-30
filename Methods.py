@@ -1,4 +1,5 @@
 import plotly.graph_objects as go
+import plotly.express as px
 import numpy as np
 
 import plotly
@@ -92,6 +93,27 @@ def psplot(x, save=True, show=True, filename="psp.html", w=300, h=200, t=None,
     return
 
 
+def customlineplot(x=None, y=None, save=False, show=True, filename="plot.html"
+               ,xlabel="T", ylabel="A", title="Plot"):
+    
+        print("Plotting, preprocessing ...")
+        fig = px.line(x=x, y=y, title=title)    
+    
+        # if reverse==True: 
+        #     fig.update_layout(
+        #         yaxis = dict(autorange="reversed")
+        #     )
+    
+        if save==True:
+            plotly.offline.plot(fig, filename=filename)
+        
+        if show==True:
+            fig.show()
+        
+        print("Done.")
+        return
+    
+    
 def customplot(x, save=True, show=True, filename="plot.html"
                , w=300, h=200, t=None, y=None, relative=True
                ,xlabel="T", ylabel="A", title="Plot", reverse=None
