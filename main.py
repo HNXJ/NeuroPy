@@ -15,18 +15,11 @@ import numpy as np
 
 ##############################################################################
 
-t = 51
-s = dataset.signals['pfc']
-k = s.shape[1]
-c = np.zeros([k, k])
-for i in range(s.shape[1]):
-    for j in range(s.shape[1]):
-        
-        f, ch = Connect.coherence(s[:, i, t], s[:, j, t], fs=1000)
-        r = np.sum(f < 100)
-        l = np.sum(f < 7)
-        c[i, j] = np.mean(ch[l:r])
 
-# TODO
+# TODO tSNE
 
-
+### PSD in time windows
+tpsd, freqs, times = Connect.time_power_spectrum_density(data=dataset.signals['pfc']
+                                , save=True, bands=True
+                                , time_window_size=500, time_overlap=50
+                                , trials=trials, bw=50, tl=0, tr=4000, time_base=-1500)
