@@ -15,12 +15,17 @@ import numpy as np
 
 ##############################################################################
 
-x = dataset.signals['pfc'][:, 1, 1]
-y = dataset.signals['pfc'][:, 2, 1]
-f, c = Connect.coherence(x, y, fs=1000)
-Methods.customlineplot(f, c)
-# TSNE and PCA
-
+t = 51
+s = dataset.signals['pfc']
+k = s.shape[1]
+c = np.zeros([k, k])
+for i in range(s.shape[1]):
+    for j in range(s.shape[1]):
+        
+        f, ch = Connect.coherence(s[:, i, t], s[:, j, t], fs=1000)
+        r = np.sum(f < 100)
+        l = np.sum(f < 7)
+        c[i, j] = np.mean(ch[l:r])
 
 # TODO
 

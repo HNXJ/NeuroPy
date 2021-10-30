@@ -292,6 +292,39 @@ def time_spectral_correlation(data=None, trials=None, ts=None):
     return tsc
 
 
+def time_spectral_coherence(data=None, time_window_size=500, time_overlap=100
+                                , trials=None, bw=40, tl=0, tr=4500, time_base=0
+                                , fs=1000):
+    
+    lam = data[:, :, trials]
+    
+    tq = time_window_size-time_overlap
+    ts = [i for i in range(tl+time_window_size, tr, tq)]
+    c = np.zeros([len(ts), lam.shape[1], lam.shape[1], len(trials)])
+    print("Dynamic spectral cohernece, it will take a while. log of progress will be printed.")
+    for tr in range(len(trials)):
+        
+        print(tr)
+        for t in range(len(ts)):
+            
+            for i in range(lam.shape[1]):
+                for j in range(lam.shape[1]):
+                    
+                    f, ch = coherence(lam[ts[t]-time_window_size:ts[t], i, tr]
+                                              , lam[ts[t]-time_window_size:ts[t], j, tr]
+                                              , fs=fs)
+                    r = np.sum(f < 100)
+                    l = np.sum(f < 7)
+                    c[t, i, j, tr] = np.mean(ch[l:r])
+                    
+                
+    ts.append(ts[len(ts)-1] + time_window_size)
+    for t in range(len(ts)):
+        ts[t] += time_base - time_window_size
+        
+    return c, ts, f[r:l]
+
+
 def time_granger_causality(data=None, time_window_size=500, time_overlap=100
                                 , trials=None, bw=40, tl=0, tr=4500, time_base=0):
     
