@@ -5,6 +5,7 @@ import Viewer
 import Learning
 
 import numpy as np
+import pandas as pd
 
 
 # dataset = Datasets.Dataset()
@@ -26,8 +27,11 @@ import numpy as np
 #                                 , trials=trials, bw=50, tl=0, tr=4000, time_base=-1500)
 # Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd.txt")
 
-x = tpsd[5, :, :, :].reshape([-1, 600]).transpose()
-y = (np.array(trials)//50)%2
-Learning.tsne_cluster(X=x, Y=y, components=3, visualize=True, iterations=1000
-              , tit=None, save=False, name="")
+# x = tpsd[5, :, :, :100].reshape([-1, 100]).transpose()
+# y = (np.array(trials)//50)%2
+X = Learning.tsne_cluster(X=x, Y=y[:100], components=3, visualize=False
+                          , iterations=100000, tit=None, save=False, name="")
+
+
+
 
