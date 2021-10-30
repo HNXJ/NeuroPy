@@ -58,9 +58,9 @@ import numpy as np
 # tsc = Connect.time_spectral_correlation(data=tpsd, trials=[1, 2], ts=times)
 
 ### Spectral cohernece in time windows
-tsch, times, fr = Connect.time_spectral_coherence(data=dataset.signals['pfc'], time_window_size=500
-                                , time_overlap=0, trials=trials, bw=50, tl=0
-                                , tr=3500, time_base=-1500)
+# tsch, times, fr = Connect.time_spectral_coherence(data=dataset.signals['pfc'], time_window_size=500
+#                                 , time_overlap=0, trials=[0, 1, 2], bw=50, tl=0
+#                                 , tr=3500, time_base=-1500)
 # ### Average TSC
 # tsc_m = np.zeros([tsc.shape[0], tsc.shape[1], tsc.shape[2], 12]) 
 # for i in range(12):
@@ -83,8 +83,12 @@ tsch, times, fr = Connect.time_spectral_coherence(data=dataset.signals['pfc'], t
 # Viewer.run(data=tpsd, fqs=freqs, title="PSD in time, pfc area ", bands=True
 #             , xlabel="Frequency", ylabel="Channel", fr=times, tr=trials)
 
-# Viewer.run(data=tsc, fqs=freqs, title="Spectral coherence in time, V4 area ", bands=False
+# Viewer.run(data=tsc, fqs=freqs, title="Spectral correlation in time, V4 area ", bands=False
 #             , xlabel="Frequency", ylabel="Channel", fr=times, tr=trials)
+
+# Viewer.run(data=tsch, fqs=fr, title="Spectral coherence in time, PFC area ", bands=False
+#             , xlabel="Frequency", ylabel="Channel", fr=times, tr=trials)
+
 
 # Viewer.run(data=tgc, fqs=freqs, title="Granger causality in time, pfc area "
 #             , xlabel="Frequency", ylabel="Channel", fr=times, tr=trials)
