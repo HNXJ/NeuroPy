@@ -7,7 +7,7 @@ import numpy as np
 
 
 dataset = Datasets.Dataset()
-dataset.load_laminar_data(filename="Data/data.mat")
+dataset.load_laminar_data(path="Data/")
 dataset.print_all_content()
 trials_block = dataset.get_trials(key='block', l=0, r=600)
 trials_trial = dataset.get_trials(key='trial', l=0, r=600)
