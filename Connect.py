@@ -355,6 +355,7 @@ def time_granger_causality(data=None, time_window_size=500, time_overlap=100
 
 def time_pca_cluster(data=None, y=None, dim=3, trials=None, times=None, title="", name="Plot"):
 
+    data[np.isnan(data)] = 0
     X = np.zeros([data.shape[0], len(trials), dim])
     
     for i in range(data.shape[0]):    
@@ -371,10 +372,12 @@ def time_pca_cluster(data=None, y=None, dim=3, trials=None, times=None, title=""
 
 def time_tsne_cluster(data=None, y=None, dim=3, perplx=5, learning_rate=10, 
                       n_iter=1000, trials=None, times=None, title="", name="Plot"):
-
-    X = np.zeros([data.shape[0], len(trials), dim])
     
+    data[np.isnan(data)] = 0
+    X = np.zeros([data.shape[0], len(trials), dim])
+    print("tSNE on time started, progress will be printed due to computational time.")
     for i in range(data.shape[0]):    
+        print("Frame window no. ", i)
         x = data[i, :, :, trials].reshape([-1, len(trials)]).transpose()
         X[i, :, :] = Learning.tsne_cluster(X=x, Y=y, components=dim, perplx=perplx,
                                            learning_rate=learning_rate, visualize=False,

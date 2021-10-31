@@ -18,26 +18,30 @@ import pandas as pd
 ##############################################################################
 
 
-trials = [i for i in range(600)]
+trials = [i for i in range(100, 200)]
 
-### PSD in time windows
-tpsd, freqs, times = Connect.time_power_spectrum_density(data=dataset.signals['pfc']
-                                , save=True, bands=True
-                                , time_window_size=100, time_overlap=10
-                                , trials=trials, bw=50, tl=0, tr=4000, time_base=-1500)
-Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-100ms.txt")
-# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd.txt")
+# ### PSD in time windows
+# tpsd, freqs, times = Connect.time_power_spectrum_density(data=dataset.signals['pfc']
+#                                 , save=True, bands=True
+#                                 , time_window_size=100, time_overlap=10
+#                                 , trials=trials, bw=50, tl=0, tr=4000, time_base=-1500)
+# Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-100ms.txt")
+[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-100ms.txt")
 
-# dim = 3
-# title = "PCA-PSD" + str(dim)
 # trials = [i for i in range(30, 70, 1)]
-# y = (np.array(trials)//50)%2
+
+tpsd[np.isnan(tpsd)] = 0
+for i in range(600):
+    tpsd[:, :, :, i] -= np.min(np.min(np.min(tpsd[:, :, :, i])))
+    tpsd[:, :, :, i] /= np.mean(np.mean(np.mean(tpsd[:, :, :, i])))
+    
+y = (np.array(trials)//50)%2
 
 
 
 # Connect.time_pca_cluster(data=tpsd, y=y, trials=trials, dim=3, times=times, title="TPCA3D", name="TPCA3D")
-# Connect.time_tsne_cluster(data=tpsd, y=y, trials=trials, dim=3, perplx=5, learning_rate=10, 
-#                       n_iter=1000, trials=None, times=None, title="tSNE in time", name="TtSNE3D")
+Connect.time_tsne_cluster(data=tpsd, y=y, trials=trials, dim=3, perplx=40, learning_rate=30, 
+                      n_iter=5000, times=times, title="tSNE in time", name="TtSNE3D")
 
 
 
