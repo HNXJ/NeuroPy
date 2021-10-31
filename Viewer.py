@@ -163,37 +163,40 @@ def create_app_scatter(data=None, y=None, dim=3, frames=3, title="T", xlabel="C"
         x = data[int(value1)-1, :, :]
         cat = y
         tit = title + ", Frame no. " + str(int(value1)) + " for t in range [" + str(fr[int(value1)-1]) + "] - [" + str(fr[int(value1)]) + "]"
-    
+
         if dim==2:
-            return {
-                'data':[go.Heatmap(z=im, y=y, x=bandlabels)]
-                , 'layout': go.Layout(autosize=False,
-                        width=1420,
-                        height=600,
-                        title=tit,
-                        xaxis=dict(title=xlabel),
-                        yaxis=dict(title=ylabel)
-                        )
-                }
+            df = pd.DataFrame({
+            'cat':cat, 'col_x':x[:, 0], 'col_y':x[:, 1]
+            })
+            df.head()
+            
+             
+            fig = px.scatter(df, x='col_x', y='col_y',
+                                color='cat',
+                                title=tit)
+            
+            fig.update_layout(
+                width=1420,
+                height=600,
+            )
+            
+            return fig
         
         elif dim==3:
             df = pd.DataFrame({
             'cat':cat, 'col_x':x[:, 0], 'col_y':x[:, 1], 'col_z':x[:, 2]
             })
             df.head()
+            fig = px.scatter_3d(df, x='col_x', y='col_y', z='col_z',
+                                color='cat',
+                                title=tit)
             
-            return {
-                'data':[px.scatter_3d(df, x='col_x', y='col_y', z='col_z',
-                                    color='cat',
-                                    title=tit)]
-                , 'layout': go.Layout(autosize=False,
-                        width=1420,
-                        height=600,
-                        title=tit,
-                        xaxis=dict(title=xlabel),
-                        yaxis=dict(title=ylabel)
-                        )
-                }
+            fig.update_layout(
+                width=1420,
+                height=600,
+            )
+            
+            return fig
     
     return app
 
