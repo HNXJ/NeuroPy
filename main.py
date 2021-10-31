@@ -26,8 +26,10 @@ import pandas as pd
 #                                 , time_window_size=500, time_overlap=50
 #                                 , trials=trials, bw=50, tl=0, tr=4000, time_base=-1500)
 # Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd.txt")
+[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd.txt")
 
-x = tpsd[4:6, :, :, 40:60].reshape([-1, 20]).transpose()
+trials = [i for i in range(40, 60, 1)]
+x = tpsd[4:6, :, :, ].reshape([-1, 20]).transpose()
 y = (np.array(trials)//50)%2
 
 X = Learning.tsne_cluster(X=x, Y=y[40:60], components=3, visualize=True
