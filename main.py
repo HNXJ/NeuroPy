@@ -28,11 +28,11 @@ import pandas as pd
 # Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-100ms.txt")
 # [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-100ms.txt")
 
-dim = 2
+dim = 3
 trials = [i for i in range(30, 70, 1)]
 x = tpsd[4:5, :, :, trials].reshape([-1, len(trials)]).transpose()
 y = (np.array(trials)//50)%2
-X = np.zeros([tpsd.shape[0], x.shape[0], dim])
+X = np.zeros([tpsd.shape[0], len(trials), dim])
 
 for i in range(tpsd.shape[0]):    
     x = tpsd[i, :, :, trials].reshape([-1, len(trials)]).transpose()

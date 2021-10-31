@@ -105,6 +105,17 @@ import numpy as np
 #             , xlabel="Frequency", ylabel="Channel", fr=times, tr=[i for i in range(12)])
 
 
+# ### Clustering
+
+# X = Learning.pca_cluster(X=x, Y=y, components=dim, visualize=True, tit="PFC-PSD-PCA"
+#             , save=True, name="pcapfcpsd")
+
+# X = Learning.tsne_cluster(X=x, Y=y, components=3, perplx=3, learning_rate=10, visualize=True
+#                           , iterations=10000, tit="3D-PFC-PSD-tSNE"
+#                           , save=True, name="3dpfctsne")
+
+
+
 # ### Demos
 # run_1(11, 61, 5)
 # run_2(3, 2, 5)
