@@ -235,7 +235,8 @@ def power_spectrum_density(data=None, save=False,
         if k > 0:
             for i in range(ps_pfc.shape[0]-k, ps_pfc.shape[0]):
                 ps_pfc[i, :] /= np.max(np.max(ps_pfc[i, :]))
-        
+       
+    ps_pfc[np.isnan(ps_pfc)] = 0
     return ps_pfc, f
 
 

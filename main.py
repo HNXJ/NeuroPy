@@ -21,7 +21,7 @@ warnings.filterwarnings("ignore")
 ##############################################################################
 
 
-trials = [i for i in range(100, 200)]
+# trials = [i for i in range(600)]
 
 # ### PSD in time windows
 # tpsd, freqs, times = Connect.time_power_spectrum_density(data=dataset.signals['pfc']
@@ -30,23 +30,24 @@ trials = [i for i in range(100, 200)]
 #                                 , trials=trials, bw=50, tl=0, tr=4000,
 #                                   time_base=-1500)
 # Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-250ms.txt")
-# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd.txt")
+[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-250ms.txt")
+# tsc = Connect.time_spectral_correlation(data=tpsd, trials=trials, ts=times)
+# Datasets.save_list([tsc], "Data/1-600-tsc-250ms.txt")
+trials = [i for i in range(200, 300, 1)]
 
-# trials = [i for i in range(30, 70, 1)]
-
-tpsd[np.isnan(tpsd)] = 0
-for i in range(600):
-    tpsd[:, :, :, i] -= np.min(np.min(np.min(tpsd[:, :, :, i])))
-    tpsd[:, :, :, i] /= np.mean(np.mean(np.mean(tpsd[:, :, :, i])))
+# tpsd[np.isnan(tpsd)] = 0
+# for i in range(600):
+#     tpsd[:, :, :, i] -= np.min(np.min(np.min(tpsd[:, :, :, i])))
+#     tpsd[:, :, :, i] /= np.mean(np.mean(np.mean(tpsd[:, :, :, i])))
     
 y = (np.array(trials)//50)%2
 
-
-# Connect.time_pca_cluster(data=tpsd, y=y, trials=trials, dim=3, times=times, title="TPCA3D", name="TPCA3D")
-Connect.time_tsne_cluster(data=tpsd[:, 3:15, 2:6, :], y=y, trials=trials, dim=3, perplx=70, learning_rate=100, 
+Connect.time_tsne_cluster(data=tpsd[:, 3:15, 2:6, :], y=y, trials=trials, dim=3, perplx=70, learning_rate=10, 
                       n_iter=5000, times=times, title="tSNE in time", name="TtSNE3D")
 
-
-
+### Best tSNE/PCAs
+# Connect.time_pca_cluster(data=tpsd, y=y, trials=trials, dim=3, times=times, title="TPCA3D", name="TPCA3D")
+# Connect.time_tsne_cluster(data=tpsd[:, 3:15, 2:6, :], y=y, trials=trials, dim=3, perplx=70, learning_rate=10, 
+#                       n_iter=5000, times=times, title="tSNE in time", name="TtSNE3D")
 
 
