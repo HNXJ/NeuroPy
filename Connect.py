@@ -1,8 +1,10 @@
 # from matplotlib import pyplot as plt ### Not used
 from statsmodels.tsa.stattools import grangercausalitytests as gct
 from scipy import signal
-import Methods
 
+import Viewer
+import Methods
+import Learning
 import numpy as np
 
 
@@ -350,4 +352,37 @@ def time_granger_causality(data=None, time_window_size=500, time_overlap=100
         
     return tgc, ts
 
+
+def time_pca_cluster(data=None, y=None, dim=3, trials=None, times=None, title="", name="Plot"):
+
+    X = np.zeros([data.shape[0], len(trials), dim])
+    
+    for i in range(data.shape[0]):    
+        x = data[i, :, :, trials].reshape([-1, len(trials)]).transpose()
+        X[i, :, :] = Learning.pca_cluster(X=x, Y=y, components=dim,
+                                          visualize=False, tit=title,
+                                          save=True, name=name)
+        
+    Viewer.scatter(data=X, y=y, dim=dim, frames=data.shape[0], title=title,
+                   xlabel="", ylabel="", fr=times, tr=None, bands=False)
+    
+    return
+
+
+def time_tsne_cluster(data=None, y=None, dim=3, perplx=5, learning_rate=10, 
+                      n_iter=1000, trials=None, times=None, title="", name="Plot"):
+
+    X = np.zeros([data.shape[0], len(trials), dim])
+    
+    for i in range(data.shape[0]):    
+        x = data[i, :, :, trials].reshape([-1, len(trials)]).transpose()
+        X[i, :, :] = Learning.tsne_cluster(X=x, Y=y, components=dim, perplx=perplx,
+                                           learning_rate=learning_rate, visualize=False,
+                                           iterations=n_iter, tit=title,
+                                           save=True, name=name)
+        
+    Viewer.scatter(data=X, y=y, dim=dim, frames=data.shape[0], title="TSNE cluster in time",
+                   xlabel="", ylabel="", fr=times, tr=None, bands=False)
+    
+    return
 

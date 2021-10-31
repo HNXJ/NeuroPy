@@ -176,8 +176,8 @@ def create_app_scatter(data=None, y=None, dim=3, frames=3, title="T", xlabel="C"
                                 title=tit)
             
             fig.update_layout(
-                width=1420,
-                height=600,
+                width=1440,
+                height=680,
             )
             
             return fig
@@ -192,8 +192,8 @@ def create_app_scatter(data=None, y=None, dim=3, frames=3, title="T", xlabel="C"
                                 title=tit)
             
             fig.update_layout(
-                width=1420,
-                height=600,
+                width=1440,
+                height=680,
             )
             
             return fig

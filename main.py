@@ -26,25 +26,18 @@ import pandas as pd
 #                                 , time_window_size=100, time_overlap=10
 #                                 , trials=trials, bw=50, tl=0, tr=4000, time_base=-1500)
 # Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-100ms.txt")
-# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-100ms.txt")
+[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd.txt")
 
 dim = 3
+title = "PCA-PSD" + str(dim)
 trials = [i for i in range(30, 70, 1)]
-x = tpsd[4:5, :, :, trials].reshape([-1, len(trials)]).transpose()
 y = (np.array(trials)//50)%2
-X = np.zeros([tpsd.shape[0], len(trials), dim])
 
-for i in range(tpsd.shape[0]):    
-    x = tpsd[i, :, :, trials].reshape([-1, len(trials)]).transpose()
-    X[i, :, :] = Learning.pca_cluster(X=x, Y=y, components=dim, visualize=False, tit="PFC-PSD-PCA"
-                , save=True, name="pcapfcpsd")
 
-# X = Learning.tsne_cluster(X=x, Y=y, components=3, perplx=3, learning_rate=10, visualize=True
-#                           , iterations=10000, tit="3D-PFC-PSD-tSNE"
-#                           , save=True, name="3dpfctsne")
 
-Viewer.scatter(data=X, y=y, dim=dim, frames=8, title="PCA cluster 2d in time", xlabel="", ylabel=""
-        ,fr=None, tr=None, bands=False)
+Connect.time_pca_cluster(data=tpsd, y=y, trials=trials, dim=3, times=times, title="TPCA3D", name="TPCA3D")
+# Connect.time_tsne_cluster(data=tpsd, y=y, trials=trials, dim=3, perplx=5, learning_rate=10, 
+#                       n_iter=1000, trials=None, times=None, title="tSNE in time", name="TtSNE3D")
 
 
 
