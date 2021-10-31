@@ -23,10 +23,10 @@ def pca_cluster(X=None, Y=None, components=2, visualize=True, tit=None, save=Fal
     return x
 
 
-def tsne_cluster(X=None, Y=None, components=2, visualize=True, iterations=100, tit=None, save=False, name=""):
+def tsne_cluster(X=None, Y=None, components=2, perplx=10, learning_rate=10, visualize=True, iterations=100, tit=None, save=False, name=""):
     
-    tsne = TSNE(n_components=components, n_iter=iterations, perplexity=7,
-                learning_rate=100, init='random')
+    tsne = TSNE(n_components=components, n_iter=iterations, perplexity=perplx,
+                learning_rate=learning_rate, init='random')
     x = tsne.fit_transform(X, Y)
     x = x - np.min(np.min(x))
     x = x / np.max(np.max(x))
@@ -38,7 +38,7 @@ def tsne_cluster(X=None, Y=None, components=2, visualize=True, iterations=100, t
 
 
 def cluster_plot_plotly(X=None, Y=None, tit=None, save=False, name=""):
-    
+
     if X.shape[1] == 2:        
         scatter_2d_plotly(X, Y, tit, save, name)
     
