@@ -6,7 +6,10 @@ import Learning
 
 import numpy as np
 import pandas as pd
+import warnings
 
+
+warnings.filterwarnings("ignore")
 
 # dataset = Datasets.Dataset()
 # dataset.load_laminar_data(path="Data/")
@@ -18,7 +21,7 @@ import pandas as pd
 ##############################################################################
 
 
-trials = [i for i in range(100, 200)]
+trials = [i for i in range(140, 160)]
 
 # ### PSD in time windows
 # tpsd, freqs, times = Connect.time_power_spectrum_density(data=dataset.signals['pfc']
@@ -36,7 +39,6 @@ for i in range(600):
     tpsd[:, :, :, i] /= np.mean(np.mean(np.mean(tpsd[:, :, :, i])))
     
 y = (np.array(trials)//50)%2
-
 
 
 # Connect.time_pca_cluster(data=tpsd, y=y, trials=trials, dim=3, times=times, title="TPCA3D", name="TPCA3D")
