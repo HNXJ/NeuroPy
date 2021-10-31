@@ -60,8 +60,6 @@ def create_app(data=None, fqs=None, trials=3, frames=3, title="T", xlabel="C"
             ]) 
     def update_1(value1, value2):
         
-        # if n_clicks is None:
-        #     return dash.no_update
         im = data[int(value2)-1, :, :, trial_ind[int(value1)]]
         y = np.array([data.shape[1] - i for i in range(data.shape[1])])
         
@@ -75,20 +73,6 @@ def create_app(data=None, fqs=None, trials=3, frames=3, title="T", xlabel="C"
                       , "L-Beta[12-16]", "M-Beta[16-20]", "U-Beta[20-30]"
                       , "L-Gamma[30-50]", "M-Gamma[50-70]", "U-Gamma[70+]"]
         
-        # annotations = []
-        # for i in range(k):
-        #     annotation = {
-        #         'x': ((i+0.1)),
-        #         'y': 0.5,
-        #         'xref': 'x',
-        #         'yref': 'y',
-        #         'text': bandlabels[i],
-        #         'align': 'center',
-        #         'ay': 0,
-        #         'opacity': 0,
-        #         'bgcolor': 'green',
-        #     }
-        #     annotations.append(annotation)
         if bands:
             return {
                 'data':[go.Heatmap(z=im, y=y, x=bandlabels)]
@@ -116,22 +100,12 @@ def create_app(data=None, fqs=None, trials=3, frames=3, title="T", xlabel="C"
 
 
 def create_app_scatter(data=None, y=None, dim=3, frames=3, title="T", xlabel="C"
-               , ylabel="C", fr=None, tr=None, bands=False):
+               , ylabel="C", fr=None, trials=None, bands=False):
         
     app = dash.Dash(__name__)
     
     app.layout = html.Div([
-        # html.Button('update', id='update'),
-        # dcc.Dropdown(
-        #     id='trial',
-        #     options=[{'label': int(i+1), 'value': int(i)} for i in tr],
-        #     value=tr[0]
-        # ),
-        # dcc.Dropdown(
-        #     id='frame',
-        #     options=[{'label': int(i+1), 'value': int(i)} for i in range(len(fr)-1)],
-        #     value='0'
-        # ),
+
         dcc.Graph(id='updated-graph')
         ,
         dcc.Slider(
@@ -166,7 +140,7 @@ def create_app_scatter(data=None, y=None, dim=3, frames=3, title="T", xlabel="C"
 
         if dim==2:
             df = pd.DataFrame({
-            'cat':cat, 'col_x':x[:, 0], 'col_y':x[:, 1]
+            'cat':cat, 'col_x':x[:, 0], 'col_y':x[:, 1], 'trial':trials
             })
             df.head()
             
@@ -184,11 +158,12 @@ def create_app_scatter(data=None, y=None, dim=3, frames=3, title="T", xlabel="C"
         
         elif dim==3:
             df = pd.DataFrame({
-            'cat':cat, 'col_x':x[:, 0], 'col_y':x[:, 1], 'col_z':x[:, 2]
+            'cat':cat, 'col_x':x[:, 0], 'col_y':x[:, 1],
+            'col_z':x[:, 2], 'trial':trials
             })
             df.head()
             fig = px.scatter_3d(df, x='col_x', y='col_y', z='col_z',
-                                color='cat',
+                                color='cat', text='trial',
                                 title=tit)
             
             fig.update_layout(
@@ -213,12 +188,12 @@ def heatmap(data=None, fqs=None, trials=1, frames=1, title="", xlabel="", ylabel
     
 
 def scatter(data=None, y=None, dim=3, frames=1, title="", xlabel="", ylabel=""
-        ,fr=None, tr=None, bands=False):
+        ,fr=None, trials=None, bands=False):
     
     if fr==None:
         fr = [i for i in range(frames + 1)]
         
     app = create_app_scatter(data=data, y=y, dim=dim, frames=frames, title=title
-                     , xlabel=xlabel, ylabel=ylabel, fr=fr, tr=tr, bands=bands)
+                     , xlabel=xlabel, ylabel=ylabel, fr=fr, trials=trials, bands=bands)
     app.run_server(debug=False, use_reloader=False)
 

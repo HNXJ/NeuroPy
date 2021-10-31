@@ -21,7 +21,7 @@ warnings.filterwarnings("ignore")
 ##############################################################################
 
 
-trials = [i for i in range(140, 160)]
+trials = [i for i in range(120, 180)]
 
 # ### PSD in time windows
 # tpsd, freqs, times = Connect.time_power_spectrum_density(data=dataset.signals['pfc']
@@ -29,7 +29,7 @@ trials = [i for i in range(140, 160)]
 #                                 , time_window_size=100, time_overlap=10
 #                                 , trials=trials, bw=50, tl=0, tr=4000, time_base=-1500)
 # Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-100ms.txt")
-[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-100ms.txt")
+[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd.txt")
 
 # trials = [i for i in range(30, 70, 1)]
 
