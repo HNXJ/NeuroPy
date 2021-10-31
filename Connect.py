@@ -365,7 +365,7 @@ def time_pca_cluster(data=None, y=None, dim=3, trials=None, times=None, title=""
                                           save=True, name=name)
         
     Viewer.scatter(data=X, y=y, dim=dim, frames=data.shape[0], title=title,
-                   xlabel="", ylabel="", fr=times, tr=None, bands=False)
+                   xlabel="", ylabel="", fr=times, trials=trials, bands=False)
     
     return
 
