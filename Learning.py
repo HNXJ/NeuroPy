@@ -127,14 +127,15 @@ def scatter_2d_plotly(X=None, Y=None, tit=None, save=False, name=""):
 
 def scatter_3d_plotly(X=None, Y=None, tit=None, save=False, name=""):
     
+    tt = [i for i in range(X.shape[0])]
     df = pd.DataFrame({
-    'cat':Y, 'col_x':X[:, 0], 'col_y':X[:, 1], 'col_z':X[:, 2]
+    'cat':Y, 'col_x':X[:, 0], 'col_y':X[:, 1], 'col_z':X[:, 2], 'trial':tt
     })
     df.head()
     
      
     fig = px.scatter_3d(df, x='col_x', y='col_y', z='col_z',
-                        color='cat',
+                        color='cat', text='trial',
                         title=tit)
      
     if save:       
