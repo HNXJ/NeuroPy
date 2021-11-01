@@ -99,11 +99,6 @@ def customlineplot(x=None, y=None, save=False, show=True, filename="plot.html"
         print("Plotting, preprocessing ...")
         fig = px.line(x=x, y=y, title=title)    
     
-        # if reverse==True: 
-        #     fig.update_layout(
-        #         yaxis = dict(autorange="reversed")
-        #     )
-    
         if save==True:
             plotly.offline.plot(fig, filename=filename)
         
