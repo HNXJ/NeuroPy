@@ -1,14 +1,14 @@
-import os
-import numpy as np
-import pandas as pd
-
-from sklearn.manifold import TSNE
-from matplotlib import pyplot as plt
 from sklearn.decomposition import PCA
+from matplotlib import pyplot as plt
+from sklearn.manifold import TSNE
 
 import plotly.express as px
+import pandas as pd
+import numpy as np
 import plotly
  
+import os
+
 
 def pca_cluster(X=None, Y=None, components=2, visualize=True, tit=None, save=False, name=""):
     
