@@ -48,18 +48,13 @@ warnings.filterwarnings("ignore")
 # trials = [i for i in range(100, 300, 1)]
 
 ### GC is time windows
-tgc, times = Connect.time_granger_causality(data=dataset.signals['pfc'],
-                                        time_window_size=250, time_overlap=0,
-                                        trials=trials, bw=50, tl=0, tr=4000,
-                                        time_base=-1500)
+# tgc, times = Connect.time_granger_causality(data=dataset.signals['pfc'],
+#                                         time_window_size=250, time_overlap=0,
+#                                         trials=trials, bw=50, tl=0, tr=4000,
+#                                         time_base=-1500)
 
-Methods.save_list([tgc, times], "Data/1-600-tgc-250ms.txt")
+# Methods.save_list([tgc, times], "Data/1-600-tgc-250ms.txt")
 
-# tpsd[np.isnan(tpsd)] = 0
-# for i in range(600):
-#     tpsd[:, :, :, i] -= np.min(np.min(np.min(tpsd[:, :, :, i])))
-#     tpsd[:, :, :, i] /= np.mean(np.mean(np.mean(tpsd[:, :, :, i])))
-    
 # y = (np.array(trials)//50)%2
 
 
