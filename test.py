@@ -143,19 +143,5 @@ def run_2(trial1=1, trial2=2, f=4): # single trial psd ratios
 
     return
 
-def run_ratio_tpsd(tps=None, t1=1, t2=2):
-
-    trp = []
-    for i in range(tps.shape[0]):
-        
-        trp.append(tps[i, :, :, t1]/tps[i, :, :, t2])
-    
-    trp = np.array(trp).reshape([tps.shape[0], tps.shape[1], tps.shape[2], 1])
-
-    # trpsd1 = trpsd(tps=tpsd_m, t1=1, t2=2)
-    Viewer.run(data=trpsd1, fqs=freqs, title="Max SP in time, pfc area on {}-{} x50".format(t1, t2), bands=True
-               , xlabel="Frequency", ylabel="Channel", fr=times, tr=[1])
-
-    return
 
 
