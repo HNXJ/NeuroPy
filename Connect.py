@@ -163,7 +163,7 @@ def granger_plotter(data=None, key='pfc', save=False,
         title = title + ",Normalized relative to other channels"
         
     print("Granger test started ...")
-    c = granger_cohernece(psd=ps_pfc.transpose())
+    c = granger_coherence(psd=ps_pfc.transpose())
             
     print("Granger p_values calculation done.")
     t = np.linspace(1, 17, 16)
