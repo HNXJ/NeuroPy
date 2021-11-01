@@ -61,6 +61,10 @@ import numpy as np
 # Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd.txt")
 # [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd.txt")
 
+
+##############################################################################
+
+
 # # Average PSD
 # tpsd_m = np.zeros([tpsd.shape[0], tpsd.shape[1], tpsd.shape[2], 12]) 
 # for i in range(12):
@@ -78,6 +82,10 @@ import numpy as np
 # for i in range(12):
 #     tsc_m[:, :, :, i] = np.mean(tsc[:, :, :, i*50:(i+1)*50], 3)
 
+
+##############################################################################
+
+
 # ### GC is time windows
 # tgc, times = Connect.time_granger_causality(data=dataset.signals['pfc'], time_window_size=500
 #                                 , time_overlap=0, trials=trials, bw=50, tl=0
@@ -90,6 +98,9 @@ import numpy as np
 # tgc_m = np.zeros([tgc.shape[0], tgc.shape[1], tgc.shape[2], 12]) 
 # for i in range(12):
 #     tgc_m[:, :, :, i] = np.mean(tgc[:, :, :, i*5:(i+1)*5], 3)
+
+
+##############################################################################
 
 
 # Viewer.heatmap(data=tpsd, fqs=freqs, title="PSD in time, pfc area ", bands=True
