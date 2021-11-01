@@ -21,3 +21,8 @@ Some visualization examples:
 ### Channelwise pectral power density (after pink noise removal) 
 
 <img src="https://github.com/HNXJ/PlotlyDraft/blob/main/Images/SMC40.png" width="1200"/>
+
+### tSNE clustering on PSD, two classes of mental state
+
+<img src="https://github.com/HNXJ/PlotlyDraft/blob/main/Images/tSNE250-100-70.png" width="1200"/>
+
