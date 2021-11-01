@@ -63,6 +63,7 @@ warnings.filterwarnings("ignore")
 # Connect.time_tsne_cluster(data=tpsd[:, 3:16, 3:16, :], y=y, trials=trials, dim=3, perplx=120, learning_rate=70, 
 #                       n_iter=5000, times=times, title="tSNE in time for granger causality values", name="TtSNE3DGC")
 
+
 ### Best tSNE/PCAs
 # Connect.time_pca_cluster(data=tpsd, y=y, trials=trials, dim=3, times=times, title="TPCA3D", name="TPCA3D")
 # Connect.time_tsne_cluster(data=tpsd[:, 3:15, 2:6, :], y=y, trials=trials, dim=3, perplx=70, learning_rate=10, 

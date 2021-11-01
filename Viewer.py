@@ -22,11 +22,6 @@ def create_app(data=None, fqs=None, trials=3, frames=3, title="T", xlabel="C"
             options=[{'label': int(i+1), 'value': int(i)} for i in tr],
             value=tr[0]
         ),
-        # dcc.Dropdown(
-        #     id='frame',
-        #     options=[{'label': int(i+1), 'value': int(i)} for i in range(len(fr)-1)],
-        #     value='0'
-        # ),
         dcc.Graph(id='updated-graph')
         ,
         dcc.Slider(
@@ -52,12 +47,12 @@ def create_app(data=None, fqs=None, trials=3, frames=3, title="T", xlabel="C"
     @app.callback(
             Output('updated-graph', 'figure')
             , inputs=[
-                # Input('update', 'n_clicks'), 
                 Input('trial', 'value'), Input('frame', 'value')
             ],
             states=[
                 State('trial', 'value'), State('frame', 'value')
             ]) 
+    
     def update_1(value1, value2):
         
         im = data[int(value2)-1, :, :, trial_ind[int(value1)]]
@@ -124,14 +119,12 @@ def create_app_scatter(data=None, y=None, dim=3, frames=3, title="T", xlabel="C"
     @app.callback(
             Output('updated-graph', 'figure')
             , inputs=[
-                # Input('update', 'n_clicks'), 
-                # Input('trial', 'value'), 
                 Input('frame', 'value')
             ],
             states=[
-                # State('trial', 'value'),
                 State('frame', 'value')
             ]) 
+    
     def update_1(value1):
         
         x = data[int(value1)-1, :, :]
