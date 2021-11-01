@@ -6,6 +6,9 @@ import Viewer
 import numpy as np
 
 
+##############################################################################
+
+
 # ### Load dataset
 
 # dataset = Datasets.Dataset()
@@ -15,12 +18,18 @@ import numpy as np
 # trials_trial = dataset.get_trials(key='trial', l=0, r=600)
 # trials = [i for i in range(0, 600, 1)]
 
+
+##############################################################################
+
     
 # ### Event related potential and current source density plots
 
 # Methods.ERP_plot(data=dataset.signals['pfc'], title="ERP of pfc for all trials", save=True, filename="ERP_plot")
 # Methods.CSD_plot(data=dataset.signals['v4'], title="Average CSD for all trials", save=True, filename="ACSD_plot")
   
+
+##############################################################################
+
 
 ### Power spectral density array in bands
 
@@ -31,6 +40,9 @@ import numpy as np
 #                 , w=251, h=16, t=freqs, y=[i for i in range(16)], relative=True
 #                 ,xlabel="T", ylabel="A", title="Plot", reverse=True
 #                 ,xtext=False, xtext_labels=[])
+
+
+##############################################################################
 
 
 # ### PSD ratio plotter
