@@ -128,6 +128,9 @@ import numpy as np
 #             , xlabel="Frequency", ylabel="Channel", fr=times, tr=[i for i in range(12)])
 
 
+##############################################################################
+
+
 # ### Clustering
 
 # X = Learning.pca_cluster(X=x, Y=y, components=dim, visualize=True, tit="PFC-PSD-PCA"
@@ -137,6 +140,8 @@ import numpy as np
 #                           , iterations=10000, tit="3D-PFC-PSD-tSNE"
 #                           , save=True, name="3dpfctsne")
 
+
+##############################################################################
 
 
 # ### Demos
@@ -167,4 +172,5 @@ def run_2(trial1=1, trial2=2, f=4): # single trial psd ratios
     return
 
 
+##############################################################################
 
