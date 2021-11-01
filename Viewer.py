@@ -169,7 +169,7 @@ def create_app_scatter(data=None, y=None, dim=3, frames=3, title="T", xlabel="C"
     return app
 
 
-def heatmap(data=None, fqs=None, trials=1, frames=1, title="", xlabel="", ylabel=""
+def heatmap(data=None, fqs=None, trials=1, frames=1, title="title", xlabel="x", ylabel="y"
         ,fr=None, tr=None, bands=False):
     
     if fr==None:
