@@ -16,22 +16,22 @@ warnings.filterwarnings("ignore")
 # dataset.print_all_content()
 # trials_block = dataset.get_trials(key='block', l=0, r=600)
 # trials_trial = dataset.get_trials(key='trial', l=0, r=600)
-trials = [i for i in range(200, 400, 1)]
+trials = [i for i in range(140, 360, 1)]
 
 ##############################################################################
 
 [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-250ms.txt")
 
 dim = 3
-# X = np.zeros([1, len(trials), dim])
-x = tpsd[4:5, :, :, trials].reshape([-1, len(trials)]).transpose()
-X = Learning.tsne_cluster(X=x, Y=y, components=dim, perplx=180,
-                                   learning_rate=100, visualize=True,
-                                   iterations=6000, tit="tSNE-it6000-px180-lr100",
+y = (np.array(trials)//50)%2
+x = tpsd[4:5, 3:15, 2:6, trials].reshape([-1, len(trials)]).transpose()
+X = Learning.tsne_cluster(X=x, Y=y, components=dim, perplx=7,
+                                   learning_rate=400, visualize=True,
+                                   iterations=3000, tit="tSNE-it6000-px180-lr100",
                                    save=True, name="plot")
     
-Viewer.scatter(data=X, y=y, dim=dim, frames=1, title="TSNE cluster in time",
-               xlabel="", ylabel="", fr=times, trials=trials, bands=False)
+# Viewer.scatter(data=X, y=y, dim=dim, frames=1, title="TSNE cluster in time",
+#                xlabel="", ylabel="", fr=times, trials=trials, bands=False)
 
 # trials = [i for i in range(600)]
 
