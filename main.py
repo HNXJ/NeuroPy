@@ -11,15 +11,27 @@ import warnings
 
 warnings.filterwarnings("ignore")
 
-dataset = Datasets.Dataset()
-dataset.load_laminar_data(path="Data/")
-dataset.print_all_content()
-trials_block = dataset.get_trials(key='block', l=0, r=600)
-trials_trial = dataset.get_trials(key='trial', l=0, r=600)
-trials = [i for i in range(0, 600, 1)]
+# dataset = Datasets.Dataset()
+# dataset.load_laminar_data(path="Data/")
+# dataset.print_all_content()
+# trials_block = dataset.get_trials(key='block', l=0, r=600)
+# trials_trial = dataset.get_trials(key='trial', l=0, r=600)
+trials = [i for i in range(200, 400, 1)]
 
 ##############################################################################
 
+[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-250ms.txt")
+
+dim = 3
+# X = np.zeros([1, len(trials), dim])
+x = tpsd[4:5, :, :, trials].reshape([-1, len(trials)]).transpose()
+X = Learning.tsne_cluster(X=x, Y=y, components=dim, perplx=180,
+                                   learning_rate=100, visualize=True,
+                                   iterations=6000, tit="tSNE-it6000-px180-lr100",
+                                   save=True, name="plot")
+    
+Viewer.scatter(data=X, y=y, dim=dim, frames=1, title="TSNE cluster in time",
+               xlabel="", ylabel="", fr=times, trials=trials, bands=False)
 
 # trials = [i for i in range(600)]
 
@@ -36,12 +48,12 @@ trials = [i for i in range(0, 600, 1)]
 # trials = [i for i in range(100, 300, 1)]
 
 ### GC is time windows
-tgc, times = Connect.time_granger_causality(data=dataset.signals['pfc'],
-                                        time_window_size=250, time_overlap=0,
-                                        trials=trials, bw=50, tl=500, tr=3500,
-                                        time_base=-1000)
+# tgc, times = Connect.time_granger_causality(data=dataset.signals['pfc'],
+#                                         time_window_size=250, time_overlap=0,
+#                                         trials=trials, bw=50, tl=500, tr=3500,
+#                                         time_base=-1000)
 
-Methods.save_list([tgc, times], "Data/1-600-tgc-250ms.txt")
+# Methods.save_list([tgc, times], "Data/1-600-tgc-250ms.txt")
 
 # tpsd[np.isnan(tpsd)] = 0
 # for i in range(600):
