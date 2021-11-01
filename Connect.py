@@ -1,4 +1,3 @@
-# from matplotlib import pyplot as plt ### Not used
 from statsmodels.tsa.stattools import grangercausalitytests as gct
 from scipy import signal
 
