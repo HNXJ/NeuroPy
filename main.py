@@ -47,7 +47,7 @@ warnings.filterwarnings("ignore")
 # Datasets.save_list([tsc], "Data/1-600-tsc-250ms.txt")
 # trials = [i for i in range(100, 300, 1)]
 
-### GC is time windows
+### GC for tSNE
 # tgc, times = Connect.time_granger_causality(data=dataset.signals['pfc'],
 #                                         time_window_size=250, time_overlap=0,
 #                                         trials=trials, bw=50, tl=0, tr=4000,
