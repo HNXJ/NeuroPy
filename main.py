@@ -66,7 +66,7 @@ warnings.filterwarnings("ignore")
 #                                         trials=trials, bw=50, tl=0, tr=4000,
 #                                         time_base=-1500)
 
-# Methods.save_list([tgc, times], "Data/1-600-tgc-250ms.txt")
+# Datasets.save_list([tgc, times], "Data/1-600-tgc-250ms.txt")
 
 # y = (np.array(trials)//50)%2
 

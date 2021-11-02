@@ -161,7 +161,7 @@ def run_1(trial1=1, trial2=151, f=4): # single trial psd ratios
     return
 
 def run_2(trial1=1, trial2=2, f=4): # single trial psd ratios
-    ### PSD ratio plotter
+    ### PSD ratio plotter 
     Methods.psd_ratio_plotter(psd=tpsd_m[f, :, :, trial1], freqs=freqs,
                       title="T" + str((trial1-1)*50) + "-" + str(trial1*50) + "SpectBandAvgPower")
     
