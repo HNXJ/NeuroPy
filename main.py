@@ -29,16 +29,16 @@ warnings.filterwarnings("ignore")
 ##############################################################################
 
 
-# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-250ms.txt")
+[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-250ms.txt")
 
-# trials = [i for i in range(600)]
-# dim = 3
-# y = (np.array(trials)//50)%2
-# x = tpsd[7:9, 3:15, 2:6, trials].reshape([-1, len(trials)]).transpose()
-# X = Learning.tsne_cluster(X=x, Y=y, components=dim, perplx=10,
-#                                    learning_rate=200, visualize=True,
-#                                    iterations=6000, tit="tSNE-it6000-px180-lr100",
-#                                    save=True, name="plot")
+trials = [i for i in range(600)]
+dim = 3
+y = (np.array(trials)//50)%2
+x = tpsd[7:9, 3:15, 2:6, trials].reshape([-1, len(trials)]).transpose()
+X = Learning.tsne_cluster(X=x, Y=y, components=dim, perplx=10,
+                                    learning_rate=200, visualize=True,
+                                    iterations=6000, tit="tSNE-it6000-px180-lr100",
+                                    save=True, name="plot")
     
 
 ##############################################################################
@@ -68,14 +68,18 @@ warnings.filterwarnings("ignore")
 
 # Datasets.save_list([tgc, times], "Data/1-600-tgc-250ms.txt")
 
-trials = [i for i in range(40, 60, 1)]
-y = (np.array(trials)//50)%2
 
-[tgc, times] = Datasets.load_list("Data/1-600-tgc-250ms.txt")
+##############################################################################
 
-Connect.time_tsne_cluster(data=tgc[:, 3:16, 3:16, :], y=y, trials=trials, dim=3, perplx=120, learning_rate=250, 
-                      n_iter=5000, times=times, title="tSNE in time for granger causality values",
-                      name="TtSNE3DGC", ee=20, method="exact")
+
+# trials = [i for i in range(40, 60, 1)]
+# y = (np.array(trials)//50)%2
+
+# [tgc, times] = Datasets.load_list("Data/1-600-tgc-250ms.txt")
+
+# Connect.time_tsne_cluster(data=tgc[:, 3:16, 3:16, :], y=y, trials=trials, dim=3, perplx=120, learning_rate=250, 
+#                       n_iter=5000, times=times, title="tSNE in time for granger causality values",
+#                       name="TtSNE3DGC", ee=20, method="exact")
 
 
 ##############################################################################
