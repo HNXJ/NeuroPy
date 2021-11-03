@@ -68,13 +68,14 @@ warnings.filterwarnings("ignore")
 
 # Datasets.save_list([tgc, times], "Data/1-600-tgc-250ms.txt")
 
-trials = [i for i in range(0, 300, 1)]
+trials = [i for i in range(40, 60, 1)]
 y = (np.array(trials)//50)%2
 
 [tgc, times] = Datasets.load_list("Data/1-600-tgc-250ms.txt")
 
-Connect.time_tsne_cluster(data=tgc[:, 3:16, 3:16, trials], y=y, trials=trials, dim=3, perplx=120, learning_rate=250, 
-                      n_iter=5000, times=times, title="tSNE in time for granger causality values", name="TtSNE3DGC")
+Connect.time_tsne_cluster(data=tgc[:, 3:16, 3:16, :], y=y, trials=trials, dim=3, perplx=120, learning_rate=250, 
+                      n_iter=5000, times=times, title="tSNE in time for granger causality values",
+                      name="TtSNE3DGC", ee=20, method="exact")
 
 
 ##############################################################################
