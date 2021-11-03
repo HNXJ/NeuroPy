@@ -371,7 +371,7 @@ def time_pca_cluster(data=None, y=None, dim=3, trials=None, times=None, title=""
 
 def time_tsne_cluster(data=None, y=None, dim=3, perplx=5, learning_rate=10, 
                       n_iter=1000, trials=None, times=None, title="", name="Plot",
-                      ee=12, method="barnes_hut"):
+                      ee=12, method="barnes_hut", init="random"):
     
     data[np.isnan(data)] = 0
     X = np.zeros([data.shape[0], len(trials), dim])
@@ -383,7 +383,7 @@ def time_tsne_cluster(data=None, y=None, dim=3, perplx=5, learning_rate=10,
                                            learning_rate=learning_rate, visualize=False,
                                            iterations=n_iter, tit=title,
                                            save=True, name=name, ee=ee,
-                                           method=method)
+                                           method=method, init=init)
         
     Viewer.scatter(data=X, y=y, dim=dim, frames=data.shape[0], title="TSNE cluster in time",
                    xlabel="", ylabel="", fr=times, trials=trials, bands=False)

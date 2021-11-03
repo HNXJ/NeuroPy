@@ -25,10 +25,10 @@ def pca_cluster(X=None, Y=None, components=2, visualize=True, tit=None, save=Fal
 
 def tsne_cluster(X=None, Y=None, components=2, perplx=10, learning_rate=10,
                  visualize=True, iterations=100, tit=None, save=False,
-                 name="", ee=12, method="barnes_hut"):
+                 name="", ee=12, method="barnes_hut", init="random"):
     
     tsne = TSNE(n_components=components, n_iter=iterations, perplexity=perplx,
-                learning_rate=learning_rate, init='random', early_exaggeration=ee,
+                learning_rate=learning_rate, init=init, early_exaggeration=ee,
                 method=method)
     
     x = tsne.fit_transform(X, Y)

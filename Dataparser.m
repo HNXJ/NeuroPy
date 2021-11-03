@@ -3,8 +3,9 @@
 
 clc;clear;
 
-load('data.mat'); % ~ 1GB of data
+load('Data/data.mat'); % ~ 1GB of data
 a = trialInfo.cueType;
+b = trialInfo.correct;
 c = zeros(size(a, 1), 1);
 
 for i = 1:size(a, 1)
@@ -13,7 +14,7 @@ for i = 1:size(a, 1)
     end
 end
 
-save('cues.mat', 'c');
+save('cues.mat', 'b', 'c');
 
 
 %%

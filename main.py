@@ -39,10 +39,10 @@ trials = [i for i in range(200, 400)]
 dim = 3
 y = (np.array(trials)//50)%2
 x = tpsd[:, 3:15, 2:6, trials].reshape([-1, len(trials)]).transpose()
-# X = Learning.tsne_cluster(X=x, Y=y, components=dim, perplx=75,
-#                                     learning_rate=10, visualize=True,
-#                                     iterations=6000, tit="tSNE-it6000-px180-lr100",
-#                                     save=True, name="plot", ee=5)#, method="exact")
+X = Learning.tsne_cluster(X=x, Y=y, components=dim, perplx=75,
+                                    learning_rate=10, visualize=True,
+                                    iterations=6000, tit="tSNE-it6000-px180-lr100",
+                                    save=True, name="plot", ee=5, init='random')#, method="exact")
     
 X = Learning.pca_cluster(X=x, Y=y, components=dim, visualize=True, tit="PFC-PSD-PCA"
             , save=True, name="pcapfcpsd")
