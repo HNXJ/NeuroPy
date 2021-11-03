@@ -23,7 +23,7 @@ warnings.filterwarnings("ignore")
 # dataset.print_all_content()
 # trials_block = dataset.get_trials(key='block', l=0, r=600)
 # trials_trial = dataset.get_trials(key='trial', l=0, r=600)
-# trials = [i for i in range(0, 600, 1)]
+trials = [i for i in range(0, 600, 1)]
 
 
 ##############################################################################
@@ -68,13 +68,13 @@ warnings.filterwarnings("ignore")
 
 # Datasets.save_list([tgc, times], "Data/1-600-tgc-250ms.txt")
 
-# y = (np.array(trials)//50)%2
+y = (np.array(trials)//50)%2
 
 
 [tgc, times] = Datasets.load_list("Data/1-600-tgc-250ms.txt")
 
-# Connect.time_tsne_cluster(data=tpsd[:, 3:16, 3:16, :], y=y, trials=trials, dim=3, perplx=120, learning_rate=70, 
-#                       n_iter=5000, times=times, title="tSNE in time for granger causality values", name="TtSNE3DGC")
+Connect.time_tsne_cluster(data=tgc[:, 3:16, 3:16, :], y=y, trials=trials, dim=3, perplx=200, learning_rate=250, 
+                      n_iter=5000, times=times, title="tSNE in time for granger causality values", name="TtSNE3DGC")
 
 
 ##############################################################################
