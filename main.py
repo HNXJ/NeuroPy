@@ -71,7 +71,7 @@ warnings.filterwarnings("ignore")
 # y = (np.array(trials)//50)%2
 
 
-# [tgc, times] = Datasets.load_list("Data/1-600-tgc.txt")
+[tgc, times] = Datasets.load_list("Data/1-600-tgc-250ms.txt")
 
 # Connect.time_tsne_cluster(data=tpsd[:, 3:16, 3:16, :], y=y, trials=trials, dim=3, perplx=120, learning_rate=70, 
 #                       n_iter=5000, times=times, title="tSNE in time for granger causality values", name="TtSNE3DGC")
