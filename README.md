@@ -22,6 +22,10 @@ Some visualization examples:
 
 <img src="https://github.com/HNXJ/PlotlyDraft/blob/main/Images/SMC40.png" width="1200"/>
 
+### Granger causality in specific frame tme (linear regression)
+
+<img src="https://github.com/HNXJ/PlotlyDraft/blob/main/Images/GCC-250-PFC-.png" width="1200"/>
+
 ### tSNE clustering on PSD, two classes of mental state
 
 <img src="https://github.com/HNXJ/PlotlyDraft/blob/main/Images/tSNE250-100-10.png" width="1200"/>
