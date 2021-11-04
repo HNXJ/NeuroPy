@@ -36,14 +36,22 @@ for i in range(tpsd.shape[0]):
         tpsd[i, :, :, j] /= np.max(np.mean(tpsd[i, :, :, j])) + 0.0001
         tpsd[i, :, :, j] = np.sqrt(tpsd[i, :, :, j])
 
-trials = [i for i in range(200, 300)]
+trials = [i for i in range(0, 600)]
 dim = 3
-# y = (np.array(trials)//50)%2
-y = np.reshape(dataset.cue_cr[trials], [-1])*3 #+ 5 * ((np.array(trials)//50)%2)
+y = (np.array(trials)//50)%2
+yl = []
+for i in range(len(trials)):
+    if y[i] == 1:
+        yl.append("Tr")
+    elif y[i] == 0:
+        yl.append("Bl")
+        
+# y = np.reshape(dataset.cue_cr[trials], [-1])*3 #+ 5 * ((np.array(trials)//50)%2)
 
-x = tpsd[:, 11:15, :, trials].reshape([-1, len(trials)]).transpose()
+# x = tpsd[:, 11:15, :, trials].reshape([-1, len(trials)]).transpose()
 
-Connect.time_tsne_cluster(data=tpsd[:, 9:16, 2:7, :], y=y, trials=trials, dim=3, perplx=5, learning_rate=25, 
+
+Connect.time_tsne_cluster(data=tpsd[:, 10:16, 2:7, :], y=yl, trials=trials, dim=3, perplx=6, learning_rate=25, 
                       n_iter=5000, times=times, title="tSNE in time for PSD, correct vs error",
                       name="TtSNE3DGC", ee=10, method="exact")
 
