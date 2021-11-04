@@ -37,17 +37,19 @@ for i in range(tpsd.shape[0]):
 
 trials = [i for i in range(200, 300)]
 dim = 3
-y = (np.array(trials)//50)%2
-x = tpsd[:, :, :, trials].reshape([-1, len(trials)]).transpose()
+# y = (np.array(trials)//50)%2
+y = np.reshape(dataset.cue_cr[trials], [-1]) + 2 * ((np.array(trials)//50)%2)
 
-# Connect.time_tsne_cluster(data=tpsd[:, 4:6, 5:7, :], y=y, trials=trials, dim=3, perplx=40, learning_rate=200, 
-#                       n_iter=10000, times=times, title="tSNE in time for granger causality values",
-#                       name="TtSNE3DGC", ee=20, method="exact")
+# x = tpsd[:, :, :, trials].reshape([-1, len(trials)]).transpose()
 
-X = Learning.tsne_cluster(X=x, Y=y, components=dim, perplx=150,
-                                    learning_rate=300, visualize=True,
-                                    iterations=5000, tit="tSNE-it6000-px180-lr100",
-                                    save=True, name="plot", ee=24, init='pca')#, method="exact")
+# Connect.time_tsne_cluster(data=tpsd[:, 4:6, 5:7, :], y=y, trials=trials, dim=3, perplx=6, learning_rate=50, 
+#                       n_iter=5000, times=times, title="tSNE in time for granger causality values",
+#                       name="TtSNE3DGC", ee=40, method="exact")
+
+# X = Learning.tsne_cluster(X=x, Y=y, components=dim, perplx=10,
+#                                     learning_rate=100, visualize=True,
+#                                     iterations=5000, tit="tSNE-it6000-px180-lr100",
+#                                     save=True, name="plot", ee=15, init='pca')#, method="exact")
     
 # X = Learning.pca_cluster(X=x, Y=y, components=dim, visualize=True, tit="PFC-PSD-PCA"
 #             , save=True, name="pcapfcpsd")
