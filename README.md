@@ -24,5 +24,5 @@ Some visualization examples:
 
 ### tSNE clustering on PSD, two classes of mental state
 
-<img src="https://github.com/HNXJ/PlotlyDraft/blob/main/Images/tSNE250-100-70.png" width="1200"/>
+<img src="https://github.com/HNXJ/PlotlyDraft/blob/main/Images/tSNE250-100-10.png" width="1200"/>
 
