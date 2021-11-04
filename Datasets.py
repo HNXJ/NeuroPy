@@ -25,6 +25,7 @@ class Dataset:
         self.cue_types = []
         self.data = None
         
+        self.cue_cr = None
         return
     
     def load_laminar_data(self, path="Data/"):
@@ -35,6 +36,7 @@ class Dataset:
         print("Loading data...")
         self.data = sio.loadmat(path + "data.mat")
         self.cues = sio.loadmat(path + "cues.mat")['c']
+        self.cue_cr = sio.loadmat(path + "cues.mat")['b']
         print("Loaded.")
         
         self.signals['pfc'] = self.data['lfp'][:, 0:16, :]

@@ -55,13 +55,14 @@ def create_app(data=None, fqs=None, trials=3, frames=3, title="T", xlabel="C"
     
     def update_1(value1, value2):
         
-        im = data[int(value2)-1, :, :, trial_ind[int(value1)]]
-        y = np.array([data.shape[1] - i for i in range(data.shape[1])])
-        
+        ych = [data.shape[1] - i - 1 for i in range(data.shape[1])]
+        im = data[int(value2)-1, ych, :, trial_ind[int(value1)]]
+        y = ["ch" + str(data.shape[1] - i) for i in range(data.shape[1])]
         if data.shape[1] == data.shape[2]:
             t = y
         else:
             t = fqs
+            
         tit = title + ", Frame no. " + str(int(value2)) + " of trial no. " + str(int(value1)+1) + " for t in range [" + str(fr[int(value2)-1]) + "] - [" + str(fr[int(value2)]) + "]"
         
         bandlabels = ["Delta[0.1-3]", "Theta[3-8]", "Alpha[8-12]"
