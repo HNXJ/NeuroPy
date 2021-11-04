@@ -47,6 +47,12 @@ for i in range(len(trials)):
     elif y[i] == 0:
         yl.append("Bl")
         
+for i in range(len(trials)):
+    if y[i] == 1:
+        yl.append("cor")
+    elif y[i] == 0:
+        yl.append("err")
+        
 # y = np.reshape(dataset.cue_cr[trials], [-1])*3 #+ 5 * ((np.array(trials)//50)%2)
 
 # x = tpsd[:, 11:15, :, trials].reshape([-1, len(trials)]).transpose()
