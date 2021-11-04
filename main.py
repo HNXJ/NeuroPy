@@ -39,7 +39,7 @@ for i in range(tpsd.shape[0]):
 trials = [i for i in range(200, 300)]
 dim = 3
 # y = (np.array(trials)//50)%2
-y = np.reshape(dataset.cue_cr[trials], [-1]) #+ 5 * ((np.array(trials)//50)%2)
+y = np.reshape(dataset.cue_cr[trials], [-1])*3 #+ 5 * ((np.array(trials)//50)%2)
 
 x = tpsd[:, 11:15, :, trials].reshape([-1, len(trials)]).transpose()
 
