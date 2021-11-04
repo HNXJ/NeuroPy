@@ -58,11 +58,11 @@ for i in range(len(trials)):
 # x = tpsd[:, 11:15, :, trials].reshape([-1, len(trials)]).transpose()
 
 
-Connect.time_tsne_cluster(data=tpsd[:, 10:16, 2:7, :], y=yl, trials=trials, dim=3, perplx=6, learning_rate=25, 
-                      n_iter=5000, times=times, title="tSNE in time for PSD, correct vs error",
-                      name="TtSNE3DGC", ee=10, method="exact")
+# Connect.time_tsne_cluster(data=tpsd[:, 10:16, 2:7, :], y=yl, trials=trials, dim=3, perplx=6, learning_rate=25, 
+#                       n_iter=5000, times=times, title="tSNE in time for PSD, correct vs error",
+#                       name="TtSNE3DGC", ee=10, method="exact")
 
-# X = Learning.tsne_cluster(X=x, Y=y, components=dim, perplx=5,
+# X = Learning.tsne_cluster(X=x, Y=y, components=dim, perplx=10,
 #                                     learning_rate=20, visualize=True,
 #                                     iterations=5000, tit="tSNE-it6000-px180-lr100",
 #                                     save=True, name="plot", ee=5, init='pca')#, method="exact")
