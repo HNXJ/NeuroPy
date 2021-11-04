@@ -40,6 +40,7 @@ trials = [i for i in range(0, 600)]
 dim = 3
 y = (np.array(trials)//50)%2
 yl = []
+
 for i in range(len(trials)):
     if y[i] == 1:
         yl.append("Tr")
