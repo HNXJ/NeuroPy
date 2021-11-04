@@ -385,7 +385,7 @@ def time_tsne_cluster(data=None, y=None, dim=3, perplx=5, learning_rate=10,
                                            save=True, name=name, ee=ee,
                                            method=method, init=init)
         
-    Viewer.scatter(data=X, y=y, dim=dim, frames=data.shape[0], title="TSNE cluster in time",
+    Viewer.scatter(data=X, y=y, dim=dim, frames=data.shape[0], title=title,
                    xlabel="", ylabel="", fr=times, trials=trials, bands=False)
     
     return

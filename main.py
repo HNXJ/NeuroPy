@@ -44,7 +44,7 @@ y = np.reshape(dataset.cue_cr[trials], [-1])*3 #+ 5 * ((np.array(trials)//50)%2)
 x = tpsd[:, 11:15, :, trials].reshape([-1, len(trials)]).transpose()
 
 Connect.time_tsne_cluster(data=tpsd[:, 9:16, 2:7, :], y=y, trials=trials, dim=3, perplx=5, learning_rate=25, 
-                      n_iter=5000, times=times, title="tSNE in time for granger causality values",
+                      n_iter=5000, times=times, title="tSNE in time for PSD, correct vs error",
                       name="TtSNE3DGC", ee=10, method="exact")
 
 # X = Learning.tsne_cluster(X=x, Y=y, components=dim, perplx=5,
