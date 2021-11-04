@@ -36,7 +36,7 @@ for i in range(tpsd.shape[0]):
         tpsd[i, :, :, j] /= np.max(np.max(tpsd[i, :, :, j])) + 0.0001
         tpsd[i, :, :, j] = np.sqrt(tpsd[i, :, :, j])
 
-trials = [i for i in range(220, 280)]
+trials = [i for i in range(120, 380)]
 dim = 3
 y = (np.array(trials)//50)%2
 yl = []
@@ -57,9 +57,10 @@ for i in range(len(trials)):
 
 # x = tpsd[:, 9:16, 2:7, trials].reshape([-1, len(trials)]).transpose()
 
-Connect.time_tsne_cluster(data=tpsd[:, 8:16, 3:8, :], y=yl, trials=trials, dim=3, perplx=18, learning_rate=25, 
-                      n_iter=6000, times=times, title="tSNE in time for PSD",
-                      name="TtSNE3DGC", ee=10, method="exact")
+Connect.time_tsne_cluster(data=tpsd[:, 10:16, 3:7, :], y=yl, trials=trials,
+                          dim=3, perplx=20, learning_rate=25, 
+                          n_iter=6000, times=times, title="tSNE in time for PSD",
+                          name="TtSNE3DGC", ee=15, method="exact")
 
 # X = Learning.tsne_cluster(X=x, Y=y, components=dim, perplx=5,
 #                                     learning_rate=25, visualize=True,
