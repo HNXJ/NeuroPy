@@ -29,20 +29,25 @@ warnings.filterwarnings("ignore")
 ##############################################################################
 
 
-[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd.txt")
+[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms.txt")
 
 for i in range(tpsd.shape[0]):
     for j in range(tpsd.shape[3]):
-        tpsd[i, :, :, j] /= np.mean(np.mean(tpsd[i, :, :, j]))
+        tpsd[i, :, :, j] /= np.mean(np.mean(tpsd[i, :, :, j])) + 0.0001
 
-trials = [i for i in range(100, 200)]
+trials = [i for i in range(200, 300)]
 dim = 3
 y = (np.array(trials)//50)%2
 x = tpsd[:, :, :, trials].reshape([-1, len(trials)]).transpose()
-X = Learning.tsne_cluster(X=x, Y=y, components=dim, perplx=40,
-                                    learning_rate=50, visualize=True,
+
+# Connect.time_tsne_cluster(data=tpsd[:, 4:6, 5:7, :], y=y, trials=trials, dim=3, perplx=40, learning_rate=200, 
+#                       n_iter=10000, times=times, title="tSNE in time for granger causality values",
+#                       name="TtSNE3DGC", ee=20, method="exact")
+
+X = Learning.tsne_cluster(X=x, Y=y, components=dim, perplx=150,
+                                    learning_rate=300, visualize=True,
                                     iterations=5000, tit="tSNE-it6000-px180-lr100",
-                                    save=True, name="plot", ee=15, init='pca')#, method="exact")
+                                    save=True, name="plot", ee=24, init='pca')#, method="exact")
     
 # X = Learning.pca_cluster(X=x, Y=y, components=dim, visualize=True, tit="PFC-PSD-PCA"
 #             , save=True, name="pcapfcpsd")
@@ -53,18 +58,19 @@ X = Learning.tsne_cluster(X=x, Y=y, components=dim, perplx=40,
 # Viewer.scatter(data=X, y=y, dim=dim, frames=1, title="TSNE cluster in time",
 #                xlabel="", ylabel="", fr=times, trials=trials, bands=False)
 
-# trials = [i for i in range(600)]
+trials = [i for i in range(600)]
 
 # ### PSD in time windows
 # tpsd, freqs, times = Connect.time_power_spectrum_density(data=dataset.signals['pfc']
 #                                 , save=True, bands=True
-#                                 , time_window_size=250, time_overlap=0
+#                                 , time_window_size=500, time_overlap=0
 #                                 , trials=trials, bw=50, tl=0, tr=4000,
 #                                   time_base=-1500)
-# Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-250ms.txt")
-# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-250ms.txt")
+
+# Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-500ms.txt")
+# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-1000ms.txt")
 # tsc = Connect.time_spectral_correlation(data=tpsd, trials=trials, ts=times)
-# Datasets.save_list([tsc], "Data/1-600-tsc-250ms.txt")
+# Datasets.save_list([tsc], "Data/1-600-tsc-500ms.txt")
 # trials = [i for i in range(100, 300, 1)]
 
 # tgc, times = Connect.time_granger_causality(data=dataset.signals['pfc'],
