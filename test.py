@@ -100,12 +100,12 @@ warnings.filterwarnings("ignore")
 #                                 , tr=3500, time_base=-1500)
 
 # Methods.save_list([tgc, times], "Data/1-600-tgc.txt")
-# [tgc, times] = Methods.load_list("Data/1-600-tgc.txt")
+# [tgc, times] = Datasets.load_list("Data/1-600-tgc-250ms.txt")
 
-# ## Average TGC
+# # ### Average TGC
 # tgc_m = np.zeros([tgc.shape[0], tgc.shape[1], tgc.shape[2], 12]) 
 # for i in range(12):
-#     tgc_m[:, :, :, i] = np.mean(tgc[:, :, :, i*5:(i+1)*5], 3)
+#     tgc_m[:, :, :, i] /= np.max(np.max(np.max(tgc[:, :, :, i])))
 
 
 ##############################################################################
@@ -131,11 +131,8 @@ warnings.filterwarnings("ignore")
 # Viewer.heatmap(data=tsch, fqs=fr, title="Spectral coherence in time, PFC area ", bands=False
 #             , xlabel="Frequency", ylabel="Channel", fr=times, tr=trials)
 
-
 # Viewer.heatmap(data=tgc, fqs=freqs, title="Granger causality in time, pfc area "
 #             , xlabel="Frequency", ylabel="Channel", fr=times, tr=trials)
-
-
 
 # Viewer.heatmap(data=tpsd_m, fqs=freqs, title="PSD in time, pfc area ", bands=True
 #             , xlabel="Frequency", ylabel="Channel", fr=times, tr=[i for i in range(12)])
@@ -168,27 +165,27 @@ warnings.filterwarnings("ignore")
 # run_2(3, 2, 5)
 # run_ratio_tpsd(tps=tpsd_m, t1=5, t2=6)
 
-def run_1(trial1=1, trial2=151, f=4): # single trial psd ratios
-    ### PSD ratio plotter
-    Methods.psd_ratio_plotter(psd=tpsd[f, :, :, trial1], freqs=freqs,
-                      title="T" + str(trial1) + "SpectBandAvgPower")
+# def run_1(trial1=1, trial2=151, f=4): # single trial psd ratios
+#     ### PSD ratio plotter
+#     Methods.psd_ratio_plotter(psd=tpsd[f, :, :, trial1], freqs=freqs,
+#                       title="T" + str(trial1) + "SpectBandAvgPower")
     
-    ## Comparisons
-    Methods.psd_ratio_compare_plotter(psd1=tpsd[f, :, :, trial1], psd2=tpsd[f, :, :, trial2],
-                              freqs=freqs, title="PSDRatio_T" + str(trial1) + "-T" + str(trial2))
+#     ## Comparisons
+#     Methods.psd_ratio_compare_plotter(psd1=tpsd[f, :, :, trial1], psd2=tpsd[f, :, :, trial2],
+#                               freqs=freqs, title="PSDRatio_T" + str(trial1) + "-T" + str(trial2))
 
-    return
+#     return
 
-def run_2(trial1=1, trial2=2, f=4): # single trial psd ratios
-    ### PSD ratio plotter 
-    Methods.psd_ratio_plotter(psd=tpsd_m[f, :, :, trial1], freqs=freqs,
-                      title="T" + str((trial1-1)*50) + "-" + str(trial1*50) + "SpectBandAvgPower")
+# def run_2(trial1=1, trial2=2, f=4): # single trial psd ratios
+#     ### PSD ratio plotter 
+#     Methods.psd_ratio_plotter(psd=tpsd_m[f, :, :, trial1], freqs=freqs,
+#                       title="T" + str((trial1-1)*50) + "-" + str(trial1*50) + "SpectBandAvgPower")
     
-    ## Comparisons
-    Methods.psd_ratio_compare_plotter(psd1=tpsd[f, :, :, trial1], psd2=tpsd[f, :, :, trial2],
-                              freqs=freqs, title="PSDRatio_Tlower" + str(trial1*50) + "-Tlower" + str(trial2*50))
+#     ## Comparisons
+#     Methods.psd_ratio_compare_plotter(psd1=tpsd[f, :, :, trial1], psd2=tpsd[f, :, :, trial2],
+#                               freqs=freqs, title="PSDRatio_Tlower" + str(trial1*50) + "-Tlower" + str(trial2*50))
 
-    return
+#     return
 
 
 ##############################################################################

@@ -58,8 +58,12 @@ def create_app(data=None, fqs=None, trials=3, frames=3, title="T", xlabel="C"
         ych = [data.shape[1] - i - 1 for i in range(data.shape[1])]
         im = data[int(value2)-1, ych, :, trial_ind[int(value1)]]
         y = ["ch" + str(data.shape[1] - i) for i in range(data.shape[1])]
+        yinv = []
+        
+        for i in range(len(y)-1, -1, -1):
+            yinv.append(y[i])
         if data.shape[1] == data.shape[2]:
-            t = y
+            t = yinv
         else:
             t = fqs
             

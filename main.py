@@ -43,9 +43,9 @@ yl = []
 
 for i in range(len(trials)):
     if y[i] == 1:
-        yl.append("Tr")
+        yl.append("Trial(unpredictable)")
     elif y[i] == 0:
-        yl.append("Bl")
+        yl.append("Block(predictable)")
         
 # for i in range(len(trials)):
 #     if y[i] == 1:
