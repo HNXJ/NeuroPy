@@ -111,19 +111,19 @@ warnings.filterwarnings("ignore")
 ##############################################################################
 
 
-[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms.txt")
+# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms.txt")
 
-for i in range(tpsd.shape[0]):
-    for j in range(tpsd.shape[3]):
-        tpsd[i, :, :, j] /= np.max(np.mean(tpsd[i, :, :, j])) + 0.0001
-        tpsd[i, :, :, j] = np.sqrt(tpsd[i, :, :, j])        
+# for i in range(tpsd.shape[0]):
+#     for j in range(tpsd.shape[3]):
+#         tpsd[i, :, :, j] /= np.max(np.max(tpsd[i, :, :, j])) + 0.0001
+#         tpsd[i, :, :, j] = np.sqrt(tpsd[i, :, :, j])        
 
         
 ##############################################################################
 
 
-Viewer.heatmap(data=tpsd, fqs=freqs, title="PSD in time, pfc area ", bands=True
-            , xlabel="Frequency", ylabel="Channel", fr=times, tr=trials)
+# Viewer.heatmap(data=tpsd, fqs=freqs, title="PSD in time, pfc area ", bands=True
+#             , xlabel="Frequency", ylabel="Channel", fr=times, tr=trials)
 
 # Viewer.heatmap(data=tsc, fqs=freqs, title="Spectral correlation in time, V4 area ", bands=False
 #             , xlabel="Frequency", ylabel="Channel", fr=times, tr=trials)

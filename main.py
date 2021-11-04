@@ -33,10 +33,10 @@ warnings.filterwarnings("ignore")
 
 for i in range(tpsd.shape[0]):
     for j in range(tpsd.shape[3]):
-        tpsd[i, :, :, j] /= np.max(np.mean(tpsd[i, :, :, j])) + 0.0001
+        tpsd[i, :, :, j] /= np.max(np.max(tpsd[i, :, :, j])) + 0.0001
         tpsd[i, :, :, j] = np.sqrt(tpsd[i, :, :, j])
 
-trials = [i for i in range(0, 600)]
+trials = [i for i in range(0, 100)]
 dim = 3
 y = (np.array(trials)//50)%2
 yl = []
@@ -47,25 +47,24 @@ for i in range(len(trials)):
     elif y[i] == 0:
         yl.append("Bl")
         
-for i in range(len(trials)):
-    if y[i] == 1:
-        yl.append("cor")
-    elif y[i] == 0:
-        yl.append("err")
+# for i in range(len(trials)):
+#     if y[i] == 1:
+#         yl.append("cor")
+#     elif y[i] == 0:
+#         yl.append("err")
         
 # y = np.reshape(dataset.cue_cr[trials], [-1])*3 #+ 5 * ((np.array(trials)//50)%2)
 
-# x = tpsd[:, 11:15, :, trials].reshape([-1, len(trials)]).transpose()
+# x = tpsd[:, 9:16, 2:7, trials].reshape([-1, len(trials)]).transpose()
 
+Connect.time_tsne_cluster(data=tpsd[:, 10:16, 2:7, :], y=yl, trials=trials, dim=3, perplx=10, learning_rate=25, 
+                      n_iter=5000, times=times, title="tSNE in time for PSD",
+                      name="TtSNE3DGC", ee=10, method="exact")
 
-# Connect.time_tsne_cluster(data=tpsd[:, 10:16, 2:7, :], y=yl, trials=trials, dim=3, perplx=6, learning_rate=25, 
-#                       n_iter=5000, times=times, title="tSNE in time for PSD, correct vs error",
-#                       name="TtSNE3DGC", ee=10, method="exact")
-
-# X = Learning.tsne_cluster(X=x, Y=y, components=dim, perplx=10,
-#                                     learning_rate=20, visualize=True,
+# X = Learning.tsne_cluster(X=x, Y=y, components=dim, perplx=5,
+#                                     learning_rate=25, visualize=True,
 #                                     iterations=5000, tit="tSNE-it6000-px180-lr100",
-#                                     save=True, name="plot", ee=5, init='pca')#, method="exact")
+#                                     save=True, name="plot", ee=10, init='pca')#, method="exact")
     
 # X = Learning.pca_cluster(X=x, Y=y, components=dim, visualize=True, tit="PFC-PSD-PCA"
 #             , save=True, name="pcapfcpsd")
