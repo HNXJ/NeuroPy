@@ -28,12 +28,15 @@ epsilon_dopa = 5e-3
 
 # Setting the stage
 print("Setting ... ")
+
 ## Stimuli section
 input_indices = array([1, 0, 0, 1, 0, 1, 1, 0,
                        0, 1, 0, 1, 1, 0])
+
 input_times = array([10, 190, 500,  550, 1000, 1010, 1500, 1510,
                      3500, 3550, 4000, 4010, 4500, 4510])*ms
-input = SpikeGeneratorGroup(2, input_indices, input_times)
+
+input_ = SpikeGeneratorGroup(2, input_indices, input_times)
 
 neurons = NeuronGroup(2, '''dv/dt = (ge * (Ee-vr) + El - v) / taum : volt
                             dge/dt = -ge / taue : 1''',
@@ -42,7 +45,7 @@ neurons = NeuronGroup(2, '''dv/dt = (ge * (Ee-vr) + El - v) / taum : volt
 neurons.v = vr
 neurons_monitor = SpikeMonitor(neurons)
 
-synapse = Synapses(input, neurons,
+synapse = Synapses(input_, neurons,
                    model='''s: volt''',
                    on_pre='v += s')
 synapse.connect(i=[0, 1], j=[0, 1])
