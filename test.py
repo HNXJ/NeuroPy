@@ -122,8 +122,8 @@ warnings.filterwarnings("ignore")
 ##############################################################################
 
 
-# Viewer.heatmap(data=tpsd, fqs=freqs, title="PSD in time, pfc area ", bands=True
-#             , xlabel="Frequency", ylabel="Channel", fr=times, tr=trials)
+Viewer.heatmap(data=tpsd, fqs=freqs, title="PSD in time, pfc area ", bands=True
+            , xlabel="Frequency", ylabel="Channel", fr=times, tr=trials)
 
 # Viewer.heatmap(data=tsc, fqs=freqs, title="Spectral correlation in time, V4 area ", bands=False
 #             , xlabel="Frequency", ylabel="Channel", fr=times, tr=trials)

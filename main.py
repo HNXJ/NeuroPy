@@ -124,14 +124,14 @@ trials = [i for i in range(600)]
 ############################################################################################################################################################
 
 
-[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms.txt")
+[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-250ms.txt")
 
 for i in range(tpsd.shape[0]):
     for j in range(tpsd.shape[3]):
         tpsd[i, :, :, j] /= np.max(np.max(tpsd[i, :, :, j])) + 0.0001
         tpsd[i, :, :, j] = np.sqrt(tpsd[i, :, :, j])
 
-trials = [i for i in range(40, 60)]
+trials = [i for i in range(42, 45)]
 dim = 3
 y = (np.array(trials)//50)%2
 yl = []
@@ -158,7 +158,7 @@ for i in range(len(trials)):
 y = []
 for i in range(len(trials)):
     for j in range(tpsd.shape[0]):
-        y.append((trials[i]//50)*3)
+        y.append((i*tpsd.shape[0] + j)%15)
 
 y = np.array(y).reshape(([-1]))
 x = tpsd[:, 9:16, 2:7, trials].reshape([-1, len(trials)*tpsd.shape[0]]).transpose()
