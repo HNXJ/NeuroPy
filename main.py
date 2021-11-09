@@ -150,10 +150,15 @@ for i in range(len(trials)):
         
 # y = np.reshape(dataset.cue_cr[trials], [-1])*3 #+ 5 * ((np.array(trials)//50)%2)
 
+# y = []
+# for i in range(len(trials)):
+#     for j in range(tpsd.shape[0]):
+#         y.append(dataset.cue_cr[trials[i]]*3)
+
 y = []
 for i in range(len(trials)):
     for j in range(tpsd.shape[0]):
-        y.append(dataset.cue_cr[trials[i]]*3)
+        y.append((trials[i]//50)*3)
 
 y = np.array(y).reshape(([-1]))
 x = tpsd[:, 9:16, 2:7, trials].reshape([-1, len(trials)*tpsd.shape[0]]).transpose()
@@ -168,7 +173,7 @@ X = Learning.tsne_cluster(X=x, Y=y, components=dim, perplx=5,
                                     iterations=1000, tit="tSNE-it6000-px180-lr100",
                                     save=True, name="plot", ee=10, init='pca')#, method="exact")
     
-# X = Learning.pca_cluster(X=x, Y=y, components=dim, visualize=True, tit="PFC-PSD-PCA"
-#             , save=True, name="pcapfcpsd")
+X = Learning.pca_cluster(X=x, Y=y, components=dim, visualize=True, tit="PFC-PSD-PCA"
+            , save=True, name="pcapfcpsd")
 
 ##############################################################################
