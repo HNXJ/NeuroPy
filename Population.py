@@ -96,10 +96,13 @@ run(simulation_duration/2)
 dopamine_indices, dopamine_times = dopamine_monitor.it
 neurons_indices, neurons_times = neurons_monitor.it
 figure(figsize=(12, 6))
+
 subplot(411)
 plot([0.05, 2.95], [2.7, 2.7], linewidth=5, color='k')
+
 text(1.5, 3, 'Classical STDP', horizontalalignment='center', fontsize=20)
 plot([3.05, 5.95], [2.7, 2.7], linewidth=5, color='k')
+
 text(4.5, 3, 'Dopamine modulated STDP', horizontalalignment='center', fontsize=20)
 plot(neurons_times, neurons_indices, 'ob')
 plot(dopamine_times, dopamine_indices + 2, 'or')
