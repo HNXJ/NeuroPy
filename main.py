@@ -155,7 +155,7 @@ for i in range(len(trials)):
     for j in range(tpsd.shape[0]):
         y.append(dataset.cue_cr[trials[i]]*3)
 
-y = np.array(y)
+y = np.array(y).reshape(([-1]))
 x = tpsd[:, 9:16, 2:7, trials].reshape([-1, len(trials)*tpsd.shape[0]]).transpose()
 
 # Connect.time_tsne_cluster(data=tpsd[:, 10:16, 3:7, :], y=yl, trials=trials,
