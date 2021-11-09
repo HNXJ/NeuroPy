@@ -30,10 +30,11 @@ epsilon_dopa = 5e-3
 print("Setting ... ")
 
 ## Stimuli section
-input_indices = array([1, 0, 0, 1, 0, 1, 1, 0,
+input_indices = array([1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0,
                        0, 1, 0, 1, 1, 0])
 
-input_times = array([10, 190, 500,  550, 1000, 1010, 1500, 1510,
+
+input_times = array([10, 190, 210, 250, 290, 410, 500,  550, 1000, 1010, 1500, 1510,
                      3500, 3550, 4000, 4010, 4500, 4510])*ms
 
 input_ = SpikeGeneratorGroup(2, input_indices, input_times)
