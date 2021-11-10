@@ -1,5 +1,6 @@
 from brian2 import *
 
+
 # Parameters
 simulation_duration = 6 * second
 
