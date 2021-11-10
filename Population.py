@@ -80,8 +80,8 @@ synapse_stdp.d = 0
 synapse_stdp_monitor = StateMonitor(synapse_stdp, ['s', 'c', 'd'], record=[0])
 
 ## Dopamine signaling section
-dopamine_indices = array([0, 0, 0])
-dopamine_times = array([3520, 4020, 4520])*ms
+dopamine_indices = array([0, 0, 0, 0, 0, 0, 0])
+dopamine_times = array([3330, 3365, 3450, 3490, 3520, 4020, 4520])*ms
 dopamine = SpikeGeneratorGroup(1, dopamine_indices, dopamine_times)
 dopamine_monitor = SpikeMonitor(dopamine)
 reward = Synapses(dopamine, synapse_stdp, model='''''',
