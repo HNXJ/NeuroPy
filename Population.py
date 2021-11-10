@@ -131,4 +131,5 @@ xlim([0, simulation_duration/second])
 ylabel('Synaptic\nstrength s(t)')
 xlabel('Time (s)')
 tight_layout()
+
 show()
