@@ -36,7 +36,7 @@ input_indices = array([1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0,
 
 
 input_times = array([10, 190, 210, 250, 290, 410, 500,  550, 1000, 1010, 1500, 1510,
-                     3500, 3550, 4000, 4010, 4500, 4510])*ms
+                     3070, 3550, 4000, 4010, 4500, 4510])*ms
 
 input_ = SpikeGeneratorGroup(2, input_indices, input_times)
 
@@ -80,8 +80,8 @@ synapse_stdp.d = 0
 synapse_stdp_monitor = StateMonitor(synapse_stdp, ['s', 'c', 'd'], record=[0])
 
 ## Dopamine signaling section
-dopamine_indices = array([0, 0, 0, 0, 0, 0, 0])
-dopamine_times = array([3330, 3365, 3450, 3490, 3520, 4020, 4520])*ms
+dopamine_indices = array([0, 0, 0, 0])
+dopamine_times = array([3090, 3520, 4020, 4520])*ms
 dopamine = SpikeGeneratorGroup(1, dopamine_indices, dopamine_times)
 dopamine_monitor = SpikeMonitor(dopamine)
 reward = Synapses(dopamine, synapse_stdp, model='''''',
