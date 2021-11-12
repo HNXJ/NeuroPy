@@ -39,7 +39,7 @@ for i in range(tpsd.shape[0]):
 trials = [i for i in range(130, 270)]
 
 dim = 3
-y = (np.array(trials)//50)%2
+# y = (np.array(trials)//50)%2
 yl = []
 
 for i in range(len(trials)):
@@ -54,7 +54,7 @@ for i in range(len(trials)):
     elif y[i] == 0:
         yl.append("err")
         
-# y = np.reshape(dataset.cue_cr[trials], [-1])*3 #+ 5 * ((np.array(trials)//50)%2)
+y = np.reshape(dataset.cue_s[trials], [-1])*3 #+ 5 * ((np.array(trials)//50)%2)
 
 x = tpsd[:, 9:16, 2:7, trials].reshape([-1, len(trials)]).transpose()
 
@@ -64,7 +64,7 @@ x = tpsd[:, 9:16, 2:7, trials].reshape([-1, len(trials)]).transpose()
 #                           name="TtSNE3DGC", ee=15, method="exact")
 
 X = Learning.tsne_cluster(X=x, Y=y, components=dim, perplx=5,
-                                    learning_rate=25, visualize=True,
+                                    learning_rate=30, visualize=True,
                                     iterations=5000, tit="tSNE-it6000-px180-lr100",
                                     save=True, name="plot", ee=10, init='pca')#, method="exact")
     
