@@ -56,7 +56,7 @@ for i in range(len(trials)):
         
 # y = np.reshape(dataset.cue_cr[trials], [-1])*3 #+ 5 * ((np.array(trials)//50)%2)
 
-x = tpsd[:, 9:16, 2:7, trials].reshape([-1, len(trials)*tpsd.shape[0]]).transpose()
+x = tpsd[:, 9:16, 2:7, trials].reshape([-1, len(trials)]).transpose()
 
 # Connect.time_tsne_cluster(data=tpsd[:, 10:16, 3:7, :], y=yl, trials=trials,
 #                           dim=3, perplx=20, learning_rate=25, 
