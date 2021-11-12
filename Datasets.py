@@ -38,6 +38,8 @@ class Dataset:
         self.data = sio.loadmat(path + "data.mat")
         self.cues = sio.loadmat(path + "cues.mat")['c']
         self.cue_cr = sio.loadmat(path + "cues.mat")['b']
+        
+        self.cue_s = sio.loadmat(path + "cues.mat")['s']
         print("Loaded.")
         
         self.signals['pfc'] = self.data['lfp'][:, 0:16, :]
