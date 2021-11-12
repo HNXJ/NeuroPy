@@ -25,6 +25,7 @@ class Dataset:
         self.cue_types = []
         self.data = None
         
+        self.cue_s = None
         self.cue_cr = None
         return
     

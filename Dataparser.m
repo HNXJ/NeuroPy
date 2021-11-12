@@ -7,6 +7,7 @@ load('Data/data.mat'); % ~ 1GB of data
 a = trialInfo.cueType;
 b = trialInfo.correct;
 s = trialInfo.sample;
+
 c = zeros(size(a, 1), 1);
 
 for i = 1:size(a, 1)
