@@ -36,7 +36,7 @@ for i in range(tpsd.shape[0]):
         tpsd[i, :, :, j] /= np.max(np.max(tpsd[i, :, :, j])) + 0.0001
         tpsd[i, :, :, j] = np.sqrt(tpsd[i, :, :, j])
 
-trials = [i for i in range(120, 380)]
+trials = [i for i in range(130, 270)]
 
 dim = 3
 y = (np.array(trials)//50)%2
