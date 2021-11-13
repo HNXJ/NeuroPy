@@ -22,3 +22,5 @@ def rdm(x):
             c[i, j] = 1 - correlation_pearson(x[i, ], x[j, ])
             c[j, i] = c[i, j]
             
+    return c
+            
