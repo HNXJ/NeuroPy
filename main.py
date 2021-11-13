@@ -19,7 +19,15 @@ warnings.filterwarnings("ignore")
 
 ##############################################################################
 
-#### TODO: RSA/RDM test
+### TODO: RSA/RDM test
+
+a = Representational.rdm(tpsd[:, :, :, 41])
+Methods.customplot(x, save=True, show=True, filename="plot.html"
+               , w=300, h=200, t=None, y=None, relative=True
+               ,xlabel="T", ylabel="A", title="Plot", reverse=None
+               ,xtext=False, xtext_labels=[])
+
+##############################################################################
 
 # dataset = Datasets.Dataset()
 # dataset.load_laminar_data(path="Data/")
