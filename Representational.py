@@ -7,10 +7,19 @@ import mne
 import cv2
 
 
+def correlation_pearson(x, y):
+
+    c = np.corrcoef(x.reshape([-1]), y.reshape([-1]))
+    return c[0, 1]
+
 def rdm(x):
     
     for i in range(x.shape[0]):
         
         for j in range(i, x.shape[0]):
             
+            c[i, j] = 1 - corr
+            c[j, i] = c[i, j]
             
+            
+print(correlation_pearson(tpsd[0, ], tpsd[2, ]))
