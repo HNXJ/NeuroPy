@@ -24,14 +24,14 @@ warnings.filterwarnings("ignore")
 trials = [i for i in range(0, 100, 1)]
 
 # rdm_ = Representational.rdm(tpsd[:, :, :, 41])
-# Methods.customplot(a, save=True, show=True, filename="plot1.html"
+# Methods.customplot(rdm_, save=True, show=True, filename="plot1.html"
 #                 , w=rdm_.shape[0], h=rdm_.shape[1], t=None, y=None, relative=True
 #                 ,xlabel="Frame", ylabel="Frame", title="RDM for trial frames", reverse=True
 #                 ,xtext=False, xtext_labels=[])
 
-rdm_ = Representational.rdm(tpsd[2:5, :, :, trials], p=3)
-Methods.customplot(a, save=True, show=True, filename="plot2.html"
-                , w=rdm_.shape[0], h=rdm_.shape[1], t=trials, y=trials, relative=True
+rdm_ = Representational.rdm(tpsd[2:3, :, :, trials], p=3)
+Methods.customplot(rdm_, save=True, show=True, filename="plot2.html"
+                , w=rdm_.shape[0], h=rdm_.shape[1], t=trials, y=trials, relative=False
                 ,xlabel="Trial", ylabel="Trial", title="RDM for trial frames", reverse=True
                 ,xtext=False, xtext_labels=[])
 

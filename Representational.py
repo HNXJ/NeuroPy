@@ -12,6 +12,7 @@ def correlation_pearson(x, y):
     c = np.corrcoef(x.reshape([-1]), y.reshape([-1]))
     return c[0, 1]
 
+
 def rdm(x, p=0):
     
     c = np.zeros([x.shape[p], x.shape[p]])
@@ -30,4 +31,9 @@ def rdm(x, p=0):
             c[j, i] = c[i, j]
             
     return c
+
+
+def time_rdm(x, p=0):
+    
+    
             
