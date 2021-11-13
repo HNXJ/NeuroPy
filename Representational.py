@@ -1,6 +1,7 @@
 import plotly.graph_objects as go
 import plotly.express as px
 import numpy as np
+import Viewer
 
 import plotly
 import mne
@@ -35,11 +36,13 @@ def rdm(x, p_dim=0):
 
 def time_rdm(x, p_dim=3, t_dim=0, title="RDM", dlabel="A", times=None, trials=None):
     
-    rdm_ = np.zeros([x.shape[t_dim], x.shape[p_dim], x.shape[p_dim]])
+    print("Creating RDM arrays ...")
+    rdm_ = np.zeros([x.shape[t_dim], x.shape[p_dim], x.shape[p_dim], 1])
     for i in range(x.shape[t_dim]):
-        rdm_ = rdm(x[i:i+1, :, :, trials], p_dim=p_dim)
+        rdm_[i, :, :, 0] = rdm(x[i:i+1, :, :, trials], p_dim=p_dim)
         
+    print("Done! \n -> Oppening viewer app.")
     Viewer.heatmap(data=rdm_, fqs=None, title=title, bands=False
-                , xlabel=dlabel, ylabel=dlabel, fr=times, tr=trials)
+                , xlabel=dlabel, ylabel=dlabel, fr=times, tr=[0])
     
     return
