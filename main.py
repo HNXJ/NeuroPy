@@ -19,6 +19,7 @@ warnings.filterwarnings("ignore")
 
 ##############################################################################
 
+#### TODO: RSA/RDM test
 
 # dataset = Datasets.Dataset()
 # dataset.load_laminar_data(path="Data/")
