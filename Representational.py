@@ -18,8 +18,6 @@ def rdm(x):
         
         for j in range(i, x.shape[0]):
             
-            c[i, j] = 1 - corr
+            c[i, j] = 1 - correlation_pearson(x[i, ], x[j, ])
             c[j, i] = c[i, j]
             
-            
-print(correlation_pearson(tpsd[0, ], tpsd[2, ]))

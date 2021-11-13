@@ -2,7 +2,9 @@ import Datasets
 import Methods
 import Connect
 import Viewer
+
 import Learning
+import Representational
 
 import numpy as np
 import pandas as pd
