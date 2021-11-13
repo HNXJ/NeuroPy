@@ -37,7 +37,7 @@ def rdm(x, p_dim=0):
 def time_rdm(x, p_dim=3, t_dim=0, title="RDM", dlabel="A", times=None, trials=None):
     
     print("Creating RDM arrays ...")
-    rdm_ = np.zeros([x.shape[t_dim], x.shape[len(trials)], x.shape[len(trials)], 1])
+    rdm_ = np.zeros([x.shape[t_dim], len(trials), len(trials), 1])
     for i in range(x.shape[t_dim]):
         rdm_[i, :, :, 0] = rdm(x[i:i+1, :, :, trials], p_dim=p_dim)
     
