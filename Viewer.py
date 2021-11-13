@@ -5,8 +5,6 @@ from dash import dcc
 import plotly.graph_objs as go
 import plotly.express as px
 import pandas as pd
-import numpy as np
-
 import dash
 
 
