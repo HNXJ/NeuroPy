@@ -14,6 +14,7 @@ def correlation_pearson(x, y):
 
 def rdm(x):
     
+    c = np.zeros([x.shape[0], x.shape[0]])
     for i in range(x.shape[0]):
         
         for j in range(i, x.shape[0]):

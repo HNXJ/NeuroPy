@@ -31,19 +31,19 @@ warnings.filterwarnings("ignore")
 ##############################################################################
 
 
-[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms.txt")
+# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms.txt")
 
-for i in range(tpsd.shape[0]):
-    for j in range(tpsd.shape[3]):
-        tpsd[i, :, :, j] /= np.max(np.max(tpsd[i, :, :, j])) + 0.0001
-        tpsd[i, :, :, j] = np.sqrt(tpsd[i, :, :, j])
+# for i in range(tpsd.shape[0]):
+#     for j in range(tpsd.shape[3]):
+#         tpsd[i, :, :, j] /= np.max(np.max(tpsd[i, :, :, j])) + 0.0001
+#         tpsd[i, :, :, j] = np.sqrt(tpsd[i, :, :, j])
 
-trials = [i for i in range(130, 270)]
+# trials = [i for i in range(130, 270)]
 
-dim = 3
-# y = (np.array(trials)//50)%2
-yl = []
-y = np.reshape(dataset.cue_s[trials], [-1]) #+ 5 * ((np.array(trials)//50)%2)
+# dim = 3
+# # y = (np.array(trials)//50)%2
+# yl = []
+# y = np.reshape(dataset.cue_s[trials], [-1]) #+ 5 * ((np.array(trials)//50)%2)
 
 # for i in range(len(trials)):
 #     if y[i] == 1:
@@ -57,20 +57,20 @@ y = np.reshape(dataset.cue_s[trials], [-1]) #+ 5 * ((np.array(trials)//50)%2)
 #     elif y[i] == 0:
 #         yl.append("err")
         
-for i in range(len(trials)):
-    if y[i] == 1:
-        yl.append("A")
-    elif y[i] == 2:
-        yl.append("B")
-    elif y[i] == 3:
-        yl.append("C")
+# for i in range(len(trials)):
+#     if y[i] == 1:
+#         yl.append("A")
+#     elif y[i] == 2:
+#         yl.append("B")
+#     elif y[i] == 3:
+#         yl.append("C")
 
-x = tpsd[:, 9:16, 2:7, trials].reshape([-1, len(trials)]).transpose()
+# x = tpsd[:, 9:16, 2:7, trials].reshape([-1, len(trials)]).transpose()
 
-Connect.time_tsne_cluster(data=tpsd[:, 10:16, 3:7, :], y=yl, trials=trials,
-                          dim=3, perplx=20, learning_rate=25, 
-                          n_iter=6000, times=times, title="tSNE in time for PSD",
-                          name="TtSNE3DGC", ee=15, method="exact")
+# Connect.time_tsne_cluster(data=tpsd[:, 10:16, 3:7, :], y=yl, trials=trials,
+#                           dim=3, perplx=20, learning_rate=25, 
+#                           n_iter=6000, times=times, title="tSNE in time for PSD",
+#                           name="TtSNE3DGC", ee=15, method="exact")
 
 # X = Learning.tsne_cluster(X=x, Y=y, components=dim, perplx=5,
 #                                     learning_rate=30, visualize=True,
