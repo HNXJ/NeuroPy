@@ -7,3 +7,10 @@ import mne
 import cv2
 
 
+def rdm(x):
+    
+    for i in range(x.shape[0]):
+        
+        for j in range(i, x.shape[0]):
+            
+            
