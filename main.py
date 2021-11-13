@@ -19,6 +19,7 @@ warnings.filterwarnings("ignore")
 
 ##############################################################################
 
+
 ### TODO: RSA/RDM test
 
 trials = [i for i in range(0, 100, 1)]
@@ -28,6 +29,7 @@ trials = [i for i in range(0, 100, 1)]
 rdm_ = Representational.time_rdm(x=tsc, p_dim=3, t_dim=0, trials=trials)
 
 Representational.time_rdm_plot(rdm_, title="RDM", dlabel="Trials", times=times)
+
 
 ##############################################################################
 
