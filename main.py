@@ -18,12 +18,12 @@ warnings.filterwarnings("ignore")
 ##############################################################################
 
 
-dataset = Datasets.Dataset()
-dataset.load_laminar_data(path="Data/")
-dataset.print_all_content()
-trials_block = dataset.get_trials(key='block', l=0, r=600)
-trials_trial = dataset.get_trials(key='trial', l=0, r=600)
-trials = [i for i in range(0, 600, 1)]
+# dataset = Datasets.Dataset()
+# dataset.load_laminar_data(path="Data/")
+# dataset.print_all_content()
+# trials_block = dataset.get_trials(key='block', l=0, r=600)
+# trials_trial = dataset.get_trials(key='trial', l=0, r=600)
+# trials = [i for i in range(0, 600, 1)]
 
 
 ##############################################################################
@@ -41,32 +41,31 @@ trials = [i for i in range(130, 270)]
 dim = 3
 # y = (np.array(trials)//50)%2
 yl = []
-
-for i in range(len(trials)):
-    if y[i] == 1:
-        yl.append("Trial(unpredictable)")
-    elif y[i] == 0:
-        yl.append("Block(predictable)")
-        
-for i in range(len(trials)):
-    if y[i] == 1:
-        yl.append("cor")
-    elif y[i] == 0:
-        yl.append("err")
-        
 y = np.reshape(dataset.cue_s[trials], [-1])*3 #+ 5 * ((np.array(trials)//50)%2)
 
+# for i in range(len(trials)):
+#     if y[i] == 1:
+#         yl.append("Trial(unpredictable)")
+#     elif y[i] == 0:
+#         yl.append("Block(predictable)")
+        
+# for i in range(len(trials)):
+#     if y[i] == 1:
+#         yl.append("cor")
+#     elif y[i] == 0:
+#         yl.append("err")
+        
 x = tpsd[:, 9:16, 2:7, trials].reshape([-1, len(trials)]).transpose()
 
-# Connect.time_tsne_cluster(data=tpsd[:, 10:16, 3:7, :], y=yl, trials=trials,
-#                           dim=3, perplx=20, learning_rate=25, 
-#                           n_iter=6000, times=times, title="tSNE in time for PSD",
-#                           name="TtSNE3DGC", ee=15, method="exact")
+Connect.time_tsne_cluster(data=tpsd[:, 10:16, 3:7, :], y=yl, trials=trials,
+                          dim=3, perplx=20, learning_rate=25, 
+                          n_iter=6000, times=times, title="tSNE in time for PSD",
+                          name="TtSNE3DGC", ee=15, method="exact")
 
-X = Learning.tsne_cluster(X=x, Y=y, components=dim, perplx=5,
-                                    learning_rate=30, visualize=True,
-                                    iterations=5000, tit="tSNE-it6000-px180-lr100",
-                                    save=True, name="plot", ee=10, init='pca')#, method="exact")
+# X = Learning.tsne_cluster(X=x, Y=y, components=dim, perplx=5,
+#                                     learning_rate=30, visualize=True,
+#                                     iterations=5000, tit="tSNE-it6000-px180-lr100",
+#                                     save=True, name="plot", ee=10, init='pca')#, method="exact")
     
 # X = Learning.pca_cluster(X=x, Y=y, components=dim, visualize=True, tit="PFC-PSD-PCA"
 #             , save=True, name="pcapfcpsd")
@@ -77,7 +76,7 @@ X = Learning.tsne_cluster(X=x, Y=y, components=dim, perplx=5,
 # Viewer.scatter(data=X, y=y, dim=dim, frames=1, title="TSNE cluster in time",
 #                xlabel="", ylabel="", fr=times, trials=trials, bands=False)
 
-trials = [i for i in range(600)]
+# trials = [i for i in range(600)]
 
 # ### PSD in time windows
 # tpsd, freqs, times = Connect.time_power_spectrum_density(data=dataset.signals['pfc']
