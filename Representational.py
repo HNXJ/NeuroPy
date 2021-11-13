@@ -35,9 +35,9 @@ def rdm(x, p_dim=0):
 
 def time_rdm(x, p_dim=3, t_dim=0, title="RDM", dlabel="A", times=None, trials=None):
     
-    rdm_ = np.zeros([x.shape[t_dim], x.shape[p], x.shape[p]])
+    rdm_ = np.zeros([x.shape[t_dim], x.shape[p_dim], x.shape[p_dim]])
     for i in range(x.shape[t_dim]):
-        rdm_ = Representational.rdm(x[i:i+1, :, :, trials], p_dim=p_dim)
+        rdm_ = rdm(x[i:i+1, :, :, trials], p_dim=p_dim)
         
     Viewer.heatmap(data=rdm_, fqs=None, title=title, bands=False
                 , xlabel=dlabel, ylabel=dlabel, fr=times, tr=trials)

@@ -23,19 +23,10 @@ warnings.filterwarnings("ignore")
 
 trials = [i for i in range(0, 100, 1)]
 
-[tsc] = Datasets.load_list("Data/1-600-tsc-250ms.txt")
+# [tsc] = Datasets.load_list("Data/1-600-tsc-250ms.txt")
 
-# rdm_ = Representational.rdm(tpsd[:, :, :, 41])
-# Methods.customplot(rdm_, save=True, show=True, filename="plot1.html"
-#                 , w=rdm_.shape[0], h=rdm_.shape[1], t=None, y=None, relative=True
-#                 ,xlabel="Frame", ylabel="Frame", title="RDM for trial frames", reverse=True
-#                 ,xtext=False, xtext_labels=[])
-
-# rdm_ = Representational.rdm(tpsd[2:3, :, :, trials], p_dim=3)
-# Methods.customplot(rdm_, save=True, show=True, filename="plot2.html"
-#                 , w=rdm_.shape[0], h=rdm_.shape[1], t=trials, y=trials, relative=False
-#                 ,xlabel="Trial", ylabel="Trial", title="RDM for trial frames", reverse=True
-#                 ,xtext=False, xtext_labels=[])
+Representational.time_rdm(x=tpsd, p_dim=3, t_dim=0, title="RDM",
+                          dlabel="A", times=times, trials=trials)
 
 
 ##############################################################################
