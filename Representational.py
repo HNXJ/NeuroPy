@@ -34,19 +34,20 @@ def rdm(x, p_dim=0):
     return c
 
 
-def time_rdm(x, p_dim=3, t_dim=0, title="RDM", dlabel="A", times=None, trials=None):
+def time_rdm(x, p_dim=3, t_dim=0, trials=None):
     
     print("Creating RDM arrays ...")
     rdm_ = np.zeros([x.shape[t_dim], len(trials), len(trials), 1])
     for i in range(x.shape[t_dim]):
         rdm_[i, :, :, 0] = rdm(x[i:i+1, :, :, trials], p_dim=p_dim)
     
+    print("Done.")
     return rdm_
         
 
-def time_rdm_plot():
-    print("Done! \n -> Oppening viewer app.")
-    Viewer.heatmap(data=rdm_, fqs=None, title=title, bands=False
+def time_rdm_plot(x, title="RDM", dlabel="A", times=None):
+    print("-> Oppening viewer app.")
+    Viewer.heatmap(data=x, fqs=None, title=title, bands=False
                 , xlabel=dlabel, ylabel=dlabel, fr=times, tr=[0])
     
     return 
