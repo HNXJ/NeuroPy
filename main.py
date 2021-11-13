@@ -41,7 +41,7 @@ trials = [i for i in range(130, 270)]
 dim = 3
 # y = (np.array(trials)//50)%2
 yl = []
-y = np.reshape(dataset.cue_s[trials], [-1])*3 #+ 5 * ((np.array(trials)//50)%2)
+y = np.reshape(dataset.cue_s[trials], [-1]) #+ 5 * ((np.array(trials)//50)%2)
 
 # for i in range(len(trials)):
 #     if y[i] == 1:
@@ -55,6 +55,14 @@ y = np.reshape(dataset.cue_s[trials], [-1])*3 #+ 5 * ((np.array(trials)//50)%2)
 #     elif y[i] == 0:
 #         yl.append("err")
         
+for i in range(len(trials)):
+    if y[i] == 1:
+        yl.append("A")
+    elif y[i] == 2:
+        yl.append("B")
+    elif y[i] == 3:
+        yl.append("C")
+
 x = tpsd[:, 9:16, 2:7, trials].reshape([-1, len(trials)]).transpose()
 
 Connect.time_tsne_cluster(data=tpsd[:, 10:16, 3:7, :], y=yl, trials=trials,
