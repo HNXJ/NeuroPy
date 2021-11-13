@@ -21,11 +21,20 @@ warnings.filterwarnings("ignore")
 
 ### TODO: RSA/RDM test
 
-a = Representational.rdm(tpsd[:, :, :, 41])
-Methods.customplot(x, save=True, show=True, filename="plot.html"
-               , w=300, h=200, t=None, y=None, relative=True
-               ,xlabel="T", ylabel="A", title="Plot", reverse=None
-               ,xtext=False, xtext_labels=[])
+trials = [i for i in range(0, 100, 1)]
+
+# rdm_ = Representational.rdm(tpsd[:, :, :, 41])
+# Methods.customplot(a, save=True, show=True, filename="plot1.html"
+#                 , w=rdm_.shape[0], h=rdm_.shape[1], t=None, y=None, relative=True
+#                 ,xlabel="Frame", ylabel="Frame", title="RDM for trial frames", reverse=True
+#                 ,xtext=False, xtext_labels=[])
+
+rdm_ = Representational.rdm(tpsd[2:5, :, :, trials], p=3)
+Methods.customplot(a, save=True, show=True, filename="plot2.html"
+                , w=rdm_.shape[0], h=rdm_.shape[1], t=trials, y=trials, relative=True
+                ,xlabel="Trial", ylabel="Trial", title="RDM for trial frames", reverse=True
+                ,xtext=False, xtext_labels=[])
+
 
 ##############################################################################
 

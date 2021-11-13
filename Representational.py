@@ -12,14 +12,21 @@ def correlation_pearson(x, y):
     c = np.corrcoef(x.reshape([-1]), y.reshape([-1]))
     return c[0, 1]
 
-def rdm(x):
+def rdm(x, p=0):
     
-    c = np.zeros([x.shape[0], x.shape[0]])
-    for i in range(x.shape[0]):
+    c = np.zeros([x.shape[p], x.shape[p]])
+    for i in range(x.shape[p]):
         
-        for j in range(i, x.shape[0]):
+        for j in range(i, x.shape[p]):
             
-            c[i, j] = 1 - correlation_pearson(x[i, ], x[j, ])
+            if p == 0:
+                c[i, j] = 1 - correlation_pearson(x[i, ], x[j, ])
+            elif p == 1:
+                c[i, j] = 1 - correlation_pearson(x[:, i, ], x[:, j, ])
+            elif p == 2:
+                c[i, j] = 1 - correlation_pearson(x[:, :, i, ], x[:, :, j, ])
+            elif p == 3:
+                c[i, j] = 1 - correlation_pearson(x[:, :, :, i, ], x[:, :, :, j, ])
             c[j, i] = c[i, j]
             
     return c
