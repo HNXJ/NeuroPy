@@ -37,12 +37,18 @@ def rdm(x, p_dim=0):
 def time_rdm(x, p_dim=3, t_dim=0, title="RDM", dlabel="A", times=None, trials=None):
     
     print("Creating RDM arrays ...")
-    rdm_ = np.zeros([x.shape[t_dim], x.shape[p_dim], x.shape[p_dim], 1])
+    rdm_ = np.zeros([x.shape[t_dim], x.shape[len(trials)], x.shape[len(trials)], 1])
     for i in range(x.shape[t_dim]):
         rdm_[i, :, :, 0] = rdm(x[i:i+1, :, :, trials], p_dim=p_dim)
+    
+    return rdm_
         
+
+def time_rdm_plot():
     print("Done! \n -> Oppening viewer app.")
     Viewer.heatmap(data=rdm_, fqs=None, title=title, bands=False
                 , xlabel=dlabel, ylabel=dlabel, fr=times, tr=[0])
     
-    return
+    return 
+
+

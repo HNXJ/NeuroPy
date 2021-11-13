@@ -25,7 +25,7 @@ trials = [i for i in range(0, 100, 1)]
 
 # [tsc] = Datasets.load_list("Data/1-600-tsc-250ms.txt")
 
-Representational.time_rdm(x=tpsd, p_dim=3, t_dim=0, title="RDM",
+rdm_ = Representational.time_rdm(x=tpsd, p_dim=3, t_dim=0, title="RDM",
                           dlabel="A", times=times, trials=trials)
 
 
