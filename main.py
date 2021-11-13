@@ -21,9 +21,9 @@ warnings.filterwarnings("ignore")
 
 ### TODO: RSA/RDM test
 
-trials = [i for i in range(35, 65, 1)]
+trials = [i for i in range(0, 100, 1)]
 
-# [tsc] = Datasets.load_list("Data/1-600-tsc-250ms.txt")
+[tsc] = Datasets.load_list("Data/1-600-tsc-250ms.txt")
 
 rdm_ = Representational.time_rdm(x=tsc, p_dim=3, t_dim=0, trials=trials)
 
