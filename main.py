@@ -23,7 +23,7 @@ warnings.filterwarnings("ignore")
 ### TODO: RSA/RDM test
 
 trials = [i for i in range(0, 100, 1)]
-[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms.txt")
+[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-1000ms.txt")
 [tsc] = Datasets.load_list("Data/1-600-tsc-1000ms.txt")
 [tgc, times] = Datasets.load_list("Data/1-600-tgc-250ms.txt")
 
