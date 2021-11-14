@@ -24,6 +24,8 @@ warnings.filterwarnings("ignore")
 
 trials = [i for i in range(0, 100, 1)]
 
+
+[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms.txt")
 [tsc] = Datasets.load_list("Data/1-600-tsc-250ms.txt")
 
 rdm_ = Representational.time_rdm(x=tsc, p_dim=3, t_dim=0, trials=trials)
