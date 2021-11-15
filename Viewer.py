@@ -9,7 +9,7 @@ import dash
 
 
 def create_app(data=None, fqs=None, trials=3, frames=3, title="T", xlabel="C"
-               , ylabel="C", fr=None, tr=None, bands=False):
+               , ylabel="C", fr=None, tr=None, bands=False, cat_labels=None):
         
     app = dash.Dash(__name__)
     
@@ -71,7 +71,7 @@ def create_app(data=None, fqs=None, trials=3, frames=3, title="T", xlabel="C"
                       , "L-Beta[12-16]", "M-Beta[16-20]", "U-Beta[20-30]"
                       , "L-Gamma[30-50]", "M-Gamma[50-70]", "U-Gamma[70+]"]
         
-        if bands:
+        if bands==True:
             return {
                 'data':[go.Heatmap(z=im, y=y, x=bandlabels)]
                 , 'layout': go.Layout(autosize=False,
@@ -82,7 +82,18 @@ def create_app(data=None, fqs=None, trials=3, frames=3, title="T", xlabel="C"
                         yaxis=dict(title=ylabel)
                         )
                 }
-        
+        elif not cat_labels==None:
+             return {
+                 'data':[go.Heatmap(z=im, y=cat_labels, x=cat_labels)]
+                 , 'layout': go.Layout(autosize=False,
+                         width=1420,
+                         height=600,
+                         title=tit,
+                         xaxis=dict(title=xlabel),
+                         yaxis=dict(title=ylabel)
+                         )
+                 }
+         
         return {
             'data':[go.Heatmap(z=im, y=y, x=t)]
             , 'layout': go.Layout(autosize=False,
@@ -173,11 +184,12 @@ def create_app_scatter(data=None, y=None, dim=3, frames=3, title="T", xlabel="C"
 
 
 def heatmap(data=None, fqs=None, trials=1, frames=1, title="title", xlabel="x", ylabel="y"
-        ,fr=None, tr=None, bands=False):
+        ,fr=None, tr=None, bands=False, cat_labels=None):
     
     fr = get_frames(fr=fr, frames=frames)
     app = create_app(data=data, fqs=fqs, trials=trials, frames=frames, title=title
-                     , xlabel=xlabel, ylabel=ylabel, fr=fr, tr=tr, bands=bands)
+                     , xlabel=xlabel, ylabel=ylabel, fr=fr, tr=tr, bands=bands,
+                     cat_labels=cat_labels)
     app.run_server(debug=False, use_reloader=False)
     
 

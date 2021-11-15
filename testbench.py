@@ -25,31 +25,44 @@ trials = [i for i in range(0, 600, 1)]
 
 ##############################################################################
 
-sample_inds = []*6
+sample_inds = []
+for i in range(6):
+    sample_inds.append([])
 
 for i in trials:
-    if dataset.cue_s[i] == 1 and dataset.cue_cr[i] == 0: # pred & A
+    if dataset.cue_s[i] == 1 and dataset.cues[i] == 0: # pred & A
         sample_inds[0].append(i)
-    if dataset.cue_s[i] == 2 and dataset.cue_cr[i] == 0: # pred & B
-        sample_inds[0].append(i)
-    if dataset.cue_s[i] == 3 and dataset.cue_cr[i] == 0: # pred & C
-        sample_inds[0].append(i)
-    if dataset.cue_s[i] == 1 and dataset.cue_cr[i] == 1: # unpred & A
-        sample_inds[0].append(i)
-    if dataset.cue_s[i] == 2 and dataset.cue_cr[i] == 1: # unpred & B
-        sample_inds[0].append(i)
-    if dataset.cue_s[i] == 3 and dataset.cue_cr[i] == 1: # unpred & C
-        sample_inds[0].append(i)
+    if dataset.cue_s[i] == 2 and dataset.cues[i] == 0: # pred & B
+        sample_inds[1].append(i)
         
-### TODO: RSA/RDM test 2X3 -> 6 class 
+    if dataset.cue_s[i] == 3 and dataset.cues[i] == 0: # pred & C
+        sample_inds[2].append(i)
+    if dataset.cue_s[i] == 1 and dataset.cues[i] == 1: # unpred & A
+        sample_inds[3].append(i)
+        
+    if dataset.cue_s[i] == 2 and dataset.cues[i] == 1: # unpred & B
+        sample_inds[4].append(i)
+    if dataset.cue_s[i] == 3 and dataset.cues[i] == 1: # unpred & C
+        sample_inds[5].append(i)
+     
+         
+### RSA/RDM test 2X3 -> 6 class 
 
 # trials = [i for i in range(0, 100, 1)]
-# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-1000ms.txt")
-# [tsc] = Datasets.load_list("Data/1-600-tsc-1000ms.txt")
-# [tgc, times] = Datasets.load_list("Data/1-600-tgc-250ms.txt")
+[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-1000ms.txt")
+[tsc] = Datasets.load_list("Data/1-600-tsc-1000ms.txt")
+[tgc, times] = Datasets.load_list("Data/1-600-tgc-250ms.txt")
 
-# rdm_ = Representational.time_rdm(x=tsc, p_dim=3, t_dim=0, trials=trials)
+xt_array = tsc
+xt = np.zeros([xt_array.shape[0], xt_array.shape[1], xt_array.shape[2], 6])
+for i in range(len(sample_inds)):
+    xt[:, :, :, i] = np.mean(tsc[:, :, :, sample_inds[i]], 3)
 
-# Representational.time_rdm_plot(rdm_, title="RDM", dlabel="Trials", times=times)
+rdm_ = Representational.time_rdm(x=xt, p_dim=3, t_dim=0, trials=[i for i in range(6)])
+
+ctl = ["A-Pred", "B-Pred", "C-Pred", "A-Unpred", "B-Unpred", "C-Unpred"]
+
+Representational.time_rdm_plot(rdm_, title="RDM, average across temp-spect-coherence categories, Each time frame"
+                               , dlabel="Modes", times=times, cat_labels=ctl)
 
 ###############################################################################
