@@ -54,6 +54,7 @@ for i in trials:
 # [tgc, times] = Datasets.load_list("Data/1-600-tgc-250ms.txt")
 
 xt_array = tpsd
+
 xt = np.zeros([xt_array.shape[0], xt_array.shape[1], xt_array.shape[2], 6])
 for i in range(len(sample_inds)):
     xt[:, :, :, i] = np.mean(xt_array[:, :, :, sample_inds[i]], 3)
