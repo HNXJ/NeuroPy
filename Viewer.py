@@ -83,7 +83,7 @@ def create_app(data=None, fqs=None, trials=3, frames=3, title="T", xlabel="C"
                         )
                 }
         elif not cat_labels==None:
-             yl = reversed(cat_labels)
+             yl = list(reversed(cat_labels))
              return {
                  'data':[go.Heatmap(z=im, y=yl, x=cat_labels)]
                  , 'layout': go.Layout(autosize=False,

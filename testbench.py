@@ -49,14 +49,14 @@ for i in trials:
 ### RSA/RDM test 2X3 -> 6 class 
 
 # trials = [i for i in range(0, 100, 1)]
-[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-1000ms.txt")
-[tsc] = Datasets.load_list("Data/1-600-tsc-1000ms.txt")
-[tgc, times] = Datasets.load_list("Data/1-600-tgc-250ms.txt")
+[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms.txt")
+[tsc] = Datasets.load_list("Data/1-600-tsc-500ms.txt")
+# [tgc, times] = Datasets.load_list("Data/1-600-tgc-250ms.txt")
 
-xt_array = tsc
+xt_array = tpsd
 xt = np.zeros([xt_array.shape[0], xt_array.shape[1], xt_array.shape[2], 6])
 for i in range(len(sample_inds)):
-    xt[:, :, :, i] = np.mean(tsc[:, :, :, sample_inds[i]], 3)
+    xt[:, :, :, i] = np.mean(xt_array[:, :, :, sample_inds[i]], 3)
 
 rdm_ = Representational.time_rdm(x=xt, p_dim=3, t_dim=0, trials=[i for i in range(6)])
 
