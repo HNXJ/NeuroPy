@@ -25,10 +25,22 @@ trials = [i for i in range(0, 600, 1)]
 
 ##############################################################################
 
+sample_inds = []*6
+
 for i in trials:
-    
-
-
+    if dataset.cue_s[i] == 1 and dataset.cue_cr[i] == 0: # pred & A
+        sample_inds[0].append(i)
+    if dataset.cue_s[i] == 2 and dataset.cue_cr[i] == 0: # pred & B
+        sample_inds[0].append(i)
+    if dataset.cue_s[i] == 3 and dataset.cue_cr[i] == 0: # pred & C
+        sample_inds[0].append(i)
+    if dataset.cue_s[i] == 1 and dataset.cue_cr[i] == 1: # unpred & A
+        sample_inds[0].append(i)
+    if dataset.cue_s[i] == 2 and dataset.cue_cr[i] == 1: # unpred & B
+        sample_inds[0].append(i)
+    if dataset.cue_s[i] == 3 and dataset.cue_cr[i] == 1: # unpred & C
+        sample_inds[0].append(i)
+        
 ### TODO: RSA/RDM test 2X3 -> 6 class 
 
 # trials = [i for i in range(0, 100, 1)]
