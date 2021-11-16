@@ -5,6 +5,7 @@ import Viewer
 
 import Learning
 import Representational
+from flask import Flask
 
 import numpy as np
 import pandas as pd
@@ -53,17 +54,29 @@ for i in trials:
 [tsc] = Datasets.load_list("Data/1-600-tsc-500ms.txt")
 # [tgc, times] = Datasets.load_list("Data/1-600-tgc-250ms.txt")
 
-xt_array = tpsd
+# xt_array = tpsd
 
-xt = np.zeros([xt_array.shape[0], xt_array.shape[1], xt_array.shape[2], 6])
-for i in range(len(sample_inds)):
-    xt[:, :, :, i] = np.mean(xt_array[:, :, :, sample_inds[i]], 3)
+# xt = np.zeros([xt_array.shape[0], xt_array.shape[1], xt_array.shape[2], 6])
+# for i in range(len(sample_inds)):
+#     xt[:, :, :, i] = np.mean(xt_array[:, :, :, sample_inds[i]], 3)
+
+# Datasets.save_list(xt, "xt.txt")
+xt = Datasets.load_list("xt.txt")
 
 rdm_ = Representational.time_rdm(x=xt, p_dim=3, t_dim=0, trials=[i for i in range(6)])
 
 ctl = ["A-Pred", "B-Pred", "C-Pred", "A-Unpred", "B-Unpred", "C-Unpred"]
 
-Representational.time_rdm_plot(rdm_, title="RDM, average across temp-spect-coherence categories, Each time frame"
+app = Representational.time_rdm_plot(rdm_, title="RDM, average across temp-spect-coherence categories, Each time frame"
                                , dlabel="Modes", times=times, cat_labels=ctl)
+
+# app.run_server()
+
+server = Flask(__name__)
+@server.route("/dash")
+def app_():
+    return app.index()
+
+app_()
 
 ###############################################################################
