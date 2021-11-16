@@ -2,7 +2,7 @@
 
 ## github@HNXJ
 
-Notable libraries: Scipy - Statsmodel - Plotly - PyMNE - CV2 - Dash - Scikit - Sklearn
+Notable libraries: Scipy - Statsmodel - Plotly - PyMNE - *CV2 - Dash - Scikit - Sklearn - *f
 
 Part of this code rquires local dash server, you can enter the address in the terminal (default 127.0.0.1:8050) to open the web application interactive plots.
 
