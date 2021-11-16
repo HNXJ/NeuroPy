@@ -70,11 +70,12 @@ ctl = ["A-Pred", "B-Pred", "C-Pred", "A-Unpred", "B-Unpred", "C-Unpred"]
 app = Representational.time_rdm_plot(rdm_, title="RDM, average across temp-spect-coherence categories, Each time frame"
                                , dlabel="Modes", times=times, cat_labels=ctl)
 
-# app.run_server()
+app.run_server()
 
-server = Flask(__name__)
-@server.route("/dash")
-def app_():
-    return app.index()
+
+# server = Flask(__name__)
+# @server.route("/dash")
+# def app_():
+    # return app.index()
 
 ###############################################################################
