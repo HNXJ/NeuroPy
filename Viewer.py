@@ -191,8 +191,9 @@ def heatmap(data=None, fqs=None, trials=1, frames=1, title="title", xlabel="x", 
     app = create_app(data=data, fqs=fqs, trials=trials, frames=frames, title=title
                      , xlabel=xlabel, ylabel=ylabel, fr=fr, tr=tr, bands=bands,
                      cat_labels=cat_labels)
-    app.run_server(debug=False, use_reloader=False)
-    
+    # app.run_server(debug=False, use_reloader=False)
+    return app
+
 
 def scatter(data=None, y=None, dim=3, frames=1, title="title", xlabel="x", ylabel="y"
         ,fr=None, trials=None, bands=False):
@@ -200,7 +201,8 @@ def scatter(data=None, y=None, dim=3, frames=1, title="title", xlabel="x", ylabe
     fr = get_frames(fr=fr, frames=frames)
     app = create_app_scatter(data=data, y=y, dim=dim, frames=frames, title=title
                      , xlabel=xlabel, ylabel=ylabel, fr=fr, trials=trials, bands=bands)
-    app.run_server(debug=False, use_reloader=False)
+    # app.run_server(debug=False, use_reloader=False)
+    return app
 
 
 def get_frames(fr=None, frames=1):
