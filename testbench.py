@@ -87,7 +87,7 @@ tpsd, freqs, times = Connect.time_power_spectrum_density(data=dataset.signals['v
                                 , save=True, bands=True
                                 , time_window_size=500, time_overlap=0
                                 , trials=trials, bw=50, tl=0, tr=4000,
-                                  time_base=-1500, fmin=8, fmax=24)
+                                  time_base=-1500, fmin=8, fmax=64)
 
 # Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-500ms-f8-f24-pfc.txt")
 # [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f8-f24-pfc.txt")
@@ -95,8 +95,8 @@ tpsd, freqs, times = Connect.time_power_spectrum_density(data=dataset.signals['v
 # Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-500ms-f8-f24-p7a.txt")
 # [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f8-f24-p7a.txt")
 
-Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-500ms-f8-f24-v4.txt")
-[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f8-f24-v4.txt")
+Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-500ms-f8-f64-v4.txt")
+[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f8-f64-v4.txt")
 
 # [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-v4.txt")
 
@@ -134,9 +134,9 @@ for i in range(len(trials)):
 
 # x = tpsd[:, 9:16, 2:7, trials].reshape([-1, len(trials)]).transpose()
 
-# app = Connect.time_tsne_cluster(data=tpsd[:, 10:16, 3:7, :], y=y, trials=trials,
-#                           dim=3, perplx=20, learning_rate=25, 
-#                           n_iter=6000, times=times, title="tSNE in time for PSD, pfc, 8Hz-24-Hz",
-#                             name="TtSNE3DGC", ee=15, method="exact")
+app = Connect.time_tsne_cluster(data=tpsd[:, 10:16, 3:7, :], y=y, trials=trials,
+                          dim=3, perplx=20, learning_rate=25, 
+                          n_iter=6000, times=times, title="tSNE in time for PSD, v4, 8Hz-24-Hz",
+                            name="TtSNE3DGC", ee=15, method="exact")
 
 app.run_server()
