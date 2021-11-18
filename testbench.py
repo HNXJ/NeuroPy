@@ -83,20 +83,20 @@ warnings.filterwarnings("ignore")
 trials = [i for i in range(0, 600)]
 
 ## PSD in time windows till tSNE
-tpsd, freqs, times = Connect.time_power_spectrum_density(data=dataset.signals['pfc']
+tpsd, freqs, times = Connect.time_power_spectrum_density(data=dataset.signals['v4']
                                 , save=True, bands=True
                                 , time_window_size=500, time_overlap=0
                                 , trials=trials, bw=50, tl=0, tr=4000,
                                   time_base=-1500, fmin=8, fmax=24)
 
-Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-500ms-f8-f24-pfc.txt")
-[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f8-f24-pfc.txt")
+# Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-500ms-f8-f24-pfc.txt")
+# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f8-f24-pfc.txt")
 
 # Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-500ms-f8-f24-p7a.txt")
 # [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f8-f24-p7a.txt")
 
-# Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-500ms-f8-f24-v4.txt")
-# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f8-f24-v4.txt")
+Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-500ms-f8-f24-v4.txt")
+[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f8-f24-v4.txt")
 
 # [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-v4.txt")
 
