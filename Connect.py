@@ -239,7 +239,8 @@ def s_granger_plotter(data=None, key='pfc', save=False,
 
 def time_power_spectrum_density(data=None, key='key', save=True, bands=True
                                 , time_window_size=500, time_overlap=100
-                                , trials=None, bw=40, tl=0, tr=4500, time_base=0):
+                                , trials=None, bw=40, tl=0, tr=4500, time_base=0
+                                , fmin=0, fmax=100):
     
     '''
         => To calculate the psd in each time window, in order to check time dependent variations
@@ -254,7 +255,7 @@ def time_power_spectrum_density(data=None, key='key', save=True, bands=True
         print("Time no. ", t)
         psd, freqs = Methods.power_spectrum_density(data=data, save=True
                                             , t1=t-time_window_size, t2=t
-                                            , fmin=0, fmax=100, normalize_w=False
+                                            , fmin=fmin, fmax=fmax, normalize_w=False
                                             , bw=bw, k=0, trials=trials)
         
         if bands:

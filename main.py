@@ -39,14 +39,25 @@ warnings.filterwarnings("ignore")
 # dataset.print_all_content()
 # trials_block = dataset.get_trials(key='block', l=0, r=600)
 # trials_trial = dataset.get_trials(key='trial', l=0, r=600)
-# trials = [i for i in range(0, 600, 1)]
+trials = [i for i in range(0, 600, 1)]
 
 
 ##############################################################################
 
+## PSD in time windows
+# tpsd, freqs, times = Connect.time_power_spectrum_density(data=dataset.signals['pfc']
+#                                 , save=True, bands=True
+#                                 , time_window_size=500, time_overlap=0
+#                                 , trials=trials, bw=50, tl=0, tr=4000,
+#                                   time_base=-1500)
 
-# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms.txt")
-[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-v4.txt")
+Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-500ms-f8-f24-pfc.txt")
+[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f8-f24-pfc.txt")
+
+Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-500ms-f8-f24-pfc.txt")
+[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f8-f24-pfc.txt")
+
+# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-v4.txt")
 
 for i in range(tpsd.shape[0]):
     for j in range(tpsd.shape[3]):
@@ -84,7 +95,7 @@ for i in range(len(trials)):
 
 app = Connect.time_tsne_cluster(data=tpsd[:, 10:16, 3:7, :], y=y, trials=trials,
                           dim=3, perplx=20, learning_rate=25, 
-                          n_iter=6000, times=times, title="tSNE in time for PSD, v4",
+                          n_iter=6000, times=times, title="tSNE in time for PSD, pfc",
                             name="TtSNE3DGC", ee=15, method="exact")
 
 app.run_server()
