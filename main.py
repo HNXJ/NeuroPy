@@ -56,9 +56,9 @@ for i in range(tpsd.shape[0]):
 trials = [i for i in range(130, 270)]
 
 dim = 3
-y = (np.array(trials)//50)%2
+# y = (np.array(trials)//50)%2
 yl = []
-# y = np.reshape(dataset.cue_s[trials], [-1]) #+ 5 * ((np.array(trials)//50)%2)
+y = np.reshape(dataset.cue_s[trials], [-1]) #+ 5 * ((np.array(trials)//50)%2)
 
 for i in range(len(trials)):
     if y[i] == 1:
