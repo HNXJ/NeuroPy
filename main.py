@@ -56,9 +56,9 @@ for i in range(tpsd.shape[0]):
 trials = [i for i in range(130, 270)]
 
 dim = 3
-# y = (np.array(trials)//50)%2
+y = (np.array(trials)//50)%2
 yl = []
-y = np.reshape(dataset.cue_s[trials], [-1]) #+ 5 * ((np.array(trials)//50)%2)
+# y = np.reshape(dataset.cue_s[trials], [-1]) #+ 5 * ((np.array(trials)//50)%2)
 
 for i in range(len(trials)):
     if y[i] == 1:
@@ -72,17 +72,17 @@ for i in range(len(trials)):
     elif y[i] == 0:
         yl.append("err")
         
-for i in range(len(trials)):
-    if y[i] == 1:
-        yl.append("A")
-    elif y[i] == 2:
-        yl.append("B")
-    elif y[i] == 3:
-        yl.append("C")
+# for i in range(len(trials)):
+#     if y[i] == 1:
+#         yl.append("A")
+#     elif y[i] == 2:
+#         yl.append("B")
+#     elif y[i] == 3:
+#         yl.append("C")
 
 # x = tpsd[:, 9:16, 2:7, trials].reshape([-1, len(trials)]).transpose()
 
-app = Connect.time_tsne_cluster(data=tpsd[:, 10:16, 3:7, :], y=yl, trials=trials,
+app = Connect.time_tsne_cluster(data=tpsd[:, 10:16, 3:7, :], y=y, trials=trials,
                           dim=3, perplx=20, learning_rate=25, 
                           n_iter=6000, times=times, title="tSNE in time for PSD, v4",
                             name="TtSNE3DGC", ee=15, method="exact")
