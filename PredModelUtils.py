@@ -5,12 +5,17 @@ import Viewer
 
 import Learning
 import Representational
-from flask import Flask
+# from flask import Flask
 
 import numpy as np
 import pandas as pd
 import warnings
 
+
+def data_compactor(x, dim=0, ind_sets=None):
+    
+    shape_list = []
+    for i in range(len(x.shape)):
 
 ##############################################################################
 
@@ -50,7 +55,7 @@ warnings.filterwarnings("ignore")
 ### RSA/RDM test 2X3 -> 6 class 
 
 # trials = [i for i in range(0, 100, 1)]
-# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms.txt")
+[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms.txt")
 # [tsc] = Datasets.load_list("Data/1-600-tsc-500ms.txt")
 # # [tgc, times] = Datasets.load_list("Data/1-600-tgc-250ms.txt")
 
@@ -72,71 +77,13 @@ warnings.filterwarnings("ignore")
 
 # app.run_server()
 
-
-# server = Flask(__name__)
-# @server.route("/dash")
-# def app_():
-    # return app.index()
-
 ###############################################################################
-
-trials = [i for i in range(0, 600)]
-
-### PSD in time windows till tSNE
-tpsd, freqs, times = Connect.time_power_spectrum_density(data=dataset.signals['v4']
-                                , save=True, bands=True
-                                , time_window_size=500, time_overlap=0
-                                , trials=trials, bw=50, tl=0, tr=4000,
-                                  time_base=-1500, fmin=8, fmax=64)
-
-# Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-500ms-f8-f24-pfc.txt")
-# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f8-f24-pfc.txt")
-
-# Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-500ms-f8-f24-p7a.txt")
-# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f8-f24-p7a.txt")
-
-Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-500ms-f8-f64-v4.txt")
-[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f8-f64-v4.txt")
-
-# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-v4.txt")
-
-for i in range(tpsd.shape[0]):
-    for j in range(tpsd.shape[3]):
-        tpsd[i, :, :, j] /= np.max(np.max(tpsd[i, :, :, j])) + 0.0001
-        tpsd[i, :, :, j] = np.sqrt(tpsd[i, :, :, j])
-
-trials = [i for i in range(130, 270)]
-
-dim = 3
-# y = (np.array(trials)//50)%2
-yl = []
-y = np.reshape(dataset.cue_s[trials], [-1]) #+ 5 * ((np.array(trials)//50)%2)
-
-for i in range(len(trials)):
-    if y[i] == 1:
-        yl.append("Trial(unpredictable)")
-    elif y[i] == 0:
-        yl.append("Block(predictable)")
-        
-for i in range(len(trials)):
-    if y[i] == 1:
-        yl.append("cor")
-    elif y[i] == 0:
-        yl.append("err")
-        
-# for i in range(len(trials)):
-#     if y[i] == 1:
-#         yl.append("A")
-#     elif y[i] == 2:
-#         yl.append("B")
-#     elif y[i] == 3:
-#         yl.append("C")
 
 # x = tpsd[:, 9:16, 2:7, trials].reshape([-1, len(trials)]).transpose()
 
-app = Connect.time_tsne_cluster(data=tpsd[:, 10:16, 3:7, :], y=y, trials=trials,
-                          dim=3, perplx=20, learning_rate=25, 
-                          n_iter=6000, times=times, title="tSNE in time for PSD, v4, 8Hz-24-Hz",
-                            name="TtSNE3DGC", ee=15, method="exact")
+# app = Connect.time_tsne_cluster(data=tpsd[:, 10:16, 3:7, :], y=y, trials=trials,
+#                           dim=3, perplx=20, learning_rate=25, 
+#                           n_iter=6000, times=times, title="tSNE in time for PSD, v4, 8Hz-24-Hz",
+#                             name="TtSNE3DGC", ee=15, method="exact")
 
-app.run_server()
+# app.run_server()
