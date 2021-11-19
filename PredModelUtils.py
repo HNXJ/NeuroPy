@@ -92,7 +92,7 @@ a = Datasets.compactor(x=tpsd, dim=1, inds=[[1, 2, 3], [4, 5, 6], [7, 8, 9, 10, 
 # app = Viewer.heatmap(data=a, fqs=freqs, title="PSD in time, pfc area ", bands=True
 #             , xlabel="Frequency", ylabel="Channel", fr=times, tr=trials)
 
-app = Connect.time_tsne_cluster(data=a, y=y, trials=trials,
+app = Connect.time_tsne_cluster(data=np.sqrt(a), y=y, trials=trials,
                           dim=3, perplx=20, learning_rate=25, 
                           n_iter=6000, times=times, title="tSNE in time for PSD, v4, 4Hz-240-Hz",
                             name="TtSNE3DGC", ee=15, method="exact")
