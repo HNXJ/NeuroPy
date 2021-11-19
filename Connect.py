@@ -260,7 +260,7 @@ def time_power_spectrum_density(data=None, key='key', save=True, bands=True
         
         if bands:
             
-            bpsd = np.zeros([psd.shape[0], 9, psd.shape[2]])
+            bpsd = np.zeros([psd.shape[0], 12, psd.shape[2]])
             for i in range(psd.shape[2]):
                 
                 bpsd[:, :, i] = Methods.psd_ratio_matrix(psd=psd[:, :, i], freqs=freqs)
