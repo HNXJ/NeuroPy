@@ -68,9 +68,10 @@ def create_app(data=None, fqs=None, trials=3, frames=3, title="T", xlabel="C"
             
         tit = title + ", Frame no. " + str(int(value2)) + " of trial no. " + str(int(value1)+1) + " for t in range [" + str(fr[int(value2)-1]) + "] - [" + str(fr[int(value2)]) + "]"
         
-        bandlabels = ["Delta[0.1-3]", "Theta[3-8]", "Alpha[8-12]"
-                      , "L-Beta[12-16]", "M-Beta[16-20]", "U-Beta[20-30]"
-                      , "L-Gamma[30-50]", "M-Gamma[50-70]", "U-Gamma[70+]"]
+    bandlabels = ["Delta[0.1-3]", "Theta[3-8]", "Alpha[8-12]"
+                  , "L-Beta[12-16]", "M-Beta[16-20]", "U-Beta[20-30]"
+                  , "L-Gamma[30-50]", "M-Gamma[50-70]", "U-Gamma[70-100]"
+                  , "UI-Gamma[100-150]", "UII-Gamma[150-200]", "UIII-Gamma[200-250]"]
         
         if bands==True:
             return {
