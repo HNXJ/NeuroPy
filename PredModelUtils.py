@@ -49,7 +49,7 @@ warnings.filterwarnings("ignore")
 ### RSA/RDM test 2X3 -> 6 class 
 
 trials = [i for i in range(0, 100, 1)]
-[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms.txt")
+[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f3-f247-p7a.txt")
 # [tsc] = Datasets.load_list("Data/1-600-tsc-500ms.txt")
 # # [tgc, times] = Datasets.load_list("Data/1-600-tgc-250ms.txt")
 
@@ -73,12 +73,23 @@ trials = [i for i in range(0, 100, 1)]
 
 ###############################################################################
 
-# x = tpsd[:, 9:16, 2:7, trials].reshape([-1, len(trials)]).transpose()
+trials = [i for i in range(0, 100, 1)]
 
+# tpsd, freqs, times = Connect.time_power_spectrum_density(data=dataset.signals['pfc']
+#                                 , save=True, bands=True
+#                                 , time_window_size=500, time_overlap=0
+#                                 , trials=trials, bw=50, tl=0, tr=4500,
+#                                   time_base=-1500, fmin=3, fmax=247)
+
+# Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-500ms-f3-f247-pfc.txt")
+[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f3-f247-pfc.txt")
 y = (np.array(trials)//50)%2
 
-a = Datasets.compactor(x=tpsd, dim=2, inds=[[0, 1], [2], [3, 4, 5, 6, 7], [8]])
+tpsd[np.isnan(tpsd)] = 0
+a = Datasets.compactor(x=tpsd, dim=1, inds=[[1, 2, 3], [4, 5, 6], [7, 8, 9, 10, 11], [12, 13, 14, 15]])
 
+# app = Viewer.heatmap(data=a, fqs=freqs, title="PSD in time, pfc area ", bands=True
+#             , xlabel="Frequency", ylabel="Channel", fr=times, tr=trials)
 app = Connect.time_tsne_cluster(data=a, y=y, trials=trials,
                           dim=3, perplx=20, learning_rate=25, 
                           n_iter=6000, times=times, title="tSNE in time for PSD, v4, 8Hz-24-Hz",

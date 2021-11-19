@@ -212,7 +212,7 @@ def power_spectrum_density(data=None, save=False,
                 normalize_w=False, k=5,
                 bw=15, trials=None, pink_noise_filter=True):
     
-    ps_pfc, f = pspectlamnorm(data[t1:t2, :, trials], axis=0, fs=1000, fc=250, fmin=fmin, fmax=fmax)
+    ps_pfc, f = pspectlamnorm(data[t1:t2, :, trials], axis=0, fs=1000, fc=500, fmin=fmin, fmax=fmax)
     piv = np.mean(ps_pfc, 0)
     piv = np.mean(piv, 1)
     
@@ -314,19 +314,19 @@ def psd_ratio_matrix(psd=None, freqs=None):
             c[:, 7] += psd[:, i]
             d[7] += 1
         
-        elif freqs[i] >= 70.0: # U-Gamma
+        elif freqs[i] < 100: # U-Gamma
             c[:, 8] += psd[:, i]
             d[8] += 1
         
-        elif freqs[i] >= 100.0: # UI-Gamma
+        elif freqs[i] < 150.0: # UI-Gamma
             c[:, 9] += psd[:, i]
             d[9] += 1
             
-        elif freqs[i] >= 150.0: # UII-Gamma
+        elif freqs[i] < 200.0: # UII-Gamma
             c[:, 10] += psd[:, i]
             d[10] += 1
             
-        elif freqs[i] >= 200.0: # UIII-Gamma
+        elif freqs[i] < 250.0: # UIII-Gamma
             c[:, 11] += psd[:, i]
             d[11] += 1
             
