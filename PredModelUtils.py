@@ -14,8 +14,6 @@ import warnings
 
 ##############################################################################
 
-
-a = Datasets.compactor(x=tpsd, dim=2, inds=[[0, 1], [2], [3, 4, 5, 6, 7], [8]])
 warnings.filterwarnings("ignore")
 
 # dataset = Datasets.Dataset()
@@ -79,9 +77,14 @@ trials = [i for i in range(0, 100, 1)]
 
 y = (np.array(trials)//50)%2
 
+a = Datasets.compactor(x=tpsd, dim=2, inds=[[0, 1], [2], [3, 4, 5, 6, 7], [8]])
+
 app = Connect.time_tsne_cluster(data=a, y=y, trials=trials,
                           dim=3, perplx=20, learning_rate=25, 
                           n_iter=6000, times=times, title="tSNE in time for PSD, v4, 8Hz-24-Hz",
                             name="TtSNE3DGC", ee=15, method="exact")
 
 app.run_server()
+
+###############################################################################
+
