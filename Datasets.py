@@ -1,5 +1,5 @@
 import scipy.io as sio
-# import numpy as np
+import numpy as np
 
 # import Methods
 # import Connect
@@ -96,5 +96,29 @@ def load_list(filename="List0.txt"):
     print("Loaded.")
     return l
     
+
+def compactor(x, dim=0, inds=None):
+    
+    shape_inds = []
+    
+    for i in range(len(x.shape)):
+        if i == dim:
+            shape_inds.append(len(inds))
+        else:
+            shape_inds.append(x.shape[i])
+            
+    xn = np.zeros(shape_inds)
+    for i in range(len(inds)):
+        if dim == 0:
+            xn[i, ] = np.mean(x[inds[i], ], 0)
+        elif dim == 1:
+            xn[:, i, ] = np.mean(x[:, inds[i], ], 1)
+        elif dim == 2:
+            xn[:, :, i, ] = np.mean(x[:, :, inds[i], ], 2)
+        elif dim == 3:
+            xn[:, :, :, i, ] = np.mean(x[:, :, :, inds[i], ], 3)      
+        elif dim == 4:
+            xn[:, :, :, :, i, ] = np.mean(x[:, :, :, :, inds[i], ], 4)
+    return xn
 
     
