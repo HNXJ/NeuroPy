@@ -82,6 +82,7 @@ trials = [i for i in range(0, 100, 1)]
 #                                   time_base=-1500, fmin=3, fmax=247)
 
 # Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-500ms-f3-f247-pfc.txt")
+
 [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f3-f247-pfc.txt")
 y = (np.array(trials)//50)%2
 
