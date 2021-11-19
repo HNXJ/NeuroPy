@@ -82,7 +82,7 @@ warnings.filterwarnings("ignore")
 
 trials = [i for i in range(0, 600)]
 
-## PSD in time windows till tSNE
+### PSD in time windows till tSNE
 tpsd, freqs, times = Connect.time_power_spectrum_density(data=dataset.signals['v4']
                                 , save=True, bands=True
                                 , time_window_size=500, time_overlap=0
