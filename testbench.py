@@ -54,17 +54,23 @@ trials = [i for i in range(0, 100, 1)]
 tpsd[np.isnan(tpsd)] = 0
 xt_array = tpsd
 
-xt = np.zeros([xt_array.shape[0], xt_array.shape[1], xt_array.shape[2], 60])
+k = 30
+xt = np.zeros([xt_array.shape[0], xt_array.shape[1], xt_array.shape[2], 6*k])
 for i in range(len(sample_inds)):
-    xt[:, :, :, i*10:(i+1)*10] = xt_array[:, :, :, sample_inds[i][:10]]
+    xt[:, :, :, i*k:(i+1)*k] = xt_array[:, :, :, sample_inds[i][:k]]
 
 Datasets.save_list(xt, "xt.txt")
 xt = Datasets.load_list("xt.txt")
+xt = Datasets.compactor(xt, dim=1, inds=[[2, 3, 4], [5, 6], [8, 9, 10, 11], [12, 13, 14, 15]])
 
-rdm_ = Representational.time_rdm(x=xt[:, :, 10:11, :], p_dim=3, t_dim=0, trials=[i for i in range(6)])
+rdm_ = Representational.time_rdm(x=xt[:, :, 1:4, :], p_dim=3, t_dim=0, trials=[i for i in range(6*k)])
 
-ctl = ["A-Pred", "B-Pred", "C-Pred", "A-Unpred", "B-Unpred", "C-Unpred"]
-
+ctl_l = ["A-Pred", "B-Pred", "C-Pred", "A-Unpred", "B-Unpred", "C-Unpred"]
+ctl = []
+for i in range(len(ctl_l)):
+    for j in range(k):
+        ctl.append(ctl_l[i] + str(j))
+        
 app = Representational.time_rdm_plot(rdm_, title="RDM, average across temp-spect-coherence categories, Each time frame"
                                 , dlabel="Modes", times=times, cat_labels=ctl)
 

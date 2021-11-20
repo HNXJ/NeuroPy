@@ -11,7 +11,7 @@ import cv2
 def correlation_pearson(x, y):
 
     c = np.corrcoef(x.reshape([-1]), y.reshape([-1]))
-    return c[0, 1]
+    return np.abs(c[0, 1])
 
 
 def rdm(x, p_dim=0):
