@@ -66,7 +66,7 @@ def create_app(data=None, fqs=None, trials=3, frames=3, title="T", xlabel="C"
         else:
             t = fqs
             
-        tit = title + ", Frame no. " + str(int(value2)) + " of trial no. " + str(int(value1)+1) + " for t in range [" + str(fr[int(value2)-1]) + "] - [" + str(fr[int(value2)]) + "]"
+        tit = title + ", Frame no. " + str(int(value2)) + " of trial/section no. " + str(int(value1)+1) + " for t in range [" + str(fr[int(value2)-1]) + "] - [" + str(fr[int(value2)]) + "]"
         
         bandlabels = ["Delta[0.1-3]", "Theta[3-8]", "Alpha[8-12]"
                       , "L-Beta[12-16]", "M-Beta[16-20]", "U-Beta[20-30]"
