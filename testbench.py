@@ -26,6 +26,22 @@ trials = [i for i in range(0, 600, 1)]
 
 ##############################################################################
 
+[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f3-f247-pfc.txt")
+tpsd1 = tpsd[:, :15, :, :]
+tpsd2 = tpsd[:, 1:, :, :]
+
+gradient_tpsd = tpsd2 - tpsd1
+mean_grad_tpsd = np.mean(gradient_tpsd, 3).reshape([8, 15, 12, 1])
+mean_grad_tpsd = np.mean(mean_grad_tpsd, 0).reshape([1, 15, 12, 1])
+# mean_grad_tpsd = Datasets.scale(mean_grad_tpsd, 0, 1)
+
+app = Viewer.heatmap(data=mean_grad_tpsd, fqs=freqs, title="PSD in time, pfc area ", bands=True
+            , xlabel="Frequency", ylabel="Channel", fr=times, tr=[0])
+
+app.run_server()
+
+##############################################################################
+
 sample_inds = []
 for i in range(6):
     sample_inds.append([])
@@ -49,32 +65,32 @@ for i in trials:
          
 ### RSA/RDM test 2X3 -> 6 class 
 
-trials = [i for i in range(0, 100, 1)]
-[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f3-f247-pfc.txt")
-tpsd[np.isnan(tpsd)] = 0
-xt_array = tpsd
+# trials = [i for i in range(0, 100, 1)]
+# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f3-f247-pfc.txt")
+# tpsd[np.isnan(tpsd)] = 0
+# xt_array = tpsd
 
-k = 30
-xt = np.zeros([xt_array.shape[0], xt_array.shape[1], xt_array.shape[2], 6*k])
-for i in range(len(sample_inds)):
-    xt[:, :, :, i*k:(i+1)*k] = xt_array[:, :, :, sample_inds[i][:k]]
+# k = 30
+# xt = np.zeros([xt_array.shape[0], xt_array.shape[1], xt_array.shape[2], 6*k])
+# for i in range(len(sample_inds)):
+#     xt[:, :, :, i*k:(i+1)*k] = xt_array[:, :, :, sample_inds[i][:k]]
 
-Datasets.save_list(xt, "xt.txt")
-xt = Datasets.load_list("xt.txt")
-xt = Datasets.compactor(xt, dim=1, inds=[[2, 3, 4], [5, 6], [8, 9, 10, 11], [12, 13, 14, 15]])
+# Datasets.save_list(xt, "xt.txt")
+# xt = Datasets.load_list("xt.txt")
+# xt = Datasets.compactor(xt, dim=1, inds=[[1, 2, 3, 4, 5], [6, 7], [8, 9, 10, 11], [12, 13, 14, 15]])
 
-rdm_ = Representational.time_rdm(x=xt[:, :, 1:4, :], p_dim=3, t_dim=0, trials=[i for i in range(6*k)])
+# rdm_ = Representational.time_rdm(x=xt[:, :, 1:4, :], p_dim=3, t_dim=0, trials=[i for i in range(6*k)])
 
-ctl_l = ["A-Pred", "B-Pred", "C-Pred", "A-Unpred", "B-Unpred", "C-Unpred"]
-ctl = []
-for i in range(len(ctl_l)):
-    for j in range(k):
-        ctl.append(ctl_l[i] + str(j))
+# ctl_l = ["A-Pred", "B-Pred", "C-Pred", "A-Unpred", "B-Unpred", "C-Unpred"]
+# ctl = []
+# for i in range(len(ctl_l)):
+#     for j in range(k):
+#         ctl.append(ctl_l[i] + str(j))
         
-app = Representational.time_rdm_plot(rdm_, title="RDM, average across temp-spect-coherence categories, Each time frame"
-                                , dlabel="Modes", times=times, cat_labels=ctl)
+# app = Representational.time_rdm_plot(rdm_, title="RDM, average across temp-spect-coherence categories, Each time frame"
+#                                 , dlabel="Modes", times=times, cat_labels=ctl)
 
-app.run_server()
+# app.run_server()
 
 
 # server = Flask(__name__)
@@ -94,7 +110,7 @@ trials = [i for i in range(0, 600)]
 #                                   time_base=-1500, fmin=3, fmax=247)
 
 # Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-500ms-f3-f247-pfc.txt")
-# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f3-f247-pfc.txt")
+[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f3-f247-pfc.txt")
 
 # tpsd, freqs, times = Connect.time_power_spectrum_density(data=dataset.signals['p7a']
 #                                 , save=True, bands=True

@@ -121,4 +121,14 @@ def compactor(x, dim=0, inds=None):
             xn[:, :, :, :, i, ] = np.mean(x[:, :, :, :, inds[i], ], 4)
     return xn
 
+
+def scale(x, low=0, high=1):
     
+    l = x
+    h = x
+    k = len(x.shape)
+    for i in range(k):
+        l = np.min(l)
+        h = np.max(h)
+        
+    return ((x-l)/h)*(high-low) + low
