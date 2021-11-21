@@ -123,7 +123,7 @@ trials = [i for i in range(0, 600)]
 #                                   time_base=-1500, fmin=3, fmax=247)
 
 # Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-500ms-f3-f247-p7a.txt")
-# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f3-f247-p7a.txt")
+[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f3-f247-p7a.txt")
 
 # tpsd, freqs, times = Connect.time_power_spectrum_density(data=dataset.signals['v4']
 #                                 , save=True, bands=True
@@ -132,7 +132,7 @@ trials = [i for i in range(0, 600)]
 #                                   time_base=-1500, fmin=3, fmax=247)
 
 # Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-500ms-f3-f247-v4.txt")
-[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f3-f247-v4.txt")
+# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f3-f247-v4.txt")
 
 # [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-v4.txt")
 
@@ -144,9 +144,10 @@ trials = [i for i in range(0, 600)]
 trials = [i for i in range(130, 270)]
 
 dim = 3
-y = (np.array(trials)//50)%2
+# y = (np.array(trials)//50)%2
 yl = []
-# y = np.reshape(dataset.cue_s[trials], [-1]) #+ 5 * ((np.array(trials)//50)%2)
+# y = np.reshape(dataset.cue_s[trials], [-1]) + 4 * ((np.array(trials)//50)%2)
+y = np.reshape(dataset.cue_cr[trials], [-1]) + 4 * ((np.array(trials)//50)%2)
 
 for i in range(len(trials)):
     if y[i] == 1:
@@ -174,9 +175,9 @@ x = Datasets.compactor(x, dim=1, inds=[[1, 2, 3], [4, 5, 6], [7, 8], [9, 10, 11,
 a = 1
 b= 2
 
-app = Connect.time_tsne_cluster(data=x[:, :, 6:12, :], y=y, trials=trials,
-                          dim=3, perplx=20, learning_rate=25, 
-                          n_iter=6000, times=times, title="tSNE in time for PSD, v4, 8Hz-240-Hz",
+app = Connect.time_tsne_cluster(data=x[:, :, 3:6, :], y=y, trials=trials,
+                          dim=3, perplx=7, learning_rate=15, 
+                          n_iter=6000, times=times, title="tSNE in time for PSD, p7a, 8Hz-240-Hz",
                             name="TtSNE3DGC", ee=15, method="exact")
 
 app.run_server()
