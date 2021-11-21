@@ -85,8 +85,7 @@ xt = Datasets.compactor(xt, dim=1, inds=[[1, 2, 3], [4, 5, 6], [7, 8], [9, 10, 1
 
 rdm_ = np.zeros([8, 72, 72, 16])
 for i in range(16):
-    rdm_[:, :, :, i] = Representational.time_rdm(x=xt[:, i:i+1, :, :], p_dim=3, t_dim=0, trials=[i for i in range(6*k)])
-
+    rdm_[:, :, :, i:i+1] = Representational.time_rdm(x=xt[:, i:i+1, :, :], p_dim=3, t_dim=0, trials=[i for i in range(6*k)])
 
 ctl_l = ["A-Pred", "B-Pred", "C-Pred", "A-Unpred", "B-Unpred", "C-Unpred"]
 ctl = []
