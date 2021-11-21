@@ -144,9 +144,9 @@ trials = [i for i in range(0, 600)]
 trials = [i for i in range(130, 270)]
 
 dim = 3
-# y = (np.array(trials)//50)%2
+y = (np.array(trials)//50)%2
 yl = []
-y = np.reshape(dataset.cue_s[trials], [-1]) #+ 5 * ((np.array(trials)//50)%2)
+# y = np.reshape(dataset.cue_s[trials], [-1]) #+ 5 * ((np.array(trials)//50)%2)
 
 for i in range(len(trials)):
     if y[i] == 1:
@@ -154,26 +154,27 @@ for i in range(len(trials)):
     elif y[i] == 0:
         yl.append("Block(predictable)")
         
-for i in range(len(trials)):
-    if y[i] == 1:
-        yl.append("cor")
-    elif y[i] == 0:
-        yl.append("err")
+# for i in range(len(trials)):
+#     if y[i] == 1:
+#         yl.append("cor")
+#     elif y[i] == 0:
+#         yl.append("err")
         
-for i in range(len(trials)):
-    if y[i] == 1:
-        yl.append("A")
-    elif y[i] == 2:
-        yl.append("B")
-    elif y[i] == 3:
-        yl.append("C")
+# for i in range(len(trials)):
+#     if y[i] == 1:
+#         yl.append("A")
+#     elif y[i] == 2:
+#         yl.append("B")
+#     elif y[i] == 3:
+#         yl.append("C")
 
 
 x = tpsd[:, :, :, :]
 x = Datasets.compactor(x, dim=1, inds=[[1, 2, 3], [4, 5, 6], [7, 8], [9, 10, 11, 12], [13, 14, 15]])
+a = 1
+b= 2
 
-
-app = Connect.time_tsne_cluster(data=x[:, :, 0:3, :], y=y, trials=trials,
+app = Connect.time_tsne_cluster(data=x[:, :, 6:12, :], y=y, trials=trials,
                           dim=3, perplx=20, learning_rate=25, 
                           n_iter=6000, times=times, title="tSNE in time for PSD, v4, 8Hz-240-Hz",
                             name="TtSNE3DGC", ee=15, method="exact")
