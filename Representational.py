@@ -48,7 +48,8 @@ def time_rdm(x, p_dim=3, t_dim=0, trials=None):
 def time_rdm_plot(x, title="RDM", dlabel="A", times=None, cat_labels=None):
     print("-> Oppening viewer app.")
     app = Viewer.heatmap(data=x, fqs=None, title=title, bands=False
-                , xlabel=dlabel, ylabel=dlabel, fr=times, tr=[0], cat_labels=cat_labels)
+                , xlabel=dlabel, ylabel=dlabel, fr=times
+                , tr=[i for i in range(x.shape[3])], cat_labels=cat_labels)
     
     return app
 

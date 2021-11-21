@@ -69,32 +69,35 @@ for i in trials:
          
 ### RSA/RDM test 2X3 -> 6 class 
 
-# trials = [i for i in range(0, 100, 1)]
-# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f3-f247-pfc.txt")
-# tpsd[np.isnan(tpsd)] = 0
-# xt_array = tpsd
+trials = [i for i in range(0, 100, 1)]
+[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f3-f247-pfc.txt")
+tpsd[np.isnan(tpsd)] = 0
+xt_array = tpsd
 
-# k = 12
-# xt = np.zeros([xt_array.shape[0], xt_array.shape[1], xt_array.shape[2], 6*k])
-# for i in range(len(sample_inds)):
-#     xt[:, :, :, i*k:(i+1)*k] = xt_array[:, :, :, sample_inds[i][:k]]
+k = 12
+xt = np.zeros([xt_array.shape[0], xt_array.shape[1], xt_array.shape[2], 6*k])
+for i in range(len(sample_inds)):
+    xt[:, :, :, i*k:(i+1)*k] = xt_array[:, :, :, sample_inds[i][:k]]
 
-# # Datasets.save_list(xt, "xt.txt")
-# xt = Datasets.load_list("xt.txt")
-# xt = Datasets.compactor(xt, dim=1, inds=[[1, 2, 3], [4, 5, 6], [7, 8], [9, 10, 11, 12], [13, 14, 15]])
+# Datasets.save_list(xt, "xt.txt")
+xt = Datasets.load_list("xt.txt")
+xt = Datasets.compactor(xt, dim=1, inds=[[1, 2, 3], [4, 5, 6], [7, 8], [9, 10, 11, 12], [13, 14, 15]])
 
-# rdm_ = Representational.time_rdm(x=xt[:, :, :, :], p_dim=3, t_dim=0, trials=[i for i in range(6*k)])
+rdm_ = np.zeros([8, 72, 72, 16])
+for i in range(16):
+    rdm_[:, :, :, i] = Representational.time_rdm(x=xt[:, i:i+1, :, :], p_dim=3, t_dim=0, trials=[i for i in range(6*k)])
 
-# ctl_l = ["A-Pred", "B-Pred", "C-Pred", "A-Unpred", "B-Unpred", "C-Unpred"]
-# ctl = []
-# for i in range(len(ctl_l)):
-#     for j in range(k):
-#         ctl.append(ctl_l[i] + str(j))
+
+ctl_l = ["A-Pred", "B-Pred", "C-Pred", "A-Unpred", "B-Unpred", "C-Unpred"]
+ctl = []
+for i in range(len(ctl_l)):
+    for j in range(k):
+        ctl.append(ctl_l[i] + str(j))
         
-# app = Representational.time_rdm_plot(rdm_, title="RDM, average across temp-spect-coherence categories, Each time frame"
-#                                 , dlabel="Modes", times=times, cat_labels=ctl)
+app = Representational.time_rdm_plot(rdm_, title="RDM, average across temp-spect-coherence categories, Each time frame"
+                                , dlabel="Modes", times=times, cat_labels=ctl)
 
-# app.run_server()
+app.run_server()
 
 
 # server = Flask(__name__)
@@ -123,7 +126,7 @@ trials = [i for i in range(0, 600)]
 #                                   time_base=-1500, fmin=3, fmax=247)
 
 # Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-500ms-f3-f247-p7a.txt")
-[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f3-f247-p7a.txt")
+# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f3-f247-p7a.txt")
 
 # tpsd, freqs, times = Connect.time_power_spectrum_density(data=dataset.signals['v4']
 #                                 , save=True, bands=True
@@ -141,19 +144,19 @@ trials = [i for i in range(0, 600)]
 #         tpsd[i, :, :, j] /= np.max(np.max(tpsd[i, :, :, j])) + 0.0001
 #         tpsd[i, :, :, j] = np.sqrt(tpsd[i, :, :, j])
 
-trials = [i for i in range(130, 270)]
+# trials = [i for i in range(130, 270)]
 
-dim = 3
+# dim = 3
 # y = (np.array(trials)//50)%2
-yl = []
+# yl = []
 # y = np.reshape(dataset.cue_s[trials], [-1]) + 4 * ((np.array(trials)//50)%2)
-y = np.reshape(dataset.cue_cr[trials], [-1]) + 4 * ((np.array(trials)//50)%2)
+# y = np.reshape(dataset.cue_cr[trials], [-1]) + 4 * ((np.array(trials)//50)%2)
 
-for i in range(len(trials)):
-    if y[i] == 1:
-        yl.append("Trial(unpredictable)")
-    elif y[i] == 0:
-        yl.append("Block(predictable)")
+# for i in range(len(trials)):
+#     if y[i] == 1:
+#         yl.append("Trial(unpredictable)")
+#     elif y[i] == 0:
+#         yl.append("Block(predictable)")
         
 # for i in range(len(trials)):
 #     if y[i] == 1:
@@ -170,14 +173,14 @@ for i in range(len(trials)):
 #         yl.append("C")
 
 
-x = tpsd[:, :, :, :]
-x = Datasets.compactor(x, dim=1, inds=[[1, 2, 3], [4, 5, 6], [7, 8], [9, 10, 11, 12], [13, 14, 15]])
-a = 1
-b= 2
+# x = tpsd[:, :, :, :]
+# x = Datasets.compactor(x, dim=1, inds=[[1, 2, 3], [4, 5, 6], [7, 8], [9, 10, 11, 12], [13, 14, 15]])
+# a = 1
+# b= 2
 
-app = Connect.time_tsne_cluster(data=x[:, :, 3:6, :], y=y, trials=trials,
-                          dim=3, perplx=7, learning_rate=15, 
-                          n_iter=6000, times=times, title="tSNE in time for PSD, p7a, 8Hz-240-Hz",
-                            name="TtSNE3DGC", ee=15, method="exact")
+# app = Connect.time_tsne_cluster(data=x[:, :, 3:6, :], y=y, trials=trials,
+#                           dim=3, perplx=7, learning_rate=15, 
+#                           n_iter=6000, times=times, title="tSNE in time for PSD, pfc, 8Hz-240-Hz",
+#                             name="TtSNE3DGC", ee=15, method="exact")
 
-app.run_server()
+# app.run_server()
