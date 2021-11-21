@@ -70,7 +70,7 @@ for i in trials:
 ### RSA/RDM test 2X3 -> 6 class 
 
 trials = [i for i in range(0, 100, 1)]
-[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f3-f247-pfc.txt")
+[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f3-f247-p7a.txt")
 tpsd[np.isnan(tpsd)] = 0
 xt_array = tpsd
 
@@ -83,8 +83,8 @@ for i in range(len(sample_inds)):
 xt = Datasets.load_list("xt.txt")
 xt = Datasets.compactor(xt, dim=1, inds=[[1, 2, 3], [4, 5, 6], [7, 8], [9, 10, 11, 12], [13, 14, 15]])
 
-rdm_ = np.zeros([8, 72, 72, 16])
-for i in range(16):
+rdm_ = np.zeros([8, 72, 72, 5])
+for i in range(5):
     rdm_[:, :, :, i:i+1] = Representational.time_rdm(x=xt[:, i:i+1, :, :], p_dim=3, t_dim=0, trials=[i for i in range(6*k)])
 
 ctl_l = ["A-Pred", "B-Pred", "C-Pred", "A-Unpred", "B-Unpred", "C-Unpred"]
