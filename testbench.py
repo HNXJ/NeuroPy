@@ -114,7 +114,7 @@ trials = [i for i in range(0, 600)]
 #                                   time_base=-1500, fmin=3, fmax=247)
 
 # Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-500ms-f3-f247-pfc.txt")
-[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f3-f247-pfc.txt")
+# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f3-f247-pfc.txt")
 
 # tpsd, freqs, times = Connect.time_power_spectrum_density(data=dataset.signals['p7a']
 #                                 , save=True, bands=True
@@ -132,7 +132,7 @@ trials = [i for i in range(0, 600)]
 #                                   time_base=-1500, fmin=3, fmax=247)
 
 # Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-500ms-f3-f247-v4.txt")
-# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f3-f247-v4.txt")
+[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f3-f247-v4.txt")
 
 # [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-v4.txt")
 
@@ -168,9 +168,12 @@ for i in range(len(trials)):
     elif y[i] == 3:
         yl.append("C")
 
-x = tpsd[:, 9:16, 2:7, trials].reshape([-1, len(trials)]).transpose()
 
-app = Connect.time_tsne_cluster(data=tpsd[:, :, 9:12, :], y=y, trials=trials,
+x = tpsd[:, :, :, :]
+x = Datasets.compactor(x, dim=1, inds=[[1, 2, 3], [4, 5, 6], [7, 8], [9, 10, 11, 12], [13, 14, 15]])
+
+
+app = Connect.time_tsne_cluster(data=x[:, :, 0:3, :], y=y, trials=trials,
                           dim=3, perplx=20, learning_rate=25, 
                           n_iter=6000, times=times, title="tSNE in time for PSD, v4, 8Hz-240-Hz",
                             name="TtSNE3DGC", ee=15, method="exact")
