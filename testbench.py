@@ -26,19 +26,23 @@ trials = [i for i in range(0, 600, 1)]
 
 ##############################################################################
 
-[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f3-f247-pfc.txt")
-tpsd1 = tpsd[:, :15, :, :]
-tpsd2 = tpsd[:, 1:, :, :]
+### Gradient layer detection
 
-gradient_tpsd = tpsd2 - tpsd1
-mean_grad_tpsd = np.mean(gradient_tpsd, 3).reshape([8, 15, 12, 1])
-mean_grad_tpsd = np.mean(mean_grad_tpsd, 0).reshape([1, 15, 12, 1])
+# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f3-f247-pfc.txt")
+# tpsd1 = tpsd[:, :15, :, :]
+# tpsd2 = tpsd[:, 1:, :, :]
+
+# gradient_tpsd = tpsd
+# mean_grad_tpsd = np.mean(gradient_tpsd, 3).reshape([8, 16, 12, 1])
+# mean_grad_tpsd[np.isnan(mean_grad_tpsd)] = 0
+# # mean_grad_tpsd = np.mean(mean_grad_tpsd, 2).reshape([8, 15, 1, 1])
+# # mean_grad_tpsd[np.isnan(mean_grad_tpsd)] = 0
 # mean_grad_tpsd = Datasets.scale(mean_grad_tpsd, 0, 1)
 
-app = Viewer.heatmap(data=mean_grad_tpsd, fqs=freqs, title="PSD in time, pfc area ", bands=True
-            , xlabel="Frequency", ylabel="Channel", fr=times, tr=[0])
+# app = Viewer.heatmap(data=mean_grad_tpsd, fqs=freqs, title="PSD in time, pfc area ", bands=True
+#             , xlabel="Frequency", ylabel="Channel", fr=times, tr=[0])
 
-app.run_server()
+# app.run_server()
 
 ##############################################################################
 
@@ -70,16 +74,16 @@ for i in trials:
 # tpsd[np.isnan(tpsd)] = 0
 # xt_array = tpsd
 
-# k = 30
+# k = 12
 # xt = np.zeros([xt_array.shape[0], xt_array.shape[1], xt_array.shape[2], 6*k])
 # for i in range(len(sample_inds)):
 #     xt[:, :, :, i*k:(i+1)*k] = xt_array[:, :, :, sample_inds[i][:k]]
 
-# Datasets.save_list(xt, "xt.txt")
+# # Datasets.save_list(xt, "xt.txt")
 # xt = Datasets.load_list("xt.txt")
-# xt = Datasets.compactor(xt, dim=1, inds=[[1, 2, 3, 4, 5], [6, 7], [8, 9, 10, 11], [12, 13, 14, 15]])
+# xt = Datasets.compactor(xt, dim=1, inds=[[1, 2, 3], [4, 5, 6], [7, 8], [9, 10, 11, 12], [13, 14, 15]])
 
-# rdm_ = Representational.time_rdm(x=xt[:, :, 1:4, :], p_dim=3, t_dim=0, trials=[i for i in range(6*k)])
+# rdm_ = Representational.time_rdm(x=xt[:, :, :, :], p_dim=3, t_dim=0, trials=[i for i in range(6*k)])
 
 # ctl_l = ["A-Pred", "B-Pred", "C-Pred", "A-Unpred", "B-Unpred", "C-Unpred"]
 # ctl = []
