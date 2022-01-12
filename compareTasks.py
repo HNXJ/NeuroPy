@@ -44,7 +44,7 @@ warnings.filterwarnings("ignore")
 #                                 , trials=trials, bw=50, tl=0, tr=4000,
 #                                   time_base=-1500)
 
-# Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-500ms-f8-f24-pfc.txt")
+# Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-500ms-f8-f24-p7a.txt")
 
 # tpsd, freqs, times = Connect.time_power_spectrum_density(data=dataset.signals['v4']
 #                                 , save=True, bands=True
@@ -52,5 +52,16 @@ warnings.filterwarnings("ignore")
 #                                 , trials=trials, bw=50, tl=0, tr=4000,
 #                                   time_base=-1500)
 
-# Datasets.save_list([tpsd, freqs, times], "Data/1-600-tpsd-500ms-f8-f24-pfc.txt")
+# Dataset s.save_list([tpsd, freqs, times], "Data/1-600-tpsd-500ms-f8-f24-v4.txt")
+
+##############################################################################
+
 # [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f8-f24-pfc.txt")
+# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f8-f24-p7a.txt")
+# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f8-f24-v4.txt")
+
+##############################################################################
+
+
+
+##############################################################################
