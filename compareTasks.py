@@ -56,12 +56,191 @@ warnings.filterwarnings("ignore")
 
 ##############################################################################
 
-# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f8-f24-pfc.txt")
+
 # [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f8-f24-p7a.txt")
 # [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f8-f24-v4.txt")
 
 ##############################################################################
+# PFC ones
 
+[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f8-f24-pfc.txt")
+trials = [i for i in range(130, 270)]
 
+dim = 3
+y = (np.array(trials)//50)%2
+yl = []
+y = np.reshape(dataset.cue_s[trials], [-1]) #+ 5 * ((np.array(trials)//50)%2)
+
+for i in range(len(trials)):
+    if y[i] == 1:
+        yl.append("Trial(unpredictable)")
+    elif y[i] == 0:
+        yl.append("Block(predictable)")
+        
+for i in range(len(trials)):
+    if y[i] == 1:
+        yl.append("cor")
+    elif y[i] == 0:
+        yl.append("err")
+        
+# for i in range(len(trials)):
+#     if y[i] == 1:
+#         yl.append("A")
+#     elif y[i] == 2:
+#         yl.append("B")
+#     elif y[i] == 3:
+#         yl.append("C")
+
+# x = tpsd[:, 9:16, 2:7, trials].reshape([-1, len(trials)]).transpose()
+
+# app = Connect.time_tsne_cluster(data=tpsd[:, 9:16, 3:7, :], y=y, trials=trials,
+#                           dim=3, perplx=20, learning_rate=25, 
+#                           n_iter=6000, times=times, title="tSNE in time for PSD, pfc-deep-10-16",
+#                             name="TtSNE3DGC", ee=15, method="exact")
+
+# app = Connect.time_tsne_cluster(data=tpsd[:, 3:10, 3:7, :], y=y, trials=trials,
+#                           dim=3, perplx=20, learning_rate=25, 
+#                           n_iter=6000, times=times, title="tSNE in time for PSD, pfc-superficial-4-9",
+#                             name="TtSNE3DGC", ee=15, method="exact")
+
+app.run_server()
 
 ##############################################################################
+
+##############################################################################
+# PFC ones
+
+# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f8-f24-pfc.txt")
+# trials = [i for i in range(130, 270)]
+
+# dim = 3
+# y = (np.array(trials)//50)%2
+# yl = []
+# y = np.reshape(dataset.cue_s[trials], [-1]) #+ 5 * ((np.array(trials)//50)%2)
+
+# for i in range(len(trials)):
+#     if y[i] == 1:
+#         yl.append("Trial(unpredictable)")
+#     elif y[i] == 0:
+#         yl.append("Block(predictable)")
+        
+# for i in range(len(trials)):
+#     if y[i] == 1:
+#         yl.append("cor")
+#     elif y[i] == 0:
+#         yl.append("err")
+        
+# for i in range(len(trials)):
+#     if y[i] == 1:
+#         yl.append("A")
+#     elif y[i] == 2:
+#         yl.append("B")
+#     elif y[i] == 3:
+#         yl.append("C")
+
+# x = tpsd[:, 9:16, 2:7, trials].reshape([-1, len(trials)]).transpose()
+
+# app = Connect.time_tsne_cluster(data=tpsd[:, 9:16, 3:7, :], y=y, trials=trials,
+#                           dim=3, perplx=20, learning_rate=25, 
+#                           n_iter=6000, times=times, title="tSNE in time for PSD, pfc-deep-10-16",
+#                             name="TtSNE3DGC", ee=15, method="exact")
+
+# app = Connect.time_tsne_cluster(data=tpsd[:, 3:10, 3:7, :], y=y, trials=trials,
+#                           dim=3, perplx=20, learning_rate=25, 
+#                           n_iter=6000, times=times, title="tSNE in time for PSD, pfc-superficial-4-9",
+#                             name="TtSNE3DGC", ee=15, method="exact")
+
+app.run_server()
+
+##############################################################################
+# P7A ones
+
+[tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f8-f24-p7a.txt")
+trials = [i for i in range(130, 270)]
+
+dim = 3
+y = (np.array(trials)//50)%2
+yl = []
+y = np.reshape(dataset.cue_s[trials], [-1]) #+ 5 * ((np.array(trials)//50)%2)
+
+for i in range(len(trials)):
+    if y[i] == 1:
+        yl.append("Trial(unpredictable)")
+    elif y[i] == 0:
+        yl.append("Block(predictable)")
+        
+for i in range(len(trials)):
+    if y[i] == 1:
+        yl.append("cor")
+    elif y[i] == 0:
+        yl.append("err")
+        
+for i in range(len(trials)):
+    if y[i] == 1:
+        yl.append("A")
+    elif y[i] == 2:
+        yl.append("B")
+    elif y[i] == 3:
+        yl.append("C")
+
+x = tpsd[:, 9:16, 2:7, trials].reshape([-1, len(trials)]).transpose()
+
+app = Connect.time_tsne_cluster(data=tpsd[:, 9:16, 3:7, :], y=y, trials=trials,
+                          dim=3, perplx=20, learning_rate=25, 
+                          n_iter=6000, times=times, title="tSNE in time for PSD, p7a-deep-10-16",
+                            name="TtSNE3DGC", ee=15, method="exact")
+
+# app = Connect.time_tsne_cluster(data=tpsd[:, 3:10, 3:7, :], y=y, trials=trials,
+#                           dim=3, perplx=20, learning_rate=25, 
+#                           n_iter=6000, times=times, title="tSNE in time for PSD, p7a-superficial-4-9",
+#                             name="TtSNE3DGC", ee=15, method="exact")
+
+app.run_server()
+
+##############################################################################
+# V4 ones
+
+# [tpsd, freqs, times] = Datasets.load_list("Data/1-600-tpsd-500ms-f8-f24-v4.txt")
+# trials = [i for i in range(130, 270)]
+
+# dim = 3
+# y = (np.array(trials)//50)%2
+# yl = []
+# y = np.reshape(dataset.cue_s[trials], [-1]) #+ 5 * ((np.array(trials)//50)%2)
+
+# for i in range(len(trials)):
+#     if y[i] == 1:
+#         yl.append("Trial(unpredictable)")
+#     elif y[i] == 0:
+#         yl.append("Block(predictable)")
+        
+# for i in range(len(trials)):
+#     if y[i] == 1:
+#         yl.append("cor")
+#     elif y[i] == 0:
+#         yl.append("err")
+        
+# for i in range(len(trials)):
+#     if y[i] == 1:
+#         yl.append("A")
+#     elif y[i] == 2:
+#         yl.append("B")
+#     elif y[i] == 3:
+#         yl.append("C")
+
+# x = tpsd[:, 9:16, 2:7, trials].reshape([-1, len(trials)]).transpose()
+
+# app = Connect.time_tsne_cluster(data=tpsd[:, 9:16, 3:7, :], y=y, trials=trials,
+#                           dim=3, perplx=20, learning_rate=25, 
+#                           n_iter=6000, times=times, title="tSNE in time for PSD, v4-deep-10-16",
+#                             name="TtSNE3DGC", ee=15, method="exact")
+
+# app = Connect.time_tsne_cluster(data=tpsd[:, 3:10, 3:7, :], y=y, trials=trials,
+#                           dim=3, perplx=20, learning_rate=25, 
+#                           n_iter=6000, times=times, title="tSNE in time for PSD, v4-superficial-4-9",
+#                             name="TtSNE3DGC", ee=15, method="exact")
+
+# app.run_server()
+
+##############################################################################
+
