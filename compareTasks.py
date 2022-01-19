@@ -240,4 +240,14 @@ y = np.reshape([dataset.cue_s[trialsf], dataset.cue_s[trialsf], dataset.cue_s[tr
 #                             name="TtSNE3DGC", ee=15, method="exact")
 
 
-app2.run_server()
+# app2.run_server()
+
+###
+
+import pickle
+
+
+f = open('app1.pckl', 'wb')
+pickle.dump(app1, f)
+f.close()
+
