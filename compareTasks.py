@@ -238,19 +238,19 @@ yl_key = ['Block_A_err', 'Block_B_err', 'Block_C_err', 'Block_A_cor', 'Block_B_c
 for i in range(len(trials)):
     yl.append(yl_key[y[i]])
     
-# app1 = Connect.time_tsne_cluster(data=tpsd[:, 9:16, 2:, :], y=yl, trials=trials,
-#                           dim=3, perplx=20, learning_rate=25, 
-#                           n_iter=6000, times=times, title="tSNE in time for PSD, v4-deep-10-16",
-#                             name="TtSNE3DGC", ee=15, method="exact")
+app1 = Connect.time_tsne_cluster(data=tpsd[:, 9:16, 2:, :], y=yl, trials=trials,
+                          dim=3, perplx=20, learning_rate=25, 
+                          n_iter=6000, times=times, title="tSNE in time for PSD, v4-deep-10-16",
+                            name="TtSNE3DGC", ee=15, method="exact")
 
-# app2 = Connect.time_tsne_cluster(data=tpsd[:, 3:10, 2:, :], y=yl, trials=trials,
-#                           dim=3, perplx=20, learning_rate=25, 
-#                           n_iter=6000, times=times, title="tSNE in time for PSD, v4-superficial-4-9",
-#                             name="TtSNE3DGC", ee=15, method="exact")
+app2 = Connect.time_tsne_cluster(data=tpsd[:, 3:10, 2:, :], y=yl, trials=trials,
+                          dim=3, perplx=20, learning_rate=25, 
+                          n_iter=6000, times=times, title="tSNE in time for PSD, v4-superficial-4-9",
+                            name="TtSNE3DGC", ee=15, method="exact")
 
 
 app1.run_server()
-# app2.run_server()
+app2.run_server()
 
 ###
 
