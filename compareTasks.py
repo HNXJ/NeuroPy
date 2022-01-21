@@ -18,9 +18,9 @@ warnings.filterwarnings("ignore")
 ##############################################################################
 ### Load and initialization
 
-dataset = Datasets.Dataset()
-dataset.load_laminar_data(path="Data/")
-dataset.print_all_content()
+# dataset = Datasets.Dataset()
+# dataset.load_laminar_data(path="Data/")
+# dataset.print_all_content()
 # trials_block = dataset.get_trials(key='block', l=0, r=600)
 # trials_trial = dataset.get_trials(key='trial', l=0, r=600)
 # trials = [i for i in range(0, 600, 1)]
@@ -207,7 +207,7 @@ trialsf = [i for i in range(0, 600, 10)]
 dim = 3
 yl = []
 y0 = (np.array(trials)//50)%2
-y1 = np.reshape([dataset.cue_s[trialsf], dataset.cue_s[trialsf], dataset.cue_s[trialsf]], [-1])
+y1 = np.reshape([dataset.cue_s[trialsf], dataset.cue_s[trialsf], dataset.cue_s[trialsf]], [-1])-1
 y2 = np.reshape([dataset.cue_cr[trialsf], dataset.cue_cr[trialsf], dataset.cue_cr[trialsf]], [-1])
 
 y = y0*6 + y1 + y2*3
@@ -233,17 +233,17 @@ y = y0*6 + y1 + y2*3
 #         yl.append("C")
 
 yl_key = ['Block_A_err', 'Block_B_err', 'Block_C_err', 'Block_A_cor', 'Block_B_cor', 'Block_C_cor'
-          'Trial_A_err', 'Trial_B_err', 'Trial_C_err', 'Trial_A_cor', 'Trial_B_cor', 'Trial_C_cor']
+          ,'Trial_A_err', 'Trial_B_err', 'Trial_C_err', 'Trial_A_cor', 'Trial_B_cor', 'Trial_C_cor']
 
 for i in range(len(trials)):
     yl.append(yl_key[y[i]])
     
-app1 = Connect.time_tsne_cluster(data=tpsd[:, 9:16, 3:, :], y=y, trials=trials,
+app1 = Connect.time_tsne_cluster(data=tpsd[:, 9:16, 3:, :], y=yl, trials=trials,
                           dim=3, perplx=20, learning_rate=25, 
                           n_iter=6000, times=times, title="tSNE in time for PSD, v4-deep-10-16",
                             name="TtSNE3DGC", ee=15, method="exact")
 
-app2 = Connect.time_tsne_cluster(data=tpsd[:, 3:10, 3:, :], y=y, trials=trials,
+app2 = Connect.time_tsne_cluster(data=tpsd[:, 3:10, 3:, :], y=yl, trials=trials,
                           dim=3, perplx=20, learning_rate=25, 
                           n_iter=6000, times=times, title="tSNE in time for PSD, v4-superficial-4-9",
                             name="TtSNE3DGC", ee=15, method="exact")
