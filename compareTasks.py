@@ -181,7 +181,7 @@ warnings.filterwarnings("ignore")
 #                           n_iter=6000, times=times, title="tSNE in time for PSD, v4-deep-10-16",
 #                             name="TtSNE3DGC", ee=15, method="exact")
 
-# app2 = Connect.time_tsne_cluster(data=tpsd[:, 3:10, 5:, :], y=yl, trials=trials,
+# app2 = Connect.time_tsne_cluster(data=tpsd[:, 2:10, 5:, :], y=yl, trials=trials,
 #                           dim=3, perplx=20, learning_rate=25, 
 #                           n_iter=6000, times=times, title="tSNE in time for PSD, v4-superficial-4-9",
 #                             name="TtSNE3DGC", ee=15, method="exact")
