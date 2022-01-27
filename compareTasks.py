@@ -18,9 +18,9 @@ warnings.filterwarnings("ignore")
 ##############################################################################
 ### Load and initialization
 
-dataset = Datasets.Dataset()
-dataset.load_laminar_data(path="Data/")
-dataset.print_all_content()
+# dataset = Datasets.Dataset()
+# dataset.load_laminar_data(path="Data/")
+# dataset.print_all_content()
 # trials_block = dataset.get_trials(key='block', l=0, r=600)
 # trials_trial = dataset.get_trials(key='trial', l=0, r=600)
 # trials = [i for i in range(0, 600, 1)]
@@ -286,9 +286,9 @@ trialsf = [i for i in range(0, 600, 5)]
 
 dim = 3
 yl = []
-y0 = (np.array(trials)//50)%2
-y1 = dataset.cue_s[trialsf] - 1
-y2 = dataset.cue_cr[trialsf]
+y0 = np.reshape((np.array(trials)//50)%2, [-1])
+y1 = np.reshape(dataset.cue_s[trialsf] - 1, [-1])
+y2 = np.reshape(dataset.cue_cr[trialsf], [-1])
 
 y = y0*6 + y1 + y2*3
 # y = y0
@@ -325,18 +325,18 @@ for i in range(len(trials)):
     
 # yl = y0    
 
-app1 = Connect.time_tsne_cluster(data=tpsd[:, 9:16, :, :], y=yl, trials=trials,
-                          dim=3, perplx=10, learning_rate=25, 
-                          n_iter=6000, times=times, title="tSNE in time for PSD, all-regions-deep-10-16",
-                            name="TtSNE3DGC", ee=15, method="exact")
+# app1 = Connect.time_tsne_cluster(data=tpsd[:, 9:16, :, :], y=yl, trials=trials,
+#                           dim=3, perplx=10, learning_rate=25, 
+#                           n_iter=6000, times=times, title="tSNE in time for PSD, all-regions-deep-10-16",
+#                             name="TtSNE3DGC", ee=15, method="exact")
 
-app2 = Connect.time_tsne_cluster(data=tpsd[:, 3:10, :, :], y=yl, trials=trials,
-                          dim=3, perplx=10, learning_rate=25, 
-                          n_iter=6000, times=times, title="tSNE in time for PSD, all-regions-superficial-4-9",
-                            name="TtSNE3DGC", ee=15, method="exact")
+# app2 = Connect.time_tsne_cluster(data=tpsd[:, 3:10, :, :], y=yl, trials=trials,
+#                           dim=3, perplx=10, learning_rate=25, 
+#                           n_iter=6000, times=times, title="tSNE in time for PSD, all-regions-superficial-4-9",
+#                             name="TtSNE3DGC", ee=15, method="exact")
 
 
-# app1.run_server()
+app1.run_server()
 # app2.run_server()
 
 # ###
